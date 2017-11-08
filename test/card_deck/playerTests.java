@@ -47,4 +47,18 @@ public class playerTests {
 
     }
 
+    @Test
+    public void drawAllCardsFromDeck() {
+        int topOfDeck = d.cards.size() - 1;
+        for (int i = 0; i < 54; i++) {
+            p.draw(d.cards.remove(topOfDeck));
+            topOfDeck--;
+            if (d.cards.isEmpty()) {
+                d = new Deck();
+                topOfDeck = d.cards.size() - 1;
+            }
+        }
+        assertEquals(d.cards.size(), 50);
+    }
+
 }
