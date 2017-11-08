@@ -29,7 +29,7 @@ public class playerTests {
     public void drawCardFromTopOfDeck() {
         int topOfDeck = d.cards.size() - 1;
         for (int i = 0; i < 2; i++) {
-            p.draw(d.cards.remove(topOfDeck), topOfDeck);
+            p.draw(d.cards.remove(topOfDeck));
             topOfDeck--;
         }
         assertEquals(p.hand.size(), 2);
@@ -40,7 +40,7 @@ public class playerTests {
     public void countDeckAfterDraw() {
         int topOfDeck = d.cards.size() - 1;
         for (int i = 0; i < 4; i++) {
-            p.draw(d.cards.remove(topOfDeck), topOfDeck);
+            p.draw(d.cards.remove(topOfDeck));
             topOfDeck--;
         }
         assertEquals(d.cards.size(), 48);

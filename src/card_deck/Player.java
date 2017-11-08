@@ -19,7 +19,7 @@ public class Player {
         this.hand = new ArrayList<Card>(); 
 }
 
-    public void draw(Card c, int topOfDeck) {
+    public void draw(Card c) {
         hand.add(c);
     }
 
