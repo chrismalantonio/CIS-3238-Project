@@ -22,6 +22,7 @@ public class Deck {
     public String[] values = {"ace", "2", "3", "4",
                         "5", "6", "7", "8", "9", "10",
                         "jack", "queen", "king"};
+    int i;
     public Deck(){ 
         this.cards = new ArrayList<Card>();
         for(int i = 0; i < SUIT_SIZE; i++){
