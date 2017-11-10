@@ -20,7 +20,7 @@ public class gameTests {
         @Before
     public void setUp() {
         d = new Deck();
-        g = new Game(d);
+        g = new Game();
     }
     
     @Test

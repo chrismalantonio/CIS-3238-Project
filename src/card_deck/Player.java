@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Player {
 
     public ArrayList<Card> hand;
+    Deck d;
     
     public Player() {
         this.hand = new ArrayList<Card>(); 

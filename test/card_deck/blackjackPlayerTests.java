@@ -6,6 +6,7 @@
 package card_deck;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class blackjackPlayerTests {
     @Before
     public void setUp() {
         d = new Deck();
-        p = new BlackjackPlayer(d);
+        p = new BlackjackPlayer();
     }
 
     @Test
@@ -30,7 +31,7 @@ public class blackjackPlayerTests {
         for (int i = 0; i < 2; i++) {
             p.draw(d);
         }
-        assertEquals(p.hand.size(), 2);
+        assertEquals(p.hand.cards.size(), 2);
 
     }
 
@@ -38,18 +39,74 @@ public class blackjackPlayerTests {
     public void cardValueGreaterThanZero() {
         p.draw(d);
         boolean check = false;
-        if (p.getHandCount() > 0) {
+        if (p.hand.handCount > 0) {
             check = true;
         }
         assertTrue(check);
 
     }
-    
+
     @Test
-    public void testBust(){
-        for (int i = 0; i < 50; i++){
+    public void testBust() {
+        for (int i = 0; i < 50; i++) {
             p.draw(d);
         }
-        assertTrue(p.bust()); 
+        assertTrue(p.bust(p.hand));
+    }
+
+    @Test
+    public void changeAceValueTest() {
+
+        Card c = new Card("diamonds", "ace");
+        Card c5 = new Card("clubs", "5");
+        Card c7 = new Card("spades", "7");
+
+        p.hand.cards.add(c);
+        p.hand.cards.add(c5);
+        p.hand.cards.add(c7);
+
+        assertTrue(p.hand.handCount < 21);
+    }
+
+    @Test
+    public void splitIntoTwoHands() {
+        Card cc5 = new Card("clubs", "5");
+        Card cs5 = new Card("spades", "5");
+
+        p.hand.cards.add(cc5);
+        p.hand.cards.add(cs5);
+
+        p.split();
+        assertEquals(p.hand.handCount, p.hand2.handCount);
+    }
+
+    @Test
+    public void handCountNotSame() {
+        Card cc5 = new Card("clubs", "5");
+        Card cs5 = new Card("spades", "5");
+
+        p.hand.cards.add(cc5);
+        p.hand.cards.add(cs5);
+
+        p.split();
+        p.draw2(d);
+
+        assertNotEquals(p.hand.handCount, p.hand2.handCount);
+    }
+
+    @Test
+    public void bustSecondHand() {
+        Card cc5 = new Card("clubs", "5");
+        Card cs5 = new Card("spades", "5");
+
+        p.hand.cards.add(cc5);
+        p.hand.cards.add(cs5);
+
+        p.split();
+        for (int i = 0; i < 50; i++) {
+            p.draw2(d);
+        }
+        
+        assertTrue(p.bust(p.hand2)); 
     }
 }

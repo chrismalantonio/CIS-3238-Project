@@ -11,12 +11,10 @@ package card_deck;
  */
 public class Game {
 
-    Deck d; 
     public int[] record = new int[2];
     public int wins, losses;
 
-    public Game(Deck d) {
-       this.d = d; 
+    public Game() {
         record[0] = wins;
         record[1] = losses;
     }
@@ -25,5 +23,4 @@ public class Game {
         record[0] = wins;
         record[1] = losses;
     }
-
 }
