@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Chris
  */
-public class BlackjackPlayer {
+public class BlackjackPlayer extends Player {
 
     private int lastCard;
     Hand hand;
@@ -21,6 +21,7 @@ public class BlackjackPlayer {
         this.hand = new Hand();
     }
 
+    @Override
     public void draw(Deck d) {
         int topOfDeck = d.cards.size() - 1;
         hand.cards.add((d.cards.remove(topOfDeck)));
