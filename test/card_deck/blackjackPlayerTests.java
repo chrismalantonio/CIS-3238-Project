@@ -36,6 +36,26 @@ public class blackjackPlayerTests {
     }
 
     @Test
+    public void countDeckAfterDraw() {
+        for (int i = 0; i < 4; i++) {
+            p.draw(d);
+        }
+        assertEquals(d.cards.size(), 48);
+
+    }
+
+    @Test
+    public void drawAllCardsFromDeck() {
+        for (int i = 0; i < 54; i++) {
+            p.draw(d);
+            if (d.cards.isEmpty()) {
+                d = new Deck();
+            }
+        }
+        assertEquals(d.cards.size(), 50);
+    }
+
+    @Test
     public void cardValueGreaterThanZero() {
         p.draw(d);
         boolean check = false;
