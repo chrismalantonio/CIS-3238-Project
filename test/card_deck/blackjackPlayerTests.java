@@ -44,4 +44,12 @@ public class blackjackPlayerTests {
         assertTrue(check);
 
     }
+    
+    @Test
+    public void testBust(){
+        for (int i = 0; i < 50; i++){
+            p.draw(d);
+        }
+        assertTrue(p.bust()); 
+    }
 }

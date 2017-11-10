@@ -38,12 +38,8 @@ public class BlackjackPlayer extends Player {
     }
 
     /*  if player's hand is over 21 return true */
-    private boolean bust() {
-        if (handCount > 21) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean bust() {
+        return handCount > 21;
     }
 
     /* get value of the newest card in your hand 
