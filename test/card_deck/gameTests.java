@@ -14,11 +14,13 @@ import org.junit.Test;
  * @author Chris Malantonio
  */
 public class gameTests {
+    Deck d; 
     Game g;
     
         @Before
     public void setUp() {
-        g = new Game();
+        d = new Deck();
+        g = new Game(d);
     }
     
     @Test

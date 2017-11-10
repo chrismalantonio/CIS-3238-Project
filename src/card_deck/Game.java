@@ -11,17 +11,19 @@ package card_deck;
  */
 public class Game {
 
-    public int[] record = new int[2]; 
-    public int wins, losses; 
-    
-    public Game() {
-    record[0] = wins;
-    record[1] = losses;
-    } 
-    
-    public void updateRecord(){
-        record[0] = wins; 
-        record[1] = losses; 
+    Deck d; 
+    public int[] record = new int[2];
+    public int wins, losses;
+
+    public Game(Deck d) {
+       this.d = d; 
+        record[0] = wins;
+        record[1] = losses;
     }
-    
+
+    public void updateRecord() {
+        record[0] = wins;
+        record[1] = losses;
+    }
+
 }
