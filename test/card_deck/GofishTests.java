@@ -18,7 +18,15 @@ import static org.junit.Assert.*;
  */
 public class GofishTests {
     
+    Deck d;
+    Gofish gofish;
+    Player p, AI;
+    
     public GofishTests() {
+        d = new Deck();
+        gofish = new Gofish(d);
+        p = new Player();
+        AI = new Player();
     }
     
     @BeforeClass
@@ -31,6 +39,8 @@ public class GofishTests {
     
     @Before
     public void setUp() {
+
+        
     }
     
     @After
@@ -44,9 +54,6 @@ public class GofishTests {
     // public void hello() {}
     @Test
     public void AiShouldHaveCardSpecified(){
-        Deck d = new Deck();
-        Gofish gofish = new Gofish(d);
-        Player AI = new Player();
         AI.draw(d);
         Card c = AI.hand.get(0);
         assertEquals("AI does not have card specified.",
@@ -55,8 +62,6 @@ public class GofishTests {
     
     @Test
     public void AiShouldNotHaveCardSpecified(){
-        Deck d = new Deck();
-        Gofish gofish = new Gofish(d);
         Player aAI = new Player();
         Player bAI = new Player();
         aAI.draw(d); bAI.draw(d);
@@ -64,5 +69,21 @@ public class GofishTests {
         Card bC = bAI.hand.get(0);
         assertNotEquals("Two players have the same card.", 
                 aC,bC);
+    }
+    
+    @Test
+    public void cardRemovedShouldNotBeInHand(){
+        AI.hand.add(new Card("hearts", "ace"));
+        gofish.giveCardToPlayer(new Card("hearts", "ace"), p, AI);
+        assertEquals("Removed card still exists in hand.",
+                    d.cards.contains(new Card("hearts", "ace")), true);
+        
+    }
+    
+    @Test
+    public void playerShouldNotReturnCardTheyDontHave(){
+        AI.hand.add(new Card("hearts", "ace"));
+        assertEquals("Player returned a card they did not have.",
+                gofish.giveCardToPlayer(new Card("hearts", "ace"), p, AI), true);
     }
 }

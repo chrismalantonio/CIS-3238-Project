@@ -30,6 +30,16 @@ public class Gofish extends Game{
         return false;
     }
     
+    public boolean giveCardToPlayer(Card c, Player to, Player from){
+        if(!from.hand.contains(c)){
+            return false;
+        }
+        from.hand.remove(c);
+        to.hand.add(c);
+        return true;
+    }
     
-    
+    public boolean addCard(){
+        return false;
+    }
 }
