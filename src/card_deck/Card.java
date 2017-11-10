@@ -23,6 +23,26 @@ public class Card {
         return this.suit + " of " + this.value;
     }
     
+    @Override
+    public boolean equals(Object c){
+        if(c == this){return true;}
+        
+        if(!(c instanceof Card)){
+            return false;
+        }
+        
+        Card cN = (Card) c;
+        
+        return (this.value.equals(cN.value) && this.suit.equals(cN.suit));
+    }
+    
+    public boolean isCard(String suit, String value){
+        if(this.suit.equals(suit) && this.value.equals(value)){
+            return true;
+        }
+        return false;
+    }
+    
     public String getValue(){return this.value;}
     public String getSuit(){return this.suit;}
     

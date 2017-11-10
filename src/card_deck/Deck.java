@@ -18,6 +18,7 @@ public class Deck {
     public final static int SUIT_SIZE = 4;
     public final static int VALUE_SIZE = 13;
     public ArrayList<Card> cards;
+    private Iterator<Card> cIterator;
     public String[] suits = {"spades", "clubs", "hearts", "diamonds"};
     public String[] values = {"ace", "2", "3", "4",
                         "5", "6", "7", "8", "9", "10",
@@ -40,5 +41,18 @@ public class Deck {
     
     public void shuffle(){
         Collections.shuffle(this.cards);
+    }
+    
+    public Card getCard(String suit, String value){
+        cIterator = cards.iterator();
+        Card c;
+        Card d = new Card(suit, value);
+        while(cIterator.hasNext()){
+            c = cIterator.next();
+            if(c.equals(d)){
+                return c;
+            }
+        }
+        return null;
     }
 }

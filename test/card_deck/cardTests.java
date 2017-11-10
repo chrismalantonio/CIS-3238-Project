@@ -47,6 +47,22 @@ public class cardTests {
 //        }
     }
     
+    @Test
+    public void specifiedCardIsReturnedCorrectly(){
+        String clubSuit = "clubs";
+        String heartSuit = "hearts";
+        String value = "3";
+        Card cA, cB, cC, cD;
+        cA = d.getCard(clubSuit, value);
+        cD = d.getCard(heartSuit, value);
+        cB = new Card("clubs", "3");
+        cC = new Card("hearts", "3");
+        
+        assertEquals("Wrong card obtained.", cA, cB);
+        assertNotEquals("Wrong card obtained.", cA, cD);
+        assertEquals("Wrong card obtained.", cC, cD);
+    }
+    
     
     @Test
     public void deckIsAValidStandardDeck(){
