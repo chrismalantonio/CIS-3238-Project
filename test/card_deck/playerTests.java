@@ -27,10 +27,8 @@ public class playerTests {
 
     @Test
     public void drawCardFromTopOfDeck() {
-        int topOfDeck = d.cards.size() - 1;
         for (int i = 0; i < 2; i++) {
-            p.draw(d.cards.remove(topOfDeck));
-            topOfDeck--;
+            p.draw(d);
         }
         assertEquals(p.hand.size(), 2);
 
@@ -38,10 +36,8 @@ public class playerTests {
 
     @Test
     public void countDeckAfterDraw() {
-        int topOfDeck = d.cards.size() - 1;
         for (int i = 0; i < 4; i++) {
-            p.draw(d.cards.remove(topOfDeck));
-            topOfDeck--;
+            p.draw(d);
         }
         assertEquals(d.cards.size(), 48);
 
@@ -49,13 +45,10 @@ public class playerTests {
 
     @Test
     public void drawAllCardsFromDeck() {
-        int topOfDeck = d.cards.size() - 1;
         for (int i = 0; i < 54; i++) {
-            p.draw(d.cards.remove(topOfDeck));
-            topOfDeck--;
+            p.draw(d);
             if (d.cards.isEmpty()) {
                 d = new Deck();
-                topOfDeck = d.cards.size() - 1;
             }
         }
         assertEquals(d.cards.size(), 50);

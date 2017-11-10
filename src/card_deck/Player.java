@@ -19,8 +19,9 @@ public class Player {
         this.hand = new ArrayList<Card>(); 
 }
 
-    public void draw(Card c) {
-        hand.add(c);
+    public void draw(Deck d) {
+        int topOfDeck = d.cards.size() - 1;
+        hand.add((d.cards.remove(topOfDeck)));
     }
 
 }
