@@ -16,7 +16,7 @@ public class Game {
     public int wins, losses;
 
     public Game(Deck d) {
-       this.d = d; 
+        this.d = d; 
         record[0] = wins;
         record[1] = losses;
     }

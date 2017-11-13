@@ -85,5 +85,24 @@ public class GofishTests {
         AI.hand.add(new Card("hearts", "ace"));
         assertEquals("Player returned a card they did not have.",
                 gofish.giveCardToPlayer(new Card("hearts", "ace"), p, AI), true);
+        
     }
+    
+    
+    @Test
+    public void gofishGameGeneratesFairPlayers(){
+        gofish.playGofish();
+        int aCount, bCount, cCount;
+        aCount = gofish.AI[0].hand.size();
+        bCount = gofish.AI[1].hand.size();
+        cCount = gofish.AI[2].hand.size();
+        assertEquals("Players have uneven cards in deck.", 
+                     aCount, gofish.DEFAULT_DECK_SIZE);
+        assertEquals("Players have uneven cards in deck.", 
+                     bCount, gofish.DEFAULT_DECK_SIZE);
+        assertEquals("Players have uneven cards in deck.", 
+                     cCount, gofish.DEFAULT_DECK_SIZE);
+        
+    }
+    
 }

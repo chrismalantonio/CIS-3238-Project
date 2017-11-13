@@ -12,9 +12,19 @@ package card_deck;
 public class Gofish extends Game{
     
     
+    public GofishPlayer[] AI;
+    public final int DEFAULT_DECK_SIZE = 7;
+    
+    
     
     public Gofish(Deck d) {
         super(d);
+        AI = new GofishPlayer[3];
+        for(int i = 0; i < AI.length; i++){
+            AI[i] = new GofishPlayer();
+        }        
+
+        
     }
     
     public void trackBooks(){
@@ -30,6 +40,8 @@ public class Gofish extends Game{
         return false;
     }
     
+    
+    
     public boolean giveCardToPlayer(Card c, Player to, Player from){
         if(!from.hand.contains(c)){
             return false;
@@ -41,5 +53,17 @@ public class Gofish extends Game{
     
     public boolean addCard(){
         return false;
+    }
+    
+    public int playGofish(){
+        for(GofishPlayer ai:AI){
+            for(int i = 0; i < 7; i++){
+                ai.draw(d);
+            }
+        }
+        
+        
+        
+        return 0;
     }
 }
