@@ -5,13 +5,12 @@
  */
 package card_deck;
 
-import java.util.ArrayList;
 
 /**
  *
  * @author Chris
  */
-public class BlackjackPlayer extends Player {
+public class BlackjackPlayer {
 
     private int lastCard;
     public Hand hand;
@@ -19,6 +18,7 @@ public class BlackjackPlayer extends Player {
 
     public BlackjackPlayer() {
         this.hand = new Hand();
+        this.hand2 = new Hand(); 
     }
 
     public void draw(Hand h, Deck d) {
