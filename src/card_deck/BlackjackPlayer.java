@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class BlackjackPlayer extends Player {
 
     private int lastCard;
-    Hand hand;
-    Hand hand2;
+    public Hand hand;
+    public Hand hand2;
 
     public BlackjackPlayer() {
         this.hand = new Hand();
@@ -87,7 +87,7 @@ public class BlackjackPlayer extends Player {
 
     /*  Checks if the original 2 cards given have the same value
         If true, split into 2 hands */
-    public boolean split() {
+    public void split() {
         if (hand.cards.size() == 2) {
             if (hand.cards.get(0).value.equals(hand.cards.get(1).value)) {
                 hand2 = new Hand();
@@ -97,9 +97,7 @@ public class BlackjackPlayer extends Player {
                 } else {
                     hand.handCount = hand2.handCount = hand.handCount / 2;
                 }
-                return true;
             }
         }
-        return false;
     }
 }

@@ -5,6 +5,8 @@
  */
 package gameWindow;
 
+import card_deck.*; 
+
 /**
  *
  * @author tuf62546
@@ -14,8 +16,21 @@ public class BlackjackWindow extends javax.swing.JFrame {
     /**
      * Creates new form BlackjackWindow
      */
+    Deck deck;
+    BlackjackPlayer player, cpu;
+    Blackjack game; 
     public BlackjackWindow() {
         initComponents();
+        deck = new Deck(); 
+        player = new BlackjackPlayer();
+        cpu = new BlackjackPlayer(); 
+        game = new Blackjack(cpu); 
+        
+        /* Initial game state */
+        for (int i = 0; i < 2; i++){
+            cpu.draw(deck);
+            player.draw(deck);
+        }
     }
 
     /**
@@ -121,10 +136,12 @@ public class BlackjackWindow extends javax.swing.JFrame {
 
     private void hitButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hitButton
         // TODO add your handling code here:
+        player.hit(player.hand, deck); 
     }//GEN-LAST:event_hitButton
 
     private void splitButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_splitButton
         // TODO add your handling code here:
+        player.split(); 
     }//GEN-LAST:event_splitButton
 
     private void stayButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stayButton
