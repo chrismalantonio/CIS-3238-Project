@@ -20,13 +20,13 @@ public class GofishTests {
     
     Deck d;
     Gofish gofish;
-    Player p, AI;
+    GofishPlayer p, AI;
     
     public GofishTests() {
         d = new Deck();
         gofish = new Gofish(d);
-        p = new Player();
-        AI = new Player();
+        p = new GofishPlayer();
+        AI = new GofishPlayer();
     }
     
     @BeforeClass
@@ -87,7 +87,6 @@ public class GofishTests {
                 gofish.giveCardToPlayer(new Card("hearts", "ace"), p, AI), true);
         
     }
-    
     
     @Test
     public void gofishGameGeneratesFairPlayers(){
