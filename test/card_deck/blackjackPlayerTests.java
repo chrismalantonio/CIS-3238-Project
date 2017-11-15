@@ -29,7 +29,7 @@ public class blackjackPlayerTests {
     @Test
     public void drawCardFromTopOfDeck() {
         for (int i = 0; i < 2; i++) {
-            p.draw(d);
+            p.draw(p.hand, d);
         }
         assertEquals(p.hand.cards.size(), 2);
 
@@ -37,7 +37,7 @@ public class blackjackPlayerTests {
 
     @Test
     public void cardValueGreaterThanZero() {
-        p.draw(d);
+        p.draw(p.hand, d);
         boolean check = false;
         if (p.hand.handCount > 0) {
             check = true;
@@ -49,7 +49,7 @@ public class blackjackPlayerTests {
     @Test
     public void testBust() {
         for (int i = 0; i < 50; i++) {
-            p.draw(d);
+            p.draw(p.hand, d);
         }
         assertTrue(p.bust(p.hand));
     }
@@ -89,7 +89,7 @@ public class blackjackPlayerTests {
         p.hand.cards.add(cs5);
 
         p.split();
-        p.draw2(d);
+        p.draw(p.hand2, d);
 
         assertNotEquals(p.hand.handCount, p.hand2.handCount);
     }
@@ -104,7 +104,7 @@ public class blackjackPlayerTests {
 
         p.split();
         for (int i = 0; i < 50; i++) {
-            p.draw2(d);
+            p.draw(p.hand2, d);
         }
         
         assertTrue(p.bust(p.hand2)); 

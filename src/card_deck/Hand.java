@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Hand {
 
-    ArrayList<Card> cards;
+    public ArrayList<Card> cards;
     public int handCount;
     public int acesInHand;
 

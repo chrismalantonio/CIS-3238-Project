@@ -21,27 +21,17 @@ public class BlackjackPlayer extends Player {
         this.hand = new Hand();
     }
 
-    @Override
-    public void draw(Deck d) {
+    public void draw(Hand h, Deck d) {
         int topOfDeck = d.cards.size() - 1;
         hand.cards.add((d.cards.remove(topOfDeck)));
-        lastCard = getCardValue(hand);
-    }
-
-    /*  Use this draw function only after splitting the player's hand into two hands */
-    public void draw2(Deck d) {
-        if (hand2.cards.size() > 0) {
-            int topOfDeck = d.cards.size() - 1;
-            hand2.cards.add((d.cards.remove(topOfDeck)));
-            lastCard = getCardValue(hand2);
-        }
+        lastCard = getCardValue(h);
     }
 
     /*  if player's hand is less than 21, he may draw another card */
     public void hit(Hand h, Deck d) {
         //Check if player's hand < 21
         if (!bust(h)) {
-            draw(d);
+            draw(h, d);
         }
     }
 
