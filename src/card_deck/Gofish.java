@@ -13,8 +13,8 @@ public class Gofish extends Game{
     
     
     
-    public Gofish(Deck d) {
-        super(d);
+    public Gofish() {
+        super();
     }
     
     public void trackBooks(){

@@ -78,7 +78,6 @@ public class MainMenu extends javax.swing.JFrame {
         GoFishWindow window = new GoFishWindow();
         window.setVisible(true);
         this.setVisible(false);
-        Gofish game = new Gofish(); 
 
     }//GEN-LAST:event_goFishButton
 
@@ -86,11 +85,7 @@ public class MainMenu extends javax.swing.JFrame {
         // Sets Blackjack window to true
         BlackjackWindow window = new BlackjackWindow();
         window.setVisible(true);
-        this.setVisible(false);
-        
-        Deck deck = new Deck();
-        BlackjackPlayer player = new BlackjackPlayer(); 
-        Blackjack game = new Blackjack(player); 
+        this.setVisible(false); 
     }//GEN-LAST:event_blackjackButton
 
     /**

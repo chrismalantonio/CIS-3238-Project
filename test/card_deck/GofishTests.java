@@ -45,7 +45,7 @@ public class GofishTests {
     @Test
     public void AiShouldHaveCardSpecified(){
         Deck d = new Deck();
-        Gofish gofish = new Gofish(d);
+        Gofish gofish = new Gofish();
         Player AI = new Player();
         AI.draw(d);
         Card c = AI.hand.get(0);
@@ -56,7 +56,7 @@ public class GofishTests {
     @Test
     public void AiShouldNotHaveCardSpecified(){
         Deck d = new Deck();
-        Gofish gofish = new Gofish(d);
+        Gofish gofish = new Gofish();
         Player aAI = new Player();
         Player bAI = new Player();
         aAI.draw(d); bAI.draw(d);
