@@ -21,7 +21,6 @@ public class Gofish extends Game{
     private boolean GAME_COMPLETE = false;
     private final int PLAYER_VAL = 4;
     private int difficulty = 5;
-    private int recentMemory = 0;
     private HashMap<GofishPlayer, Card[]> memories;
 
     public Gofish(Deck d) {
@@ -54,6 +53,8 @@ public class Gofish extends Game{
     public boolean askPlayerForCard(Card c, Player p){
         if(p == null){
             //SIDE TRACKED
+        }else{
+
         }
         return false;
     }
@@ -86,11 +87,11 @@ public class Gofish extends Game{
         }
     }
     
-    public Iterator getMemories(){
-        return memories.values().iterator();
+    public Card[] getMemories(GofishPlayer AI){
+        return memories.get(AI);
     }
     
-    public Card mostRecentCard(Player AI){
+    public Card mostRecentCard(GofishPlayer AI){
         return memories.get(AI)[0];
     }
     
@@ -137,6 +138,12 @@ public class Gofish extends Game{
          * players again
          */
         
+        while(!GAME_COMPLETE){
+            
+            
+            
+            GAME_COMPLETE = true;
+        }
         
         return 0;
     }

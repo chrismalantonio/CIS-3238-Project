@@ -6,6 +6,7 @@
 package card_deck;
 
 import java.util.Iterator;
+import java.util.Random;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -67,17 +68,23 @@ public class GofishTests {
     
     @Test
     public void AiShouldNotHaveCardSpecified(){
-
-
         Deck d = new Deck();
         Gofish gofish = new Gofish(d);
         Player aAI = new Player();
         Player bAI = new Player();
-        aAI.draw(d); bAI.draw(d);
-        Card aC = aAI.hand.get(0);
-        Card bC = bAI.hand.get(0);
-        assertNotEquals("Two players have the same card.", 
-                aC,bC);
+        int handSize = d.cards.size() /2;
+        for(int i = 0; i < handSize; i++){
+            aAI.draw(d); bAI.draw(d);
+        }
+        
+        for(int i = 0; i < 100000; i++){
+            Card aC = aAI.hand.get((int)(handSize * Math.random()));
+            Card bC = bAI.hand.get((int)(handSize * Math.random()));
+            assertNotEquals("The deck has two cards that are the same.", 
+            aC,bC);
+        }
+        
+
     }
     
     @Test
@@ -109,6 +116,7 @@ public class GofishTests {
     
     @Test
     public void oldCardsPushedBackInMemory(){
+        Card cX = new Card("clubs", "2");
         Card[] c = new Card[6];
         c[0] = new Card("spades", "ace");
         c[1] = new Card("spades", "2");
@@ -116,23 +124,28 @@ public class GofishTests {
         c[3] = new Card("spades", "4");
         c[4] = new Card("spades", "5");
         c[5] = new Card("spades", "6");
-        
-        Iterator AiMemories = gofish.getMemories();
-        
         gofish = new Gofish(new Deck());
+
+        Card[] memories = gofish.getMemories(gofish.AI[0]);
+        
+        gofish.updateAIMemory(cX, gofish.AI[0]);
+
+        assertEquals("Card in first position is not the first card remembered.",
+                     cX, memories[0]);
+
         for(Card n: c){
             gofish.updateAIMemory(n, gofish.AI[0]);
         }
         
-        while(AiMemories.hasNext()){
-            Card[] cards = (Card[]) AiMemories.next();
-            for(Card n: cards){
-                assertEquals("Card exists in memory that should have been "
-                        + "forgotten.",c[0], n);
-            }
+        for(Card n: memories){
+            assertNotEquals("Card that was in memory but removed is still in"
+                    + "memory.", n, c[0]);
         }
-        
     }
+    
+    
+    @Test
+    public void 
     
     @Test
     public void gofishGameGeneratesFairPlayers(){
