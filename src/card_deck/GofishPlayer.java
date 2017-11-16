@@ -22,6 +22,7 @@ public class GofishPlayer extends Player{
     private final int BOOK_SIZE = 2;
     public GofishPlayer(){
         super();
+        books = new ArrayList<Card>();
     }
     
     public boolean checkForBooks(Card c){
@@ -40,15 +41,15 @@ public class GofishPlayer extends Player{
     public void addBook(Card c){
         handIterator = hand.iterator();
         Card d;
-        boolean matchFound = false;
-        for(Card handC: hand && !matchFound){
-            if(c.value.equals(handC.value) && !c.suit.equals(handC.suit)){
-                matchFound = true;
-                d = handC;
+        while(handIterator.hasNext()){
+            d = handIterator.next();
+            if(c.value.equals(d.value) && !c.suit.equals(d.suit)){
+                books.add(c);
+                books.add(d);
+                hand.remove(c);
+                hand.remove(d);
+                break;
             }
         }
-        
-        books.add(c);
-        books.add(d);
     }
 }

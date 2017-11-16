@@ -66,6 +66,25 @@ public class GofishPlayerTests {
             assertEquals("Nonexistent book found in player book list", bookExists,
                         p.checkForBooks(c));
         }
+    }
+
+    @Test
+    public void cardsInBookAreNotInHand(){
+        Deck d = new Deck();
+        for(int i = 0; i < 52; i++){
+            p.draw(d);
+        }
+        
+        Card a = p.hand.get(0);
+        p.addBook(a);
+        int remCards = 0;
+        for(Card c: p.hand){
+            if(c.value.equals(a.value)){
+                remCards++;
+            }
+        }
+        
+        assertEquals("Book creation failed.", remCards, 2);
         
     }
 }
