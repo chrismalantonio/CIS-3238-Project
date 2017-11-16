@@ -6,6 +6,7 @@
 package card_deck;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -18,13 +19,18 @@ public class Gofish extends Game{
     public GofishPlayer[] AI;
     public final int DEFAULT_DECK_SIZE = 7;
     private boolean GAME_COMPLETE = false;
-    
+    private final int PLAYER_VAL = 4;
+    private int difficulty = 5;
+    private int recentMemory = 0;
+    private HashMap<GofishPlayer, Card[]> memories;
 
     public Gofish(Deck d) {
         super(d);
+        memories = new HashMap<GofishPlayer, Card[]>();
         AI = new GofishPlayer[3];
         for(int i = 0; i < AI.length; i++){
             AI[i] = new GofishPlayer();
+            memories.put(AI[i], new Card[5]);
         }        
     }
     
@@ -45,6 +51,13 @@ public class Gofish extends Game{
         return false;
     }
     
+    public boolean askPlayerForCard(Card c, Player p){
+        if(p == null){
+            //SIDE TRACKED
+        }
+        return false;
+    }
+    
     public boolean giveCardToPlayer(Card c, GofishPlayer to, GofishPlayer from){
         if(!from.hand.contains(c)){
             return false;
@@ -59,6 +72,31 @@ public class Gofish extends Game{
     
     public boolean addCard(){
         return false;
+    }
+    
+    public int updateAIMemory(Card c, Player p){
+        this.shiftDown(memories.get(p));
+        memories.get(p)[0] = c;
+        return 0;
+    }
+    
+    public void shiftDown(Card[] cards){
+        for(int i = cards.length-1; i > 0; i--){
+            cards[i] = cards[i-1];
+        }
+    }
+    
+    public Iterator getMemories(){
+        return memories.values().iterator();
+    }
+    
+    public Card mostRecentCard(Player AI){
+        return memories.get(AI)[0];
+    }
+    
+    public int updatePlayerMemory(Card c){
+        
+        return 0;
     }
     
     public int playGofish(){
