@@ -19,14 +19,13 @@ public class Gofish extends Game{
     public final int DEFAULT_DECK_SIZE = 7;
     private boolean GAME_COMPLETE = false;
     
+
     public Gofish(Deck d) {
         super(d);
         AI = new GofishPlayer[3];
         for(int i = 0; i < AI.length; i++){
             AI[i] = new GofishPlayer();
         }        
-
-        
     }
     
     public void trackBooks(){

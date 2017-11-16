@@ -11,7 +11,8 @@ package gameWindow;
  */
 public class gameMain {
     public static void main(String[] args) {
-        GoFishWindow window = new GoFishWindow();
+        MainMenu window = new MainMenu();
         window.setVisible(true);
+        
     }
 }
