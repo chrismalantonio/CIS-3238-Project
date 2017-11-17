@@ -20,6 +20,8 @@ public class GoFishWindow extends javax.swing.JFrame {
      */
     public boolean[] buttonsShowing;
     public boolean running = false;
+    private javax.swing.JPopupMenu cardRequestMenu;
+    private CardRequestMenu requestMenu;
     public GoFishWindow() {
         initComponents();
         interactButtons[0] = jButton2;
@@ -33,9 +35,14 @@ public class GoFishWindow extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("hi from " + e.toString());
-                    
+                }                
+            });
+            interactPopups[i].add(new JMenuItem("ask for a card")).addActionListener(
+            new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    new CardRequestMenu().setVisible(true);
                 }
-                
             });
         }
 
@@ -72,6 +79,9 @@ public class GoFishWindow extends javax.swing.JFrame {
         jFrame2 = new javax.swing.JFrame();
         jFrame3 = new javax.swing.JFrame();
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        jPopupMenu3 = new javax.swing.JPopupMenu();
+        jPopupMenu4 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -236,7 +246,7 @@ public class GoFishWindow extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
+                .addContainerGap(95, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(93, 93, 93))
         );
@@ -282,19 +292,14 @@ public class GoFishWindow extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         interactPopups[0].show(jButton2, 0, 0);
-        buttonsShowing[0] = true;
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         interactPopups[1].show(jButton3, 0, 0);
-        buttonsShowing[1] = true;
-
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         interactPopups[2].show(jButton4, 0, 0);
-        buttonsShowing[2] = true;
-
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -304,20 +309,14 @@ public class GoFishWindow extends javax.swing.JFrame {
     public boolean pressButton(int buttonIndex){
         switch(buttonIndex){
             case 0:
-                this.jButton2ActionPerformed(null);
-                return false;
+                this.jButton2MouseClicked(null);
+                return interactPopups[0].isVisible();
             case 1:
-                this.jButton2ActionPerformed(null);
-                if(interactPopups[1].isVisible()){
-                    return true;
-                }
-                return false;
+                this.jButton3ActionPerformed(null);
+                return interactPopups[1].isVisible();
             case 2:
-                this.jButton2ActionPerformed(null);
-                if(interactPopups[2].isVisible()){
-                    return true;
-                }
-                return false;
+                this.jButton4ActionPerformed(null);
+                return interactPopups[2].isVisible();  
             default:
                 break;
         }
@@ -343,6 +342,7 @@ public class GoFishWindow extends javax.swing.JFrame {
 
     
     private javax.swing.JButton[] interactButtons = new javax.swing.JButton[3];
+    private javax.swing.JButton[] requestButtons = new javax.swing.JButton[3];
     private javax.swing.JPopupMenu[] interactPopups = new javax.swing.JPopupMenu[3];
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -359,5 +359,8 @@ public class GoFishWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
+    private javax.swing.JPopupMenu jPopupMenu3;
+    private javax.swing.JPopupMenu jPopupMenu4;
     // End of variables declaration//GEN-END:variables
 }

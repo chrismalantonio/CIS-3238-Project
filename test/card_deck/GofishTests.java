@@ -33,6 +33,7 @@ public class GofishTests {
     
     @BeforeClass
     public static void setUpClass() {
+        
     }
     
     @AfterClass
