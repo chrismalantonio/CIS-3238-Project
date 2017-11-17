@@ -18,13 +18,14 @@ public class GoFishWindow extends javax.swing.JFrame {
     /**
      * Creates new form GoFishWindow
      */
+    public boolean[] buttonsShowing;
     public boolean running = false;
     public GoFishWindow() {
         initComponents();
         interactButtons[0] = jButton2;
         interactButtons[1] = jButton3;
         interactButtons[2] = jButton4;
-        
+        buttonsShowing = new boolean[interactButtons.length];
         for(int i = 0; i < 3; i++){
             interactPopups[i] = new javax.swing.JPopupMenu();
             interactPopups[i].add(new JMenuItem("show cards")).addActionListener(
@@ -32,6 +33,7 @@ public class GoFishWindow extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("hi from " + e.toString());
+                    
                 }
                 
             });
@@ -182,12 +184,12 @@ public class GoFishWindow extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addComponent(jButton2)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -207,14 +209,14 @@ public class GoFishWindow extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(74, 74, 74))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -241,7 +243,7 @@ public class GoFishWindow extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -280,20 +282,48 @@ public class GoFishWindow extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         interactPopups[0].show(jButton2, 0, 0);
+        buttonsShowing[0] = true;
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         interactPopups[1].show(jButton3, 0, 0);
+        buttonsShowing[1] = true;
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         interactPopups[2].show(jButton4, 0, 0);
+        buttonsShowing[2] = true;
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public boolean pressButton(int buttonIndex){
+        switch(buttonIndex){
+            case 0:
+                this.jButton2ActionPerformed(null);
+                return false;
+            case 1:
+                this.jButton2ActionPerformed(null);
+                if(interactPopups[1].isVisible()){
+                    return true;
+                }
+                return false;
+            case 2:
+                this.jButton2ActionPerformed(null);
+                if(interactPopups[2].isVisible()){
+                    return true;
+                }
+                return false;
+            default:
+                break;
+        }
+        return false;
+    }
+    
 //    interactPopups[0].
     /**
      * @param args the command line arguments
