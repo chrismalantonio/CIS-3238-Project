@@ -38,18 +38,15 @@ public class GoFishWindowTest {
     public void tearDown() {
     }
     
-    @Test
-    public void pressingInteractButtonBringsUpMenu(){
-        
-    }
 
     @Test
-    public void interactButtonShowsMenu(){
+    public void interactButtonBringsUpMenu(){
+        window = new GoFishWindow();
+        window.setVisible(true);
         boolean[] buttonPressStatus = {false};
         for(int i = 0; i < 3; i++){
-            assertEquals("Menu did not show up when clicked.", true,
+            assertEquals("Menu for "+i+" did not show up when clicked.", true,
                     window.pressButton(i));
         }
-        
     }
 }

@@ -75,7 +75,7 @@ public class Gofish extends Game{
         return false;
     }
     
-    public int updateAIMemory(Card c, Player p){
+    public int updateAIMemory(Card c, GofishPlayer p){
         this.shiftDown(memories.get(p));
         memories.get(p)[0] = c;
         return 0;
