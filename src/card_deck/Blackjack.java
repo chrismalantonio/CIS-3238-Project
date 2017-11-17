@@ -41,13 +41,4 @@ public class Blackjack extends Game {
         }
     }
 
-    public void dealerDraw2(BlackjackPlayer player, BlackjackPlayer cpu, Deck deck) {
-        while (cpu.hand.handCount < player.hand.handCount
-                && cpu.hand.handCount < player.hand2.handCount
-                && (player.hand.handCount <= 21 || player.hand2.handCount <= 21)) {
-            cpu.hit(cpu.hand, deck);
-        }
-        playerWin(player.hand, cpu.hand);
-        playerWin(player.hand2, cpu.hand);
-    }
 }

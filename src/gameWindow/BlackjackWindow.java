@@ -36,13 +36,13 @@ public class BlackjackWindow extends javax.swing.JFrame {
             cpu.draw(cpu.hand, deck);
             player.draw(player.hand, deck);
         }
-
+        
         if (player.hand.cards.get(0).value.equals(player.hand.cards.get(1).value)) {
             split.setVisible(true);
         } else {
             split.setVisible(false);
         }
-
+        
         newGame.setVisible(false);
         /*  Set buttons for 2nd hand to false initially */
         hit2.setVisible(false);
@@ -238,7 +238,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
 
     private void stay2Button(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stay2Button
         if (!stay.isVisible() && stay2.isVisible()) {
-            game.dealerDraw2(player, cpu, deck);
+            game.dealerDraw(player, cpu, deck);
         }
         hit2.setVisible(false);
         stay2.setVisible(false);
