@@ -10,19 +10,13 @@ package card_deck;
  * @author Chris
  */
 public class Blackjack extends Game {
-
-    BlackjackPlayer p, cpu;
-    
-    //int current
-
-    public Blackjack(BlackjackPlayer p) {
+  
+    public Blackjack() {
         super(); 
-        this.p = p;
-        cpu = new BlackjackPlayer();
     }
 
-    public boolean playerWin(){
-        if (cpu.hand.handCount < p.hand.handCount && p.hand.handCount<= 21){
+    public boolean playerWin(Hand p, Hand cpu){
+        if (p.handCount > cpu.handCount && p.handCount <= 21){
             wins++; 
             return true;
         } else {

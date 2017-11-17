@@ -23,31 +23,27 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="jButton4" max="-2" attributes="0"/>
-              <EmptySpace pref="233" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+              <Component id="newGame" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="69" max="32767" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="166" max="32767" attributes="0"/>
+              <EmptySpace pref="208" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <Component id="newGame" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton4" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,9 +57,9 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton1" alignment="0" max="-2" attributes="0"/>
-                      <Component id="jButton3" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="hit" alignment="0" max="-2" attributes="0"/>
+                      <Component id="stay" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="split" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="17" max="32767" attributes="0"/>
               </Group>
@@ -72,17 +68,17 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="jButton1" max="-2" attributes="0"/>
+                  <Component id="hit" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                  <Component id="split" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                  <Component id="stay" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="hit">
           <Properties>
             <Property name="text" type="java.lang.String" value="Hit   "/>
           </Properties>
@@ -90,7 +86,7 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="hitButton"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="split">
           <Properties>
             <Property name="text" type="java.lang.String" value="Split"/>
           </Properties>
@@ -98,7 +94,7 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="splitButton"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="stay">
           <Properties>
             <Property name="text" type="java.lang.String" value="Stay"/>
           </Properties>
@@ -108,15 +104,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButton4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Bet  "/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="betButton"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="newGame">
       <Properties>
         <Property name="text" type="java.lang.String" value="New Game"/>
       </Properties>
@@ -124,5 +112,50 @@
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="newGameButton"/>
       </Events>
     </Component>
+    <Container class="javax.swing.JPanel" name="jPanel2">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="stay2" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="hit2" alignment="0" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  <Component id="hit2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="stay2" min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="hit2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Hit   "/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="hit2Button"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="stay2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Stay"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="stay2Button"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

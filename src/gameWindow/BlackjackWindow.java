@@ -19,16 +19,15 @@ public class BlackjackWindow extends javax.swing.JFrame {
     Deck deck;
     BlackjackPlayer player, cpu;
     Blackjack game;
-    int cardsDrawn;
 
     public BlackjackWindow() {
         initComponents();
-        deck = new Deck();
         createNewGame();
-        game = new Blackjack(cpu);
+        game = new Blackjack();
     }
 
     public void createNewGame() {
+        deck = new Deck();
         player = new BlackjackPlayer();
         cpu = new BlackjackPlayer();
 
@@ -39,10 +38,15 @@ public class BlackjackWindow extends javax.swing.JFrame {
         }
 
         if (player.hand.cards.get(0).value.equals(player.hand.cards.get(1).value)) {
-            jButton2.setVisible(true);
+            split.setVisible(true);
         } else {
-            jButton2.setVisible(false);
+            split.setVisible(false);
         }
+
+        newGame.setVisible(false);
+        /*  Set buttons for 2nd hand to false initially */
+        hit2.setVisible(false);
+        stay2.setVisible(false);
     }
 
     /**
@@ -55,30 +59,32 @@ public class BlackjackWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        hit = new javax.swing.JButton();
+        split = new javax.swing.JButton();
+        stay = new javax.swing.JButton();
+        newGame = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        hit2 = new javax.swing.JButton();
+        stay2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Hit   ");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        hit.setText("Hit   ");
+        hit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 hitButton(evt);
             }
         });
 
-        jButton2.setText("Split");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        split.setText("Split");
+        split.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 splitButton(evt);
             }
         });
 
-        jButton3.setText("Stay");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        stay.setText("Stay");
+        stay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 stayButton(evt);
             }
@@ -91,98 +97,138 @@ public class BlackjackWindow extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(hit)
+                    .addComponent(stay)
+                    .addComponent(split))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton1)
+                .addComponent(hit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(split)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3))
+                .addComponent(stay))
         );
 
-        jButton4.setText("Bet  ");
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                betButton(evt);
-            }
-        });
-
-        jButton5.setText("New Game");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        newGame.setText("New Game");
+        newGame.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 newGameButton(evt);
             }
         });
 
+        hit2.setText("Hit   ");
+        hit2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hit2Button(evt);
+            }
+        });
+
+        stay2.setText("Stay");
+        stay2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stay2Button(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(stay2)
+                    .addComponent(hit2))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(hit2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stay2))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 233, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(newGame)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                .addContainerGap(208, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
-                .addGap(19, 19, 19))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newGame)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void hitButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hitButton
-        /*  Checking if player split() previously  */
-        if (!player.hand2.cards.isEmpty()) {
-            if (cardsDrawn % 2 == 1) {
-                player.hit(player.hand2, deck);
-            }
-        } else {
-            player.hit(player.hand, deck);
+        player.hit(player.hand, deck);
+        if (player.hand.handCount >= 21) {
+            hit.setVisible(false);
         }
-        cardsDrawn++;
     }//GEN-LAST:event_hitButton
 
     private void splitButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_splitButton
         // TODO add your handling code here:        
         player.split();
-        jButton2.setVisible(false);
+        split.setVisible(false);
+        hit2.setVisible(true);
+        stay2.setVisible(true);
     }//GEN-LAST:event_splitButton
+
 
     private void stayButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stayButton
         // TODO add your handling code here:
-
-        jButton5.setVisible(true);
+        game.playerWin(player.hand, cpu.hand);
+        hit.setVisible(false);
+        stay.setVisible(false);
+        if (!stay.isVisible() && !stay2.isVisible()) {
+            newGame.setVisible(true);
+        }
     }//GEN-LAST:event_stayButton
-
-    private void betButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_betButton
-        // TODO add your handling code here:
-    }//GEN-LAST:event_betButton
 
     private void newGameButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newGameButton
         // TODO add your handling code here:
         createNewGame();
-        jButton5.setVisible(false);
+        newGame.setVisible(false);
+        hit.setVisible(true);
+        stay.setVisible(true);
     }//GEN-LAST:event_newGameButton
+
+    private void hit2Button(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hit2Button
+        player.hit(player.hand2, deck);
+        if (player.hand2.handCount >= 21) {
+            hit2.setVisible(false);
+        }
+    }//GEN-LAST:event_hit2Button
+
+    private void stay2Button(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stay2Button
+        game.playerWin(player.hand2, cpu.hand);
+        hit2.setVisible(false);
+        stay2.setVisible(false);
+        if (!stay.isVisible() && !stay2.isVisible()) {
+            newGame.setVisible(true);
+        }
+    }//GEN-LAST:event_stay2Button
 
     /* Use these function for tests */
     public void newGameButton() {
@@ -193,6 +239,10 @@ public class BlackjackWindow extends javax.swing.JFrame {
         this.hitButton(null);
     }
 
+    public void hit2Button() {
+        this.hit2Button(null);
+    }
+
     public void splitButton() {
         this.splitButton(null);
     }
@@ -200,14 +250,19 @@ public class BlackjackWindow extends javax.swing.JFrame {
     public void stayButton() {
         this.stayButton(null);
     }
-    
-    
+
+    public void stay2Button() {
+        this.stay2Button(null);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton hit;
+    private javax.swing.JButton hit2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton newGame;
+    private javax.swing.JButton split;
+    private javax.swing.JButton stay;
+    private javax.swing.JButton stay2;
     // End of variables declaration//GEN-END:variables
 }
