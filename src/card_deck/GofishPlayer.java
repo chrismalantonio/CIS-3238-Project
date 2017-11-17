@@ -18,8 +18,8 @@ public class GofishPlayer extends Player{
     public ArrayList<Card> books;
     private Iterator<Card> bookIterator;
     Iterator<Card> handIterator;
-
     private final int BOOK_SIZE = 2;
+    
     public GofishPlayer(){
         super();
         books = new ArrayList<Card>();
