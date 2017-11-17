@@ -23,7 +23,7 @@ public class BlackjackPlayer {
 
     public void draw(Hand h, Deck d) {
         int topOfDeck = d.cards.size() - 1;
-        hand.cards.add((d.cards.remove(topOfDeck)));
+        h.cards.add((d.cards.remove(topOfDeck)));
         lastCard = getCardValue(h);
     }
 
@@ -84,6 +84,8 @@ public class BlackjackPlayer {
                 hand2.cards.add((hand.cards.remove(1)));
                 if (hand.acesInHand == 2) {
                     hand.handCount = hand2.handCount = 11;
+                    hand.acesInHand = 1; 
+                    hand2.acesInHand = 1; 
                 } else {
                     hand.handCount = hand2.handCount = hand.handCount / 2;
                 }

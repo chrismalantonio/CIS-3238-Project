@@ -5,7 +5,6 @@
  */
 package gameWindow;
 
-import card_deck.*;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,9 +50,8 @@ public class blackjackWindowTests {
         for (int i=0; i < 40; i++){
             window.hit2Button();
         }
-        
-        assertTrue(window.player.bust(window.player.hand2));
-        
+        assertTrue(window.player.bust(window.player.hand2));        
     }
+    
 
 }

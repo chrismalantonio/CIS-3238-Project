@@ -184,12 +184,20 @@ public class BlackjackWindow extends javax.swing.JFrame {
         player.hit(player.hand, deck);
         if (player.hand.handCount >= 21) {
             hit.setVisible(false);
+            stay.setVisible(false);
+            game.dealerDraw(player, cpu, deck);
+            if (!stay.isVisible() && !stay2.isVisible()) {
+                newGame.setVisible(true);
+            }
         }
+        split.setVisible(false);
     }//GEN-LAST:event_hitButton
 
     private void splitButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_splitButton
         // TODO add your handling code here:        
         player.split();
+        player.hit(player.hand, deck);
+        player.hit(player.hand2, deck);
         split.setVisible(false);
         hit2.setVisible(true);
         stay2.setVisible(true);
@@ -197,8 +205,10 @@ public class BlackjackWindow extends javax.swing.JFrame {
 
 
     private void stayButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stayButton
-        // TODO add your handling code here:
-        game.playerWin(player.hand, cpu.hand);
+        if (stay.isVisible() && !stay2.isVisible()) {
+            /* Dealer draws until it beats one hand or busts */
+            game.dealerDraw(player, cpu, deck);
+        }
         hit.setVisible(false);
         stay.setVisible(false);
         if (!stay.isVisible() && !stay2.isVisible()) {
@@ -218,13 +228,21 @@ public class BlackjackWindow extends javax.swing.JFrame {
         player.hit(player.hand2, deck);
         if (player.hand2.handCount >= 21) {
             hit2.setVisible(false);
+            stay2.setVisible(false);
+            game.playerWin(player.hand2, cpu.hand);
+            if (!stay.isVisible() && !stay2.isVisible()) {
+                newGame.setVisible(true);
+            }
         }
     }//GEN-LAST:event_hit2Button
 
     private void stay2Button(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stay2Button
-        game.playerWin(player.hand2, cpu.hand);
+        if (!stay.isVisible() && stay2.isVisible()) {
+            game.dealerDraw2(player, cpu, deck);
+        }
         hit2.setVisible(false);
         stay2.setVisible(false);
+        game.playerWin(player.hand2, cpu.hand);
         if (!stay.isVisible() && !stay2.isVisible()) {
             newGame.setVisible(true);
         }
