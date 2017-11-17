@@ -83,8 +83,6 @@ public class GofishTests {
             assertNotEquals("The deck has two cards that are the same.", 
             aC,bC);
         }
-        
-
     }
     
     @Test
@@ -93,7 +91,6 @@ public class GofishTests {
         gofish.giveCardToPlayer(new Card("hearts", "ace"), p, AI);
         assertEquals("Removed card still exists in hand.",
                     d.cards.contains(new Card("hearts", "ace")), true);
-        
     }
     
     @Test
@@ -142,10 +139,6 @@ public class GofishTests {
                     + "memory.", n, c[0]);
         }
     }
-    
-    
-    @Test
-    public void 
     
     @Test
     public void gofishGameGeneratesFairPlayers(){
