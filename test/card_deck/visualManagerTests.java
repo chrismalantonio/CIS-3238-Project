@@ -6,6 +6,7 @@
 package card_deck;
 
 import gameWindow.GoFishWindow;
+import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,15 +47,11 @@ public class visualManagerTests {
     }
     
     @Test
-    public void visualManagerCanRelayInfoFromWindowToGame(){
+    public void visualManagerCanRelayInfoFromWindowToGame() {
         gWindow = new GoFishWindow();
         visualManager vm = new visualManager();
 //        assertEquals("Game and window not connected.", vm.connect(gofish), 41);
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
 }
