@@ -185,7 +185,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
         if (player.hand.handCount >= 21) {
             hit.setVisible(false);
             stay.setVisible(false);
-            game.dealerDraw(player, cpu, deck);
+            game.decideWinner(player, cpu, deck);
             if (!stay.isVisible() && !stay2.isVisible()) {
                 newGame.setVisible(true);
             }
@@ -207,7 +207,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
     private void stayButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stayButton
         if (stay.isVisible() && !stay2.isVisible()) {
             /* Dealer draws until it beats one hand or busts */
-            game.dealerDraw(player, cpu, deck);
+            game.decideWinner(player, cpu, deck);
         }
         hit.setVisible(false);
         stay.setVisible(false);
@@ -229,7 +229,6 @@ public class BlackjackWindow extends javax.swing.JFrame {
         if (player.hand2.handCount >= 21) {
             hit2.setVisible(false);
             stay2.setVisible(false);
-            game.playerWin(player.hand2, cpu.hand);
             if (!stay.isVisible() && !stay2.isVisible()) {
                 newGame.setVisible(true);
             }
@@ -238,11 +237,10 @@ public class BlackjackWindow extends javax.swing.JFrame {
 
     private void stay2Button(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stay2Button
         if (!stay.isVisible() && stay2.isVisible()) {
-            game.dealerDraw(player, cpu, deck);
+            game.decideWinner(player, cpu, deck);
         }
         hit2.setVisible(false);
         stay2.setVisible(false);
-        game.playerWin(player.hand2, cpu.hand);
         if (!stay.isVisible() && !stay2.isVisible()) {
             newGame.setVisible(true);
         }
