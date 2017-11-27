@@ -38,6 +38,7 @@ public class visualManager {
         String value = c.getValue();
         String suit = c.getSuit();
         int numValue, numSuit;
+        numValue = numSuit = 0;
         switch (value) {
             case "ace":
                 numValue = 1;
@@ -54,31 +55,24 @@ public class visualManager {
             default:
                 numValue = Integer.parseInt(c.getValue());
         }
-        numValue--;
 
         switch (suit) {
             case "clubs":
-                numSuit = 0;
-                break;
-            case "spades":
                 numSuit = 1;
                 break;
-            case "hearts":
+            case "spades":
                 numSuit = 2;
                 break;
-            case "diamonds":
+            case "hearts":
                 numSuit = 3;
                 break;
+            case "diamonds":
+                numSuit = 4;
+                break;
             default:
-                numSuit = 0;
+                break; 
         }
-        if (numSuit == 0) {
-            return numValue;
-        } else if (numValue == 0) {
-            return numSuit * 13;
-        } else {
-            return numValue * numSuit;
-        }
+        return numValue * numSuit; 
     }
 
 }
