@@ -6,6 +6,7 @@
 package gameWindow;
 
 import card_deck.*;
+import visualManager.*; 
 
 /**
  *
@@ -19,9 +20,11 @@ public class BlackjackWindow extends javax.swing.JFrame {
     Deck deck;
     BlackjackPlayer player, cpu;
     Blackjack game;
+    visualManager v;
 
     public BlackjackWindow() {
         initComponents();
+        v = new visualManager(); 
         createNewGame();
         game = new Blackjack();
     }
@@ -36,17 +39,23 @@ public class BlackjackWindow extends javax.swing.JFrame {
             cpu.draw(cpu.hand, deck);
             player.draw(player.hand, deck);
         }
-        
+
         if (player.hand.cards.get(0).value.equals(player.hand.cards.get(1).value)) {
             split.setVisible(true);
         } else {
             split.setVisible(false);
         }
-        
+
         newGame.setVisible(false);
         /*  Set buttons for 2nd hand to false initially */
         hit2.setVisible(false);
         stay2.setVisible(false);
+        
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + getCard(player, 0) + ".png")));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + getCard(player, 1) + ".png")));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + 0 + ".png")));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + getCard(cpu, 1) + ".png")));
     }
 
     /**
@@ -66,6 +75,10 @@ public class BlackjackWindow extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         hit2 = new javax.swing.JButton();
         stay2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -153,23 +166,52 @@ public class BlackjackWindow extends javax.swing.JFrame {
                 .addComponent(stay2))
         );
 
+        jLabel1.setText("jLabel1");
+
+        jLabel2.setText("jLabel2");
+
+        jLabel3.setText("jLabel3");
+
+        jLabel4.setText("jLabel4");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(newGame)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel4))
+                            .addComponent(newGame))
+                        .addGap(123, 123, 123)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(208, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 250, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(74, 74, 74)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newGame)
@@ -246,6 +288,10 @@ public class BlackjackWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_stay2Button
 
+    private int getCard(BlackjackPlayer p, int index){
+        return v.getCardPosition(p.hand.cards.get(index));
+    }
+    
     /* Use these function for tests */
     public void newGameButton() {
         this.newGameButton(null);
@@ -274,6 +320,10 @@ public class BlackjackWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton hit;
     private javax.swing.JButton hit2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton newGame;
