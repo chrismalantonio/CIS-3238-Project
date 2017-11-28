@@ -57,24 +57,24 @@ public class blackjackPlayerTests {
     @Test
     public void changeAceValueTest() {
 
-        Card c = new Card("diamonds", "ace");
-        Card c5 = new Card("clubs", "5");
-        Card c7 = new Card("spades", "7");
+        Card ace = new Card("diamonds", "ace");
+        Card five = new Card("clubs", "5");
+        Card seven = new Card("spades", "7");
 
-        p.hand.cards.add(c);
-        p.hand.cards.add(c5);
-        p.hand.cards.add(c7);
+        p.hand.cards.add(ace);
+        p.hand.cards.add(five);
+        p.hand.cards.add(seven);
 
         assertTrue(p.hand.handCount < 21);
     }
 
     @Test
     public void splitIntoTwoHands() {
-        Card cc5 = new Card("clubs", "5");
-        Card cs5 = new Card("spades", "5");
+        Card cFive = new Card("clubs", "5");
+        Card sFive = new Card("spades", "5");
 
-        p.hand.cards.add(cc5);
-        p.hand.cards.add(cs5);
+        p.hand.cards.add(cFive);
+        p.hand.cards.add(sFive);
 
         p.split();
         assertEquals(p.hand.handCount, p.hand2.handCount);
@@ -82,11 +82,11 @@ public class blackjackPlayerTests {
 
     @Test
     public void handCountNotSame() {
-        Card cc5 = new Card("clubs", "5");
-        Card cs5 = new Card("spades", "5");
+        Card cFive = new Card("clubs", "5");
+        Card sFive = new Card("spades", "5");
 
-        p.hand.cards.add(cc5);
-        p.hand.cards.add(cs5);
+        p.hand.cards.add(cFive);
+        p.hand.cards.add(sFive);
 
         p.split();
         p.draw(p.hand2, d);
@@ -96,17 +96,34 @@ public class blackjackPlayerTests {
 
     @Test
     public void bustSecondHand() {
-        Card cc5 = new Card("clubs", "5");
-        Card cs5 = new Card("spades", "5");
+        Card cFive = new Card("clubs", "5");
+        Card sFive = new Card("spades", "5");
 
-        p.hand.cards.add(cc5);
-        p.hand.cards.add(cs5);
+        p.hand.cards.add(cFive);
+        p.hand.cards.add(sFive);
 
         p.split();
         for (int i = 0; i < 50; i++) {
             p.draw(p.hand2, d);
         }
+
+        assertTrue(p.bust(p.hand2));
+    }
+
+    @Test
+    public void testGetValueOfCard() {
+        int cardVal, cardVal2;
+
+        Card queen = new Card("clubs", "queen");
+        Card king = new Card("spades", "king");
+
+        p.hand.cards.add(queen);
+        p.hand.cards.add(king);
         
-        assertTrue(p.bust(p.hand2)); 
+        cardVal = p.getCardValue(p.hand, 0);
+        cardVal2 = p.getCardValue(p.hand, 1);
+
+        assertEquals(cardVal, cardVal2); 
+    
     }
 }

@@ -28,7 +28,8 @@ public class Blackjack extends Game {
         if (!player.hand2.cards.isEmpty()) {
             while (cpu.hand.handCount < player.hand.handCount
                     && cpu.hand.handCount < player.hand2.handCount
-                    && (player.hand.handCount <= 21 || player.hand2.handCount <= 21)) {
+                    && (player.hand.handCount <= 21 || player.hand2.handCount <= 21)
+                    && cpu.hand.handCount < 17) {
                 cpu.hit(cpu.hand, deck);
             }
             checkHands(player.hand, cpu.hand);

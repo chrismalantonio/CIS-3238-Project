@@ -5,7 +5,6 @@
  */
 package card_deck;
 
-
 /**
  *
  * @author Chris
@@ -18,13 +17,13 @@ public class BlackjackPlayer {
 
     public BlackjackPlayer() {
         this.hand = new Hand();
-        this.hand2 = new Hand(); 
+        this.hand2 = new Hand();
     }
 
     public void draw(Hand h, Deck d) {
         int topOfDeck = d.cards.size() - 1;
         h.cards.add((d.cards.remove(topOfDeck)));
-        lastCard = getCardValue(h);
+        increaseHandCount(h);
     }
 
     /*  if player's hand is less than 21, he may draw another card */
@@ -42,7 +41,7 @@ public class BlackjackPlayer {
 
     /* get value of the newest card in your hand 
         and update handCount */
-    private int getCardValue(Hand h) {
+    private void increaseHandCount(Hand h) {
         int topOfHand = hand.cards.size() - 1;
         int numValue;
         Card c = hand.cards.get(topOfHand);
@@ -72,24 +71,49 @@ public class BlackjackPlayer {
                 numValue = Integer.parseInt(c.getValue());
         }
         h.handCount += numValue;
-        return numValue;
     }
 
     /*  Checks if the original 2 cards given have the same value
         If true, split into 2 hands */
     public void split() {
         if (hand.cards.size() == 2) {
-            if (hand.cards.get(0).value.equals(hand.cards.get(1).value)) {
+            if (getCardValue(hand, 0) == getCardValue(hand, 1)) {
                 hand2 = new Hand();
                 hand2.cards.add((hand.cards.remove(1)));
                 if (hand.acesInHand == 2) {
                     hand.handCount = hand2.handCount = 11;
-                    hand.acesInHand = 1; 
-                    hand2.acesInHand = 1; 
+                    hand.acesInHand = 1;
+                    hand2.acesInHand = 1;
                 } else {
                     hand.handCount = hand2.handCount = hand.handCount / 2;
                 }
             }
         }
     }
+
+    public int getCardValue(Hand h, int index) {
+        int cardValue = 0;
+        Card c = h.cards.get(index);
+        String card = c.getValue();
+
+        switch (card) {
+            case "ace":
+                cardValue = 1;
+                break;
+            case "jack":
+                cardValue = 10;
+                break;
+            case "queen":
+                cardValue = 10;
+                break;
+            case "king":
+                cardValue = 10;
+                break;
+            default:
+                cardValue = Integer.parseInt(c.getValue());
+        }
+
+        return cardValue;
+    }
+
 }

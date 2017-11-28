@@ -23,7 +23,6 @@ public class visualManager {
     private final int height = 98;
     private final int width = 73;
 
-
     public int connect(Gofish game) {
         GoFishWindow window = new GoFishWindow();
         window.setVisible(true);
@@ -70,9 +69,10 @@ public class visualManager {
                 numSuit = 4;
                 break;
             default:
-                break; 
+                break;
         }
-        return numValue * numSuit; 
+
+        return (13*(numSuit-1)) + numValue;
     }
 
 }
