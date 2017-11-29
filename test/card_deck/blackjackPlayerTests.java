@@ -39,7 +39,7 @@ public class blackjackPlayerTests {
     public void cardValueGreaterThanZero() {
         p.draw(p.hand, d);
         boolean check = false;
-        if (p.hand.handCount > 0) {
+        if (p.hand.count > 0) {
             check = true;
         }
         assertTrue(check);
@@ -65,7 +65,7 @@ public class blackjackPlayerTests {
         p.hand.cards.add(five);
         p.hand.cards.add(seven);
 
-        assertTrue(p.hand.handCount < 21);
+        assertTrue(p.hand.count < 21);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class blackjackPlayerTests {
         p.hand.cards.add(sFive);
 
         p.split();
-        assertEquals(p.hand.handCount, p.hand2.handCount);
+        assertEquals(p.hand.count, p.hand2.count);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class blackjackPlayerTests {
         p.split();
         p.draw(p.hand2, d);
 
-        assertNotEquals(p.hand.handCount, p.hand2.handCount);
+        assertNotEquals(p.hand.count, p.hand2.count);
     }
 
     @Test

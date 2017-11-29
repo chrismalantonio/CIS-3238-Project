@@ -36,7 +36,7 @@ public class BlackjackPlayer {
 
     /*  if player's hand is over 21 return true */
     public boolean bust(Hand h) {
-        return h.handCount > 21;
+        return h.count > 21;
     }
 
     /* get value of the newest card in your hand 
@@ -46,17 +46,17 @@ public class BlackjackPlayer {
         int numValue;
         Card c = hand.cards.get(topOfHand);
         String value = c.getValue();
-        if (h.acesInHand > 0 && h.handCount > 21 && h.cards.size() < 12) {
-            h.handCount -= 10;
+        if (h.aces > 0 && h.count > 21 && h.cards.size() < 12) {
+            h.count -= 10;
         }
         switch (value) {
             case "ace":
-                if (h.handCount > 11) {
+                if (h.count > 11) {
                     numValue = 1;
                 } else {
                     numValue = 11;
                 }
-                h.acesInHand++;
+                h.aces++;
                 break;
             case "jack":
                 numValue = 10;
@@ -70,7 +70,7 @@ public class BlackjackPlayer {
             default:
                 numValue = Integer.parseInt(c.getValue());
         }
-        h.handCount += numValue;
+        h.count += numValue;
     }
 
     /*  Checks if the original 2 cards given have the same value
@@ -80,12 +80,12 @@ public class BlackjackPlayer {
             if (getCardValue(hand, 0) == getCardValue(hand, 1)) {
                 hand2 = new Hand();
                 hand2.cards.add((hand.cards.remove(1)));
-                if (hand.acesInHand == 2) {
-                    hand.handCount = hand2.handCount = 11;
-                    hand.acesInHand = 1;
-                    hand2.acesInHand = 1;
+                if (hand.aces == 2) {
+                    hand.count = hand2.count = 11;
+                    hand.aces = 1;
+                    hand2.aces = 1;
                 } else {
-                    hand.handCount = hand2.handCount = hand.handCount / 2;
+                    hand.count = hand2.count = hand.count / 2;
                 }
             }
         }

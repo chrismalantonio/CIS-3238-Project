@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Hand {
 
     public ArrayList<Card> cards;
-    public int handCount;
-    public int acesInHand;
+    public int count;
+    public int aces;
 
     public Hand() {
         cards = new ArrayList<Card>();

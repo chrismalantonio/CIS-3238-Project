@@ -18,11 +18,6 @@ import javax.imageio.ImageIO;
  */
 public class visualManager {
 
-    private final int rows = 4;
-    private final int cols = 13;
-    private final int height = 98;
-    private final int width = 73;
-
     public int connect(Gofish game) {
         GoFishWindow window = new GoFishWindow();
         window.setVisible(true);
@@ -33,7 +28,7 @@ public class visualManager {
         return Integer.MIN_VALUE;
     }
 
-    public int getCardPosition(Card c) {
+    public String getCardLocation(Card c) {
         String value = c.getValue();
         String suit = c.getSuit();
         int numValue, numSuit;
@@ -71,8 +66,8 @@ public class visualManager {
             default:
                 break;
         }
-
-        return (13*(numSuit-1)) + numValue;
+        
+        return "/images/" + ((13*(numSuit-1)) + numValue) + ".png" ;
     }
 
 }

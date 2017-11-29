@@ -25,7 +25,6 @@ public class BlackjackWindow extends javax.swing.JFrame {
     public BlackjackWindow() {
         initComponents();
         v = new visualManager(); 
-        hideLabels(); 
         createNewGame();
         game = new Blackjack();
     }
@@ -52,10 +51,11 @@ public class BlackjackWindow extends javax.swing.JFrame {
         hit2.setVisible(false);
         stay2.setVisible(false);
         
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + getCard(player, 0) + ".png")));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + getCard(player, 1) + ".png")));
+        hideLabels(); 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(player.hand, 0))));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(player.hand, 1))));
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + 0 + ".png")));
-        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + getCard(cpu, 1) + ".png")));
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(cpu.hand, 1))));
     }
 
     /**
@@ -400,7 +400,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
 
     private void hitButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hitButton
         player.hit(player.hand, deck);
-        if (player.hand.handCount >= 21) {
+        if (player.hand.count >= 21) {
             hit.setVisible(false);
             stay.setVisible(false);
             game.decideWinner(player, cpu, deck);
@@ -445,7 +445,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
 
     private void hit2Button(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hit2Button
         player.hit(player.hand2, deck);
-        if (player.hand2.handCount >= 21) {
+        if (player.hand2.count >= 21) {
             hit2.setVisible(false);
             stay2.setVisible(false);
             if (!stay.isVisible() && !stay2.isVisible()) {
@@ -466,8 +466,8 @@ public class BlackjackWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_stay2Button
 
     /* Get the image file name of a card in the player's hand */
-    private int getCard(BlackjackPlayer p, int index){
-        return v.getCardPosition(p.hand.cards.get(index));
+    private String getCard(Hand h, int index){
+        return v.getCardLocation(h.cards.get(index));
     }
     
     private void hideLabels(){
