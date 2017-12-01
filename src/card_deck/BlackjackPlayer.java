@@ -77,7 +77,7 @@ public class BlackjackPlayer {
         if (hand.cards.size() == 2) {
             if (getCardValue(hand, 0) == getCardValue(hand, 1)) {
                 hand2.cards.add((hand.cards.remove(1)));
-                if (hand.aces == 2) {
+                if (hand.aces == 1) {
                     hand.count = hand2.count = 11;
                     hand.aces = 1;
                     hand2.aces = 1;
