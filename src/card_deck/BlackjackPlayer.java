@@ -42,16 +42,16 @@ public class BlackjackPlayer {
     /* get value of the newest card in your hand 
         and update handCount */
     private void increaseHandCount(Hand h) {
-        int topOfHand = hand.cards.size() - 1;
+        int topOfHand = h.cards.size() - 1;
         int numValue;
-        Card c = hand.cards.get(topOfHand);
+        Card c = h.cards.get(topOfHand);
         String value = c.getValue();
-        if (h.aces > 0 && h.count > 21 && h.cards.size() < 12) {
-            h.count -= 10;
-        }
+//        if (h.aces == 1 && h.count > 21 && h.cards.size() < 12) {
+//            h.count -= 10;
+//        }
         switch (value) {
             case "ace":
-                if (h.count > 11) {
+                if (h.count > 10) {
                     numValue = 1;
                 } else {
                     numValue = 11;
@@ -78,14 +78,14 @@ public class BlackjackPlayer {
     public void split() {
         if (hand.cards.size() == 2) {
             if (getCardValue(hand, 0) == getCardValue(hand, 1)) {
-                hand2 = new Hand();
                 hand2.cards.add((hand.cards.remove(1)));
                 if (hand.aces == 2) {
                     hand.count = hand2.count = 11;
                     hand.aces = 1;
                     hand2.aces = 1;
                 } else {
-                    hand.count = hand2.count = hand.count / 2;
+                    hand.count = hand.count / 2;
+                    hand2.count = hand.count;
                 }
             }
         }
