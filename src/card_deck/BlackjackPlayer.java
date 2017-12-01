@@ -46,16 +46,9 @@ public class BlackjackPlayer {
         int numValue;
         Card c = h.cards.get(topOfHand);
         String value = c.getValue();
-//        if (h.aces == 1 && h.count > 21 && h.cards.size() < 12) {
-//            h.count -= 10;
-//        }
         switch (value) {
             case "ace":
-                if (h.count > 10) {
-                    numValue = 1;
-                } else {
                     numValue = 11;
-                }
                 h.aces++;
                 break;
             case "jack":
@@ -71,6 +64,11 @@ public class BlackjackPlayer {
                 numValue = Integer.parseInt(c.getValue());
         }
         h.count += numValue;
+        if (h.aces > 0 && h.count > 21) {
+            h.count -= 10;
+            h.aces--; 
+        }
+
     }
 
     /*  Checks if the original 2 cards given have the same value
