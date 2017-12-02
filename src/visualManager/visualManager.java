@@ -33,7 +33,7 @@ public class visualManager {
         return Integer.MIN_VALUE;
     }
 
-    public int getCardPosition(Card c) {
+    public String getCardLocation(Card c) {
         String value = c.getValue();
         String suit = c.getSuit();
         int numValue, numSuit;
@@ -71,8 +71,8 @@ public class visualManager {
             default:
                 break;
         }
-
-        return (13*(numSuit-1)) + numValue;
+        
+        return "/images/" + ((13*(numSuit-1)) + numValue) + ".png" ;
     }
 
 }

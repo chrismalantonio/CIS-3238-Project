@@ -11,13 +11,19 @@ package card_deck;
  */
 public class Blackjack extends Game {
 
+    public int ties;
     public Blackjack() {
         super();
+        ties = 0;
     }
 
     public void checkHands(Hand p, Hand cpu) {
-        if (p.handCount > cpu.handCount && p.handCount <= 21) {
+        if ((p.count == 21 && cpu.count != 21) 
+                || (p.count < cpu.count && cpu.count > 21 && p.count <= 21) 
+                || (p.count > cpu.count && p.count < 21)) {
             wins++;
+        } else if (p.count == cpu.count){
+            ties++; 
         } else {
             losses++;
         }
@@ -26,16 +32,15 @@ public class Blackjack extends Game {
     public void decideWinner(BlackjackPlayer player, BlackjackPlayer cpu, Deck deck) {
         /* Dealer draws until it beats one hand or busts */
         if (!player.hand2.cards.isEmpty()) {
-            while (cpu.hand.handCount < player.hand.handCount
-                    && cpu.hand.handCount < player.hand2.handCount
-                    && (player.hand.handCount <= 21 || player.hand2.handCount <= 21)
-                    && cpu.hand.handCount < 17) {
+            while (cpu.hand.count < 17 
+                    && (cpu.hand.count < player.hand.count || cpu.hand.count < player.hand2.count) 
+                    && (player.hand.count <= 21 || player.hand2.count <= 21)) {
                 cpu.hit(cpu.hand, deck);
             }
             checkHands(player.hand, cpu.hand);
             checkHands(player.hand2, cpu.hand);
         } else {
-            while (cpu.hand.handCount < player.hand.handCount && player.hand.handCount <= 21) {
+            while (cpu.hand.count < player.hand.count && player.hand.count <= 21 && cpu.hand.count < 17) {
                 cpu.hit(cpu.hand, deck);
             }
             checkHands(player.hand, cpu.hand);

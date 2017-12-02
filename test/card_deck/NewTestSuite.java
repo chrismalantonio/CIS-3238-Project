@@ -15,7 +15,7 @@ import org.junit.runners.Suite;
  * @author Neel Patel
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({card_deck.gameTests.class, card_deck.visualManagerTests.class, card_deck.GofishTests.class, card_deck.playerTests.class, card_deck.GofishPlayerTests.class, card_deck.blackjackPlayerTests.class, card_deck.cardTests.class})
+@Suite.SuiteClasses({card_deck.gameTests.class, card_deck.visualManagerTests.class, card_deck.GofishTests.class, card_deck.playerTests.class, card_deck.GofishPlayerTests.class, card_deck.blackjackPlayerTests.class, card_deck.cardTests.class, card_deck.BlackjackTests.class, gameWindow.blackjackWindowTests.class})
 public class NewTestSuite {
 
     @BeforeClass
