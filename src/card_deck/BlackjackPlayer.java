@@ -64,11 +64,10 @@ public class BlackjackPlayer {
                 numValue = Integer.parseInt(c.getValue());
         }
         h.count += numValue;
-        if (h.aces > 0 && h.count > 21) {
+        if (h.aces > 0 && h.count > 21){
             h.count -= 10;
-            h.aces--; 
+            h.aces--;
         }
-
     }
 
     /*  Checks if the original 2 cards given have the same value
@@ -82,8 +81,7 @@ public class BlackjackPlayer {
                     hand.aces = 1;
                     hand2.aces = 1;
                 } else {
-                    hand.count = hand.count / 2;
-                    hand2.count = hand.count;
+                    hand.count = hand2.count = hand.count / 2;
                 }
             }
         }
