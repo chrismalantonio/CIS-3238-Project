@@ -22,6 +22,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
     BlackjackPlayer player, cpu;
     Blackjack game;
     visualManager v;
+
     private int wins, losses, ties;
 
     public BlackjackWindow() {
@@ -93,6 +94,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         record = new javax.swing.JLabel();
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 

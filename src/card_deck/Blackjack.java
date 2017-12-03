@@ -18,9 +18,11 @@ public class Blackjack extends Game {
     }
 
     public void checkHands(Hand p, Hand cpu) {
+
         if ((p.count == 21 && cpu.count != 21) 
                 || (p.count < cpu.count && cpu.count > 21 && p.count <= 21) 
                 || (p.count > cpu.count && p.count < 21)) {
+
             wins++;
         } else if (p.count == cpu.count){
             ties++; 
@@ -30,7 +32,7 @@ public class Blackjack extends Game {
     }
 
     public void decideWinner(BlackjackPlayer player, BlackjackPlayer cpu, Deck deck) {
-        /* Dealer draws until it beats one hand or busts */
+        /* Dealer draws until it has 17 or more points */
         if (!player.hand2.cards.isEmpty()) {
             while (cpu.hand.count < 17 
                     && (cpu.hand.count < player.hand.count || cpu.hand.count < player.hand2.count) 

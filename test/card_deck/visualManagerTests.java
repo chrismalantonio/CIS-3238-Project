@@ -23,11 +23,13 @@ public class visualManagerTests {
     
     Deck d;
     Gofish gofish;
+    visualManager v; 
     GoFishWindow gWindow;
     
     public visualManagerTests() {
         d = new Deck();
         gofish = new Gofish(d);
+        v = new visualManager(); 
     }
     
     @BeforeClass
@@ -53,5 +55,11 @@ public class visualManagerTests {
 //        assertEquals("Game and window not connected.", vm.connect(gofish), 41);
     }
 
+    @Test
+    public void checkImagePath(){
+        String king = "/images/13.png";
+        Card card = new Card("clubs", "king");    
+        assertEquals(v.getCardLocation(card), king);
+    }
     
 }

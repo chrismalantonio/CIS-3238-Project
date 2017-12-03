@@ -18,11 +18,6 @@ import javax.imageio.ImageIO;
  */
 public class visualManager {
 
-    private final int rows = 4;
-    private final int cols = 13;
-    private final int height = 98;
-    private final int width = 73;
-
     public int connect(Gofish game) {
         GoFishWindow window = new GoFishWindow();
         window.setVisible(true);
