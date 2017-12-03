@@ -57,7 +57,9 @@ public class GofishPlayerTests {
     }
     
     @Test 
-    public void 
+    public void sometest(){
+        
+    }
     
     @Test
     public void checkBooksConfirmsBookStatus(){

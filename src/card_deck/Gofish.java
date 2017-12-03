@@ -8,6 +8,7 @@ package card_deck;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  *
@@ -21,16 +22,24 @@ public class Gofish extends Game{
     private boolean GAME_COMPLETE = false;
     private final int PLAYER_VAL = 4;
     private int difficulty = 5;
+    public static final GofishPlayer HUMAN = null;
     private HashMap<GofishPlayer, Card[]> memories;
 
     public Gofish(Deck d) {
+        /*
+        Initializes the game, creates AI players and their memory buffers.
+        Sets the size of the memory buffer to the difficulty value, higher
+        difficulty = more previous cards remembered.
+        */
         super(d);
         memories = new HashMap<GofishPlayer, Card[]>();
         AI = new GofishPlayer[3];
         for(int i = 0; i < AI.length; i++){
             AI[i] = new GofishPlayer();
-            memories.put(AI[i], new Card[5]);
-        }        
+            memories.put(AI[i], new Card[difficulty]);
+        }
+        memories.put(HUMAN, new Card[difficulty]);
+        
     }
     
     public void trackBooks(){
@@ -38,12 +47,18 @@ public class Gofish extends Game{
     }
     
     public Iterator<Card> getBooks(GofishPlayer p){
+        /*
+        Returns an iterator of all the obtained books of an AI player.
+        */
         return p.books.iterator();
     }
     
     public boolean checkIfAiHasCard(Card c, Player AI){
+        /*
+        Checks if an AI player has a card.
+        */
         for(Card card: AI.hand){
-            if(card.equals(c)){
+            if(card.value.equals(c.value)){
                 return true;
             }
         }
@@ -51,15 +66,21 @@ public class Gofish extends Game{
     }
     
     public boolean askPlayerForCard(Card c, Player p){
-        if(p == null){
-            //SIDE TRACKED
+        /*
+        Request a card from a player, returns true if they have it.
+        */
+        if(p == Gofish.HUMAN){
+            //AI wants a card from the player
         }else{
-
+            return this.checkIfAiHasCard(c, p);
         }
         return false;
     }
     
     public boolean giveCardToPlayer(Card c, GofishPlayer to, GofishPlayer from){
+        /*
+        Transfer a card from one player to another player.
+        */
         if(!from.hand.contains(c)){
             return false;
         }
@@ -71,27 +92,68 @@ public class Gofish extends Game{
         return true;
     }
     
+    public GofishPlayer choosePlayerToAskFrom(GofishPlayer AI){
+        
+        return null;
+    }
+    
+    public boolean chooseCardToAskFor(GofishPlayer AI){
+        /*
+        AI looks through memory and picks a player and card to ask for.
+        */
+        
+        return false;
+    }
+    
+    private GofishPlayer getRandomPlayer(GofishPlayer requester){
+        int player;
+        do{
+            player = (int) Math.floor(Math.random() * 4.0);
+        }while(player < 3 && this.AI[player].equals(requester));
+        
+        if(player == 3){return HUMAN;}
+        return this.AI[player];
+    }
+    
+    public boolean AITurn(){
+     
+        return false;
+    }
+    
     public boolean addCard(){
         return false;
     }
     
     public int updateAIMemory(Card c, GofishPlayer p){
+        /*
+        Updates the AI's memory by adding the most recent card requested by any
+        player.
+        */
         this.shiftDown(memories.get(p));
         memories.get(p)[0] = c;
         return 0;
     }
     
     public void shiftDown(Card[] cards){
+        /*
+        Moves all the cards in the buffer down.
+        */
         for(int i = cards.length-1; i > 0; i--){
             cards[i] = cards[i-1];
         }
     }
     
     public Card[] getMemories(GofishPlayer AI){
+        /*
+        Returns an array containing all the cards the AI has seen most recently.
+        */
         return memories.get(AI);
     }
     
     public Card mostRecentCard(GofishPlayer AI){
+        /*
+        Returns the most recent card the AI saw.
+        */
         return memories.get(AI)[0];
     }
     
