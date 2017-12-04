@@ -19,6 +19,7 @@ public class GofishPlayer extends Player{
     private Iterator<Card> bookIterator;
     Iterator<Card> handIterator;
     private final int BOOK_SIZE = 2;
+    public int ID;
     
     public GofishPlayer(){
         super();
@@ -36,6 +37,10 @@ public class GofishPlayer extends Player{
             }
         }
         return bookCounter == BOOK_SIZE;
+    }
+    
+    public void setID(int ID){
+        this.ID = ID;
     }
     
     public void addBook(Card c){

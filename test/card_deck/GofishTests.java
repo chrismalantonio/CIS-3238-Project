@@ -79,12 +79,13 @@ public class GofishTests {
             aAI.draw(d); bAI.draw(d);
         }
         
-        for(int i = 0; i < 100000; i++){
-            Card aC = aAI.hand.get((int)(handSize * Math.random()));
-            Card bC = bAI.hand.get((int)(handSize * Math.random()));
-//            assertNotEquals("The deck has two cards that are the same.", 
-//            aC,bC);
-        }
+//        for(int i = 0; i < 100000; i++){
+//            gofish.d = new Deck();
+//            Card aC = aAI.hand.get((int)(Math.floor(handSize * Math.random())));
+//            Card bC = bAI.hand.get((int)(Math.floor(handSize * Math.random())));
+////            assertNotEquals("The deck has two cards that are the same.", 
+////            aC,bC);
+//        }
     }
     
     @Test
@@ -144,7 +145,8 @@ public class GofishTests {
     
     @Test
     public void gofishGameGeneratesFairPlayers(){
-        gofish.playGofish();
+        gofish = new Gofish(new Deck());
+        gofish.dealCards();
         int aCount, bCount, cCount;
         aCount = gofish.AI[0].hand.size();
         bCount = gofish.AI[1].hand.size();
@@ -299,6 +301,5 @@ public class GofishTests {
         }
         assertEquals("Hands before and after turn are still the same.",
                 handBeforeTurn.equals(handAfterTurn), false);
-        
     }
 }
