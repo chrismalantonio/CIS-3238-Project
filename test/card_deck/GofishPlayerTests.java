@@ -45,6 +45,21 @@ public class GofishPlayerTests {
     public void playerHasCorrectStartingCardAmount(){
         
     }
+
+    @Test
+    public void playerIsAbleToTakeACardFromOpponent(){
+        
+    }
+    
+    @Test
+    public void playerCanGiveACardToOpponent(){
+        
+    }
+    
+    @Test 
+    public void sometest(){
+        
+    }
     
     @Test
     public void checkBooksConfirmsBookStatus(){
@@ -67,7 +82,7 @@ public class GofishPlayerTests {
                         p.checkForBooks(c));
         }
     }
-
+    
     @Test
     public void cardsInBookAreNotInHand(){
         Deck d = new Deck();
