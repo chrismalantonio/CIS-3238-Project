@@ -5,6 +5,7 @@
  */
 package card_deck;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import org.junit.After;
@@ -172,6 +173,16 @@ public class GofishTests {
                 + "a card with matching value.", hasCard, true);
     }
     
+    @Test
+    public void AIMemoryHasCards(){
+        gofish = new Gofish(new Deck());
+        GofishPlayer A = gofish.AI[0];
+        Card[] c = gofish.getMemories(A);
+        for(Card C: c){
+            assertNotNull("Card in memory is null.", C);
+        }
+    }
+    
     @Test 
     public void AskForCardReturnFalseWhenPlayerDoesntHaveCard(){
         gofish = new Gofish(new Deck());
@@ -198,9 +209,96 @@ public class GofishTests {
         gofish = new Gofish(new Deck());
         GofishPlayer A = gofish.AI[0];
         GofishPlayer B = gofish.AI[1];
+        gofish.updateAIMemory(new Card("heart", "ace"), A);
+        Card c = gofish.chooseCardToAskFor(A, gofish.getRandomPlayer(A));
+        assertNotNull("AI didn't choose a card from memory.", c);
+    }
+    
+    @Test
+    public void requestedCardGoesInPlayerMemory(){
+        gofish = new Gofish(new Deck());
+        GofishPlayer A = gofish.AI[0];
+        GofishPlayer B = gofish.AI[1];
+        A.hand.add(new Card("Hearts", "3"));
+        B.hand.add(new Card("Spades", "2"));
+        Card C = A.hand.get(0);
+        if(!gofish.askPlayerForCard(A.hand.get(0), B)){
+            gofish.updateAIMemory(C, A);
+        }
+        Card[] aMem = gofish.getMemories(A);
+        boolean cardInMemory = false;
+        for(Card c: aMem){
+            if(c.equals(C)){
+                cardInMemory = true;
+            }
+        }
         
-        boolean result = gofish.chooseCardToAskFor(A);
-        assertEquals("AI was unable to choose a card from its memory."
-                , result ,true);
+        assertEquals("Rejected card not in AI's memory.", cardInMemory, true);
+    }
+    
+    @Test
+    public void memoryNotUpdatedWhenBookFound(){
+        gofish = new Gofish(new Deck());
+        GofishPlayer A = gofish.AI[0];
+        GofishPlayer B = gofish.AI[1];
+        A.hand.add(new Card("Hearts", "3"));
+        B.hand.add(new Card("spades", "3"));
+        
+        if(!gofish.askPlayerForCard(A.hand.get(0), B)){
+            gofish.updateAIMemory(A.hand.get(0),A);
+        }
+        Card[] aMem = gofish.getMemories(A);
+        boolean cardInMemory = false;
+        for(Card c: aMem){
+            if(c.equals(A.hand.get(0))){
+                cardInMemory = true;
+            }
+        }
+        
+        assertEquals("Card that formed book went to memory.",
+                cardInMemory, false);
+    }
+    
+    @Test
+    public void AiTurnChangesTheStateOfTheHand(){
+        gofish = new Gofish(new Deck());
+        GofishPlayer A = gofish.AI[0];
+        GofishPlayer B = gofish.AI[1];
+        GofishPlayer C = gofish.AI[2];
+        GofishPlayer D = gofish.HUMAN;
+        for(int i = 0; i < 10; i++){
+            A.draw(gofish.d);
+            B.draw(gofish.d);
+            C.draw(gofish.d);
+            D.draw(gofish.d);
+        }
+        Card bCard = B.hand.get(0);
+        Card[] bMem = gofish.getMemories(B);
+        for(int i = 0; i < 5; i++){
+            bMem[i] = bCard;
+        }
+        Card cCard = C.hand.get(0);
+        Card[] cMem = gofish.getMemories(C);
+        for(int i = 0; i < 5; i++){
+            cMem[i] = cCard;
+        }
+        Card dCard = D.hand.get(0);
+        Card[] dMem = gofish.getMemories(D);
+        for(int i = 0; i < 5; i++){
+            dMem[i] = dCard;
+        }
+        
+        ArrayList<Card> handBeforeTurn = new ArrayList<Card>();
+        for(Card c: A.hand){
+            handBeforeTurn.add(c);
+        }
+        gofish.AITurn(A);
+        ArrayList<Card> handAfterTurn = new ArrayList<Card>();
+        for(Card c: A.hand){
+            handAfterTurn.add(c);
+        }
+        assertEquals("Hands before and after turn are still the same.",
+                handBeforeTurn.equals(handAfterTurn), false);
+        
     }
 }

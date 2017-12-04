@@ -22,7 +22,7 @@ public class Gofish extends Game{
     private boolean GAME_COMPLETE = false;
     private final int PLAYER_VAL = 4;
     private int difficulty = 5;
-    public static final GofishPlayer HUMAN = null;
+    public GofishPlayer HUMAN;
     private HashMap<GofishPlayer, Card[]> memories;
 
     public Gofish(Deck d) {
@@ -38,8 +38,9 @@ public class Gofish extends Game{
             AI[i] = new GofishPlayer();
             memories.put(AI[i], new Card[difficulty]);
         }
+        HUMAN = new GofishPlayer();
         memories.put(HUMAN, new Card[difficulty]);
-        
+        this.initializeAIMemories();
     }
     
     public void trackBooks(){
@@ -58,6 +59,7 @@ public class Gofish extends Game{
         Checks if an AI player has a card.
         */
         for(Card card: AI.hand){
+            System.out.println(card.toString());
             if(card.value.equals(c.value)){
                 return true;
             }
@@ -65,11 +67,11 @@ public class Gofish extends Game{
         return false;
     }
     
-    public boolean askPlayerForCard(Card c, Player p){
+    public boolean askPlayerForCard(Card c, GofishPlayer p){
         /*
         Request a card from a player, returns true if they have it.
         */
-        if(p == Gofish.HUMAN){
+        if(p == HUMAN){
             //AI wants a card from the player
         }else{
             return this.checkIfAiHasCard(c, p);
@@ -92,20 +94,15 @@ public class Gofish extends Game{
         return true;
     }
     
-    public GofishPlayer choosePlayerToAskFrom(GofishPlayer AI){
-        
-        return null;
-    }
-    
-    public boolean chooseCardToAskFor(GofishPlayer AI){
+    public Card chooseCardToAskFor(GofishPlayer AI, GofishPlayer askTo){
         /*
         AI looks through memory and picks a player and card to ask for.
         */
-        
-        return false;
+        return this.memories.get(askTo)[(int) Math.floor(Math.random() * 
+                this.difficulty)];
     }
     
-    private GofishPlayer getRandomPlayer(GofishPlayer requester){
+    public GofishPlayer getRandomPlayer(GofishPlayer requester){
         int player;
         do{
             player = (int) Math.floor(Math.random() * 4.0);
@@ -115,8 +112,34 @@ public class Gofish extends Game{
         return this.AI[player];
     }
     
-    public boolean AITurn(){
-     
+    private void initializeAIMemories(){
+        Deck temp = new Deck();
+        for(GofishPlayer p: this.AI){
+            for(int i = 0; i < this.difficulty; i++){
+                this.memories.get(p)[i] = temp.cards.get((int)Math.floor(
+                Math.random() * 52));
+            }
+        }
+        
+        for(int i = 0; i < this.difficulty; i++){
+            this.memories.get(this.HUMAN)[i] = temp.cards.get((int)Math.floor(
+            Math.random() * 52));
+        }
+    }
+    
+    public boolean AITurn(GofishPlayer P){
+        /*
+        Choose a player, and look through their memory to see if they have
+        a card value that current player has, ask for that card from that player.
+        */
+        GofishPlayer otherP = this.getRandomPlayer(P);
+        Card request = this.chooseCardToAskFor(P, otherP);
+        System.out.println("Request: " +request);
+        if(this.askPlayerForCard(request, otherP)){
+            System.out.println("?");
+            this.giveCardToPlayer(request, P, otherP);
+        }
+        
         return false;
     }
     
@@ -157,8 +180,9 @@ public class Gofish extends Game{
         return memories.get(AI)[0];
     }
     
-    public int updatePlayerMemory(Card c){
-        
+    public int updatePlayerMemory(GofishPlayer P, Card c){
+        this.shiftDown(memories.get(HUMAN));
+        memories.get(HUMAN)[0] = c;
         return 0;
     }
     
