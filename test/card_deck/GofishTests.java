@@ -78,14 +78,15 @@ public class GofishTests {
         for(int i = 0; i < handSize; i++){
             aAI.draw(d); bAI.draw(d);
         }
+        System.out.println(aAI.hand.size()+ ","+bAI.hand.size());
         
-//        for(int i = 0; i < 100000; i++){
-//            gofish.d = new Deck();
-//            Card aC = aAI.hand.get((int)(Math.floor(handSize * Math.random())));
-//            Card bC = bAI.hand.get((int)(Math.floor(handSize * Math.random())));
-////            assertNotEquals("The deck has two cards that are the same.", 
-////            aC,bC);
-//        }
+        for(int i = 0; i < 100000; i++){
+            gofish.d = new Deck();
+            Card aC = aAI.hand.get((int)(Math.floor(handSize * Math.random())));
+            Card bC = bAI.hand.get((int)(Math.floor(handSize * Math.random())));
+            assertNotEquals("The deck has two cards that are the same.", 
+            aC,bC);
+        }
     }
     
     @Test
@@ -138,8 +139,8 @@ public class GofishTests {
         }
         
         for(Card n: memories){
-//            assertNotEquals("Card that was in memory but removed is still in"
-//                    + "memory.", n, c[0]);
+            assertNotEquals("Card that was in memory but removed is still in"
+                    + "memory.", n, c[0]);
         }
     }
     
@@ -291,13 +292,17 @@ public class GofishTests {
         }
         
         ArrayList<Card> handBeforeTurn = new ArrayList<Card>();
+        System.out.println("Print cards before");
         for(Card c: A.hand){
-            handBeforeTurn.add(c);
+            handBeforeTurn.add(new Card(c.suit, c.value));
+            System.out.println(c.toString());
         }
         gofish.AITurn(A);
         ArrayList<Card> handAfterTurn = new ArrayList<Card>();
+        System.out.println("Print cards");
         for(Card c: A.hand){
-            handAfterTurn.add(c);
+            handAfterTurn.add(new Card(c.suit, c.value));
+            System.out.println(c.toString());
         }
         assertEquals("Hands before and after turn are still the same.",
                 handBeforeTurn.equals(handAfterTurn), false);
@@ -307,5 +312,13 @@ public class GofishTests {
     public void playGame(){
         gofish = new Gofish(new Deck());
         gofish.playGofish();
+    }
+    
+    @Test
+    public void playerShouldNotAskForACardWhoseValueTheyDontHave(){
+        gofish = new Gofish(new Deck());
+        GofishPlayer A = gofish.AI[0];
+        A.hand.add(new Card("ace", "spades"));
+        
     }
 }

@@ -83,13 +83,19 @@ public class Gofish extends Game {
         /*
          Transfer a card from one player to another player.
          */
-        if (!from.hand.contains(c)) {
-            return false;
-        }
-        from.hand.remove(c);
-        to.hand.add(c);
+//        if (!from.hand.contains(c)) {
+//            return false;
+//        }
+//        to.hand.add(c);
+
         if (to.checkForBooks(c)) {
+            from.hand.remove(c);
+            System.out.println(to.ID + " Has obtained a book of the following card value: "
+                               + c.value);
             to.addBook(c);
+        }
+        else{
+            to.hand.add(c);
         }
         return true;
     }
@@ -98,8 +104,18 @@ public class Gofish extends Game {
         /*
          AI looks through memory and picks a player and card to ask for.
          */
-        return this.memories.get(askTo)[(int) Math.floor(Math.random()
-                * this.difficulty)];
+        int cardToAskForIndex = (int)Math.floor(Math.random() * this.memories
+                                .get(askTo).length);
+        for(int i = 0; i < this.memories.get(askTo).length; i++){
+            for(Card c: AI.hand){
+                if(c.value.equals(this.memories.get(askTo)[i].value)){
+                    cardToAskForIndex = i;
+                    break;
+                }
+            }
+        }
+        
+        return this.memories.get(askTo)[cardToAskForIndex];
     }
 
     public GofishPlayer getRandomPlayer(GofishPlayer requester) {
@@ -127,6 +143,10 @@ public class Gofish extends Game {
             this.memories.get(this.HUMAN)[i] = temp.cards.get((int) Math.floor(
                     Math.random() * 52));
         }
+    }
+    
+    public ArrayList<Card> handView(GofishPlayer P){
+        return P.hand;
     }
 
     public void AITurn(GofishPlayer P) {
@@ -198,6 +218,9 @@ public class Gofish extends Game {
                 ai.draw(d);
             }
         }
+        for(int i = 0; i < 7; i++){
+            HUMAN.draw(d);
+        }
     }
 
     public int playGofish() {
@@ -230,15 +253,38 @@ public class Gofish extends Game {
          */
         this.dealCards();
         int currentPlayer = 0;
+        ArrayList<Card> currentHand;
+        System.out.println("Beginning game.");
         while (!GAME_COMPLETE) {
             System.out.println("------------------------------------");
-            if(currentPlayer == 3){
+            if(currentPlayer < 3){
+                currentHand = this.handView(this.AI[currentPlayer]);
+                System.out.println("It is " + this.AI[currentPlayer].ID + "'s turn.");
+                System.out.print("Hand before:");
+                this.printHand(this.AI[currentPlayer]);
+                this.AITurn(this.AI[currentPlayer]);
+                System.out.print("Hand after: ");
+                this.printHand(this.AI[currentPlayer]);
             }
-            System.out.println("It is " + currentPlayer + "'s turn.");
-            this.AITurn(this.AI[currentPlayer]);
-            currentPlayer = currentPlayer+1 % this.PLAYER_VAL;
+            else{
+                currentHand = this.handView(this.HUMAN);
+                System.out.println("It is " + this.HUMAN.ID + "'s turn.");
+                System.out.print("Hand before: ");
+                this.printHand(HUMAN);
+                this.AITurn(HUMAN);
+                System.out.print("Hand after: ");
+                this.printHand(HUMAN);
+            }
+            currentPlayer = (currentPlayer+1) % this.PLAYER_VAL;
+            if(currentPlayer == 0){GAME_COMPLETE = true;}
         }
-
         return 0;
+    }
+    
+    private void printHand(GofishPlayer P){
+        for(Card c: P.hand){
+            System.out.print(c.toString() + ", ");
+        }
+        System.out.println("");
     }
 }

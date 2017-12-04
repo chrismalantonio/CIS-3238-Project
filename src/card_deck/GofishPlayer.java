@@ -32,11 +32,11 @@ public class GofishPlayer extends Player{
         Card d;
         while(handIterator.hasNext() && bookCounter < BOOK_SIZE){
             d = handIterator.next();
-            if(c.value.equals(d.value) && !c.suit.equals(d.suit)){
-                bookCounter++;
+            if(c.value.equals(d.value)){
+                return true;
             }
         }
-        return bookCounter == BOOK_SIZE;
+        return false;
     }
     
     public void setID(int ID){
@@ -51,7 +51,7 @@ public class GofishPlayer extends Player{
             if(c.value.equals(d.value) && !c.suit.equals(d.suit)){
                 books.add(c);
                 books.add(d);
-                hand.remove(c);
+//                hand.remove(c);
                 hand.remove(d);
                 break;
             }
