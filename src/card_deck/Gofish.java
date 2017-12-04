@@ -60,7 +60,6 @@ public class Gofish extends Game {
          Checks if an AI player has a card.
          */
         for (Card card : AI.hand) {
-            System.out.println(card.toString());
             if (card.value.equals(c.value)) {
                 return true;
             }
@@ -202,7 +201,6 @@ public class Gofish extends Game {
     }
 
     public int playGofish() {
-
         /**
          * Create a while loop that cycles through each player. The AI players
          * will all have the same behavior, so nothing special with them. We can
@@ -230,11 +228,15 @@ public class Gofish extends Game {
          * the player's book list. After that, the player's turn will end and we
          * cycle through all the AI players again
          */
+        this.dealCards();
         int currentPlayer = 0;
         while (!GAME_COMPLETE) {
+            System.out.println("------------------------------------");
+            if(currentPlayer == 3){
+            }
             System.out.println("It is " + currentPlayer + "'s turn.");
             this.AITurn(this.AI[currentPlayer]);
-            GAME_COMPLETE = true;
+            currentPlayer = currentPlayer+1 % this.PLAYER_VAL;
         }
 
         return 0;

@@ -302,4 +302,10 @@ public class GofishTests {
         assertEquals("Hands before and after turn are still the same.",
                 handBeforeTurn.equals(handAfterTurn), false);
     }
+    
+    @Test
+    public void playGame(){
+        gofish = new Gofish(new Deck());
+        gofish.playGofish();
+    }
 }
