@@ -72,50 +72,81 @@ public class Gofish extends Game {
          Request a card from a player, returns true if they have it.
          */
         if (p == HUMAN) {
-            //AI wants a card from the player
+            return this.checkIfAiHasCard(c, p);
         } else {
             return this.checkIfAiHasCard(c, p);
         }
-        return false;
+//        return false;
     }
 
     public boolean giveCardToPlayer(Card c, GofishPlayer to, GofishPlayer from) {
         /*
          Transfer a card from one player to another player.
          */
-//        if (!from.hand.contains(c)) {
-//            return false;
-//        }
-//        to.hand.add(c);
-
+        Card cardToRemove = null;
+        for(Card fC: from.hand){
+            if(fC.value.equals(c.value)){
+                cardToRemove = fC;
+            }
+        }
         if (to.checkForBooks(c)) {
-            from.hand.remove(c);
+            System.out.println(c.toString());
+            System.out.println(from.hand.contains(c));
+            System.out.println("From's hand before removal:");
+            this.printHand(from);
+            from.hand.remove(cardToRemove);
+            System.out.println("From's hand after removal:");
+            this.printHand(from);
             System.out.println(to.ID + " Has obtained a book of the following card value: "
                                + c.value);
             to.addBook(c);
         }
         else{
+            from.hand.remove(cardToRemove);
             to.hand.add(c);
         }
         return true;
+    }
+    
+    public void findBooksInHand(GofishPlayer A){
+        Card b,c;
+        c = b = null;
+        boolean bookExists = false;
+        for(int i = 0; i < A.hand.size(); i++){
+            c = A.hand.get(i);
+            for(int j = 0; j < A.hand.size() && !bookExists; j++){
+                if(c.value.equals(A.hand.get(j).value) && 
+                        !c.suit.equals(A.hand.get(j).suit)){
+                    bookExists = true;
+                    b = A.hand.get(j);
+                }
+            }
+            if(bookExists){
+                System.out.println(A.ID + " has found a book in their hand and"
+                        + "removed it.");
+                A.hand.remove(c); A.hand.remove(b);
+                A.books.add(c); A.books.add(b);
+            }
+            bookExists = false;
+        }
+        System.out.println(A.ID+"'s hand after books removed.");
+        this.printHand(A);
     }
 
     public Card chooseCardToAskFor(GofishPlayer AI, GofishPlayer askTo) {
         /*
          AI looks through memory and picks a player and card to ask for.
          */
-        int cardToAskForIndex = (int)Math.floor(Math.random() * this.memories
-                                .get(askTo).length);
+        int cardToAskForIndex = (int)Math.floor(Math.random() * AI.hand.size());
         for(int i = 0; i < this.memories.get(askTo).length; i++){
             for(Card c: AI.hand){
                 if(c.value.equals(this.memories.get(askTo)[i].value)){
-                    cardToAskForIndex = i;
-                    break;
+                    return this.memories.get(askTo)[i];
                 }
             }
         }
         
-        return this.memories.get(askTo)[cardToAskForIndex];
+        return AI.hand.get(cardToAskForIndex);
     }
 
     public GofishPlayer getRandomPlayer(GofishPlayer requester) {
@@ -125,7 +156,11 @@ public class Gofish extends Game {
         } while (player < 3 && this.AI[player].equals(requester));
 
         if (player == 3) {
-            return HUMAN;
+            if(requester.equals(HUMAN)){
+                return this.AI[(int)Math.floor(Math.random() * 3)];
+            }else{
+                return HUMAN;
+            }
         }
         return this.AI[player];
     }
@@ -158,14 +193,19 @@ public class Gofish extends Game {
          */
         GofishPlayer otherP = this.getRandomPlayer(P);
         Card request = this.chooseCardToAskFor(P, otherP);
-        System.out.println(P.ID + " Asking for card " + request.toString()
+        System.out.println(P.ID + " Asking for card of value " + request.value
                 + " from " + otherP.ID);
         if (this.askPlayerForCard(request, otherP)) {
-            System.out.println(otherP.ID + " Has " + request.toString());
+            System.out.println(otherP.ID + " Has a " + request.toString());
             this.giveCardToPlayer(request, P, otherP);
         } else {
             System.out.println(P.ID + " has to gofish.");
-            P.draw(this.d);
+            if(this.d.cards.isEmpty()){
+                System.out.println(P.ID + " can't draw, no cards left.");
+            }
+            else{
+                P.draw(this.d);
+            }
         }
     }
 
@@ -222,6 +262,43 @@ public class Gofish extends Game {
             HUMAN.draw(d);
         }
     }
+    
+    private int cardCount(){
+        int cardSum = 0;
+        for(GofishPlayer P: this.AI){
+            cardSum += (P.hand.size()+P.books.size());
+        }
+        cardSum += (HUMAN.hand.size() + HUMAN.books.size());
+        cardSum += this.d.cards.size();
+        return cardSum;
+    }
+    
+    public GofishPlayer findWinner(){
+        GofishPlayer winner = this.AI[0];
+        int score = 0;
+        for(GofishPlayer P: this.AI){
+            if(P.books.size() > score){
+                score = P.books.size();
+                winner = P;
+            }
+        }
+        if(HUMAN.books.size() > score){
+            return HUMAN;
+        }
+        return winner;
+    }
+    
+    public GofishPlayer checkForWinner(){
+        for(GofishPlayer P: this.AI){
+            if(P.hand.isEmpty()){
+                return P;
+            }
+        }
+        if(HUMAN.hand.isEmpty()){
+            return HUMAN;
+        }
+        return null;
+    }
 
     public int playGofish() {
         /**
@@ -257,6 +334,7 @@ public class Gofish extends Game {
         System.out.println("Beginning game.");
         while (!GAME_COMPLETE) {
             System.out.println("------------------------------------");
+            System.out.println("Card count: " + this.cardCount());
             if(currentPlayer < 3){
                 currentHand = this.handView(this.AI[currentPlayer]);
                 System.out.println("It is " + this.AI[currentPlayer].ID + "'s turn.");
@@ -265,6 +343,7 @@ public class Gofish extends Game {
                 this.AITurn(this.AI[currentPlayer]);
                 System.out.print("Hand after: ");
                 this.printHand(this.AI[currentPlayer]);
+                this.findBooksInHand(this.AI[currentPlayer]);
             }
             else{
                 currentHand = this.handView(this.HUMAN);
@@ -274,9 +353,32 @@ public class Gofish extends Game {
                 this.AITurn(HUMAN);
                 System.out.print("Hand after: ");
                 this.printHand(HUMAN);
+                this.findBooksInHand(HUMAN);
             }
+            GofishPlayer lastPlayer = this.checkForWinner();
+            if(lastPlayer != null){
+                System.out.println(lastPlayer.ID + " has an empty hand, game has ended.");
+                System.out.println("Finding winner...");
+                GofishPlayer winner = this.findWinner();
+                System.out.println(winner.ID + " is the winner. They obtained " +
+                                   winner.books.size()/2+".");
+                GAME_COMPLETE = true;
+            }
+//            if(currentPlayer < 3){
+//                this.findBooksInHand(this.AI[currentPlayer]);
+//                if(this.AI[currentPlayer].hand.isEmpty()){
+//                    GAME_COMPLETE = true;
+//                    System.out.println(this.AI[currentPlayer].ID + " is the winner.");
+//                }               
+//            }else{
+//                this.findBooksInHand(HUMAN);
+//                if(this.HUMAN.hand.isEmpty()){
+//                GAME_COMPLETE = true;
+//                System.out.println(this.HUMAN.ID + " is the winner.");
+//            }
+//            }
             currentPlayer = (currentPlayer+1) % this.PLAYER_VAL;
-            if(currentPlayer == 0){GAME_COMPLETE = true;}
+            
         }
         return 0;
     }

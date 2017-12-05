@@ -43,18 +43,23 @@ public class GofishPlayer extends Player{
         this.ID = ID;
     }
     
+
+    
     public void addBook(Card c){
         handIterator = hand.iterator();
-        Card d;
+        Card d = null;
+        boolean bookFound = false;
         while(handIterator.hasNext()){
             d = handIterator.next();
-            if(c.value.equals(d.value) && !c.suit.equals(d.suit)){
+            if(c.value.equals(d.value)){
                 books.add(c);
                 books.add(d);
-//                hand.remove(c);
-                hand.remove(d);
+                bookFound = true;
                 break;
             }
+        }
+        if(bookFound){
+            this.hand.remove(d);
         }
     }
 }
