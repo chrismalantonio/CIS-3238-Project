@@ -30,11 +30,11 @@ public class GoFishWindow extends javax.swing.JFrame {
         buttonsShowing = new boolean[interactButtons.length];
         for(int i = 0; i < 3; i++){
             interactPopups[i] = new javax.swing.JPopupMenu();
-            interactPopups[i].add(new JMenuItem("show cards")).addActionListener(
+            interactPopups[i].add(new JMenuItem("show books")).addActionListener(
             new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("hi from " + e.toString());
+                    System.out.println("hi from button " + e.getSource().toString());
                 }                
             });
             interactPopups[i].add(new JMenuItem("ask for a card")).addActionListener(
