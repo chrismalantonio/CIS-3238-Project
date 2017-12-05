@@ -360,23 +360,10 @@ public class Gofish extends Game {
                 System.out.println(lastPlayer.ID + " has an empty hand, game has ended.");
                 System.out.println("Finding winner...");
                 GofishPlayer winner = this.findWinner();
-                System.out.println(winner.ID + " is the winner. They obtained " +
-                                   winner.books.size()/2+".");
+                System.out.println("Player " + winner.ID + " is the winner. They obtained " +
+                                   winner.books.size()/2+" books.");
                 GAME_COMPLETE = true;
             }
-//            if(currentPlayer < 3){
-//                this.findBooksInHand(this.AI[currentPlayer]);
-//                if(this.AI[currentPlayer].hand.isEmpty()){
-//                    GAME_COMPLETE = true;
-//                    System.out.println(this.AI[currentPlayer].ID + " is the winner.");
-//                }               
-//            }else{
-//                this.findBooksInHand(HUMAN);
-//                if(this.HUMAN.hand.isEmpty()){
-//                GAME_COMPLETE = true;
-//                System.out.println(this.HUMAN.ID + " is the winner.");
-//            }
-//            }
             currentPlayer = (currentPlayer+1) % this.PLAYER_VAL;
             
         }
