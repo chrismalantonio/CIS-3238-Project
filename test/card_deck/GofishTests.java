@@ -403,6 +403,34 @@ public class GofishTests {
     
     @Test 
     public void numberOfCardsDoesNotChange(){
-        
+        gofish = new Gofish(new Deck());
+        int deckSizeBefore = 0;
+        for(GofishPlayer P: gofish.AI){
+            deckSizeBefore += (P.hand.size() + P.books.size());
+        }
+        deckSizeBefore += gofish.HUMAN.hand.size() + gofish.HUMAN.books.size();
+        deckSizeBefore += gofish.d.cards.size();
+        gofish.playGofish();
+        int deckSizeAfter = 0;
+        for(GofishPlayer P: gofish.AI){
+            deckSizeAfter += (P.hand.size() + P.books.size());
+        }
+        deckSizeAfter += gofish.HUMAN.hand.size() + gofish.HUMAN.books.size();
+        deckSizeAfter += gofish.d.cards.size();
+        assertEquals("The size of the deck changed during gameplay.", true, 
+                deckSizeBefore == deckSizeAfter);
+    }
+    
+    @Test
+    public void winnerHasTheMostBooks(){
+        gofish = new Gofish(new Deck());
+        gofish.playGofish();
+        boolean anotherWinner = false;
+        GofishPlayer winner = gofish.findWinner();
+        for(GofishPlayer P: gofish.AI){
+            if(P.books.size() > winner.books.size()){
+                anotherWinner = true;
+            }
+        }
     }
 }
