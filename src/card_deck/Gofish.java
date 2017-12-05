@@ -104,18 +104,16 @@ public class Gofish extends Game {
         /*
          AI looks through memory and picks a player and card to ask for.
          */
-        int cardToAskForIndex = (int)Math.floor(Math.random() * this.memories
-                                .get(askTo).length);
+        int cardToAskForIndex = (int)Math.floor(Math.random() * AI.hand.size());
         for(int i = 0; i < this.memories.get(askTo).length; i++){
             for(Card c: AI.hand){
                 if(c.value.equals(this.memories.get(askTo)[i].value)){
-                    cardToAskForIndex = i;
-                    break;
+                    return this.memories.get(askTo)[i];
                 }
             }
         }
         
-        return this.memories.get(askTo)[cardToAskForIndex];
+        return AI.hand.get(cardToAskForIndex);
     }
 
     public GofishPlayer getRandomPlayer(GofishPlayer requester) {
