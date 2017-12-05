@@ -91,6 +91,7 @@ public class Gofish extends Game {
             to.addBook(c);
         }
         else{
+            from.hand.remove(c);
             to.hand.add(c);
         }
         return true;
@@ -110,10 +111,15 @@ public class Gofish extends Game {
                 }
             }
             if(bookExists){
+                System.out.println(A.ID + " has found a book in their hand and"
+                        + "removed it.");
                 A.hand.remove(c); A.hand.remove(b);
+                A.books.add(c); A.books.add(b);
             }
             bookExists = false;
         }
+        System.out.println(A.ID+"'s hand after books removed.");
+        this.printHand(A);
     }
 
     public Card chooseCardToAskFor(GofishPlayer AI, GofishPlayer askTo) {
@@ -241,6 +247,16 @@ public class Gofish extends Game {
             HUMAN.draw(d);
         }
     }
+    
+    private int cardCount(){
+        int cardSum = 0;
+        for(GofishPlayer P: this.AI){
+            cardSum += (P.hand.size()+P.books.size());
+        }
+        cardSum += (HUMAN.hand.size() + HUMAN.books.size());
+        cardSum += this.d.cards.size();
+        return cardSum;
+    }
 
     public int playGofish() {
         /**
@@ -276,6 +292,7 @@ public class Gofish extends Game {
         System.out.println("Beginning game.");
         while (!GAME_COMPLETE) {
             System.out.println("------------------------------------");
+            System.out.println("Card count: " + this.cardCount());
             if(currentPlayer < 3){
                 currentHand = this.handView(this.AI[currentPlayer]);
                 System.out.println("It is " + this.AI[currentPlayer].ID + "'s turn.");

@@ -400,4 +400,9 @@ public class GofishTests {
         assertEquals("Player still has a book in their hand.",
                 true, A.hand.isEmpty());
     }
+    
+    @Test 
+    public void numberOfCardsDoesNotChange(){
+        
+    }
 }
