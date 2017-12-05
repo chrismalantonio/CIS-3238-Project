@@ -354,4 +354,50 @@ public class GofishTests {
         assertEquals("Player asked for a card whose value they don't have.", 
                     c.value.equals("ace"), true);
     }
+    
+    @Test
+    public void gameEndsWhenAPlayerHasAnEmptyHand(){
+        gofish = new Gofish(new Deck());
+        gofish.playGofish();
+        boolean emptyHand = false;
+        for(GofishPlayer P:gofish.AI){
+            if(P.hand.isEmpty()){
+                emptyHand = true;
+                break;
+            }
+        }
+        
+        if(gofish.HUMAN.hand.isEmpty()){emptyHand = true;}
+        
+        assertEquals("Game ended but no player has an empty hand.", true, 
+                emptyHand);
+    }
+    
+    @Test
+    public void createdBookShouldGoIntoBookList(){
+        gofish = new Gofish(new Deck());
+        GofishPlayer A = gofish.AI[0];
+        GofishPlayer B = gofish.AI[1];
+        A.hand.add(new Card("hearts", "ace"));
+        B.hand.add(new Card("spades", "ace"));
+        Card aCard = A.hand.get(0);
+        Card bCard = B.hand.get(0);
+        gofish.giveCardToPlayer(bCard, A, B);
+        assertEquals("Book still exists in player's hand.", true, 
+                A.books.contains(aCard) && A.books.contains(bCard));
+    }
+    
+    @Test
+    public void pairOfValuesShouldNotBeInHand(){
+        gofish = new Gofish(new Deck());
+        GofishPlayer A = gofish.AI[0];
+        A.hand.add(new Card("hearts", "ace"));
+        A.hand.add(new Card("spades", "ace"));
+        gofish.findBooksInHand(A);
+        for(Card c: A.hand){
+            System.out.println(c.toString());
+        }
+        assertEquals("Player still has a book in their hand.",
+                true, A.hand.isEmpty());
+    }
 }

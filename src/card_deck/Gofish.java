@@ -83,10 +83,6 @@ public class Gofish extends Game {
         /*
          Transfer a card from one player to another player.
          */
-//        if (!from.hand.contains(c)) {
-//            return false;
-//        }
-//        to.hand.add(c);
 
         if (to.checkForBooks(c)) {
             from.hand.remove(c);
@@ -98,6 +94,26 @@ public class Gofish extends Game {
             to.hand.add(c);
         }
         return true;
+    }
+    
+    public void findBooksInHand(GofishPlayer A){
+        Card b,c;
+        c = b = null;
+        boolean bookExists = false;
+        for(int i = 0; i < A.hand.size(); i++){
+            c = A.hand.get(i);
+            for(int j = 0; j < A.hand.size() && !bookExists; j++){
+                if(c.value.equals(A.hand.get(j).value) && 
+                        !c.suit.equals(A.hand.get(j).suit)){
+                    bookExists = true;
+                    b = A.hand.get(j);
+                }
+            }
+            if(bookExists){
+                A.hand.remove(c); A.hand.remove(b);
+            }
+            bookExists = false;
+        }
     }
 
     public Card chooseCardToAskFor(GofishPlayer AI, GofishPlayer askTo) {
@@ -156,14 +172,19 @@ public class Gofish extends Game {
          */
         GofishPlayer otherP = this.getRandomPlayer(P);
         Card request = this.chooseCardToAskFor(P, otherP);
-        System.out.println(P.ID + " Asking for card " + request.toString()
+        System.out.println(P.ID + " Asking for card of value " + request.value
                 + " from " + otherP.ID);
         if (this.askPlayerForCard(request, otherP)) {
-            System.out.println(otherP.ID + " Has " + request.toString());
+            System.out.println(otherP.ID + " Has a " + request.value);
             this.giveCardToPlayer(request, P, otherP);
         } else {
             System.out.println(P.ID + " has to gofish.");
-            P.draw(this.d);
+            if(this.d.cards.isEmpty()){
+                System.out.println(P.ID + " can't draw, no cards left.");
+            }
+            else{
+                P.draw(this.d);
+            }
         }
     }
 
@@ -273,8 +294,22 @@ public class Gofish extends Game {
                 System.out.print("Hand after: ");
                 this.printHand(HUMAN);
             }
+            if(currentPlayer < 3){
+                this.findBooksInHand(this.AI[currentPlayer]);
+                if(this.AI[currentPlayer].hand.isEmpty()){
+                    GAME_COMPLETE = true;
+                    System.out.println(this.AI[currentPlayer].ID + " is the winner.");
+                }               
+            }else{
+                this.findBooksInHand(HUMAN);
+                if(this.HUMAN.hand.isEmpty()){
+                GAME_COMPLETE = true;
+                System.out.println(this.HUMAN.ID + " is the winner.");
+            }
+            }
+
             currentPlayer = (currentPlayer+1) % this.PLAYER_VAL;
-            if(currentPlayer == 0){GAME_COMPLETE = true;}
+            
         }
         return 0;
     }
