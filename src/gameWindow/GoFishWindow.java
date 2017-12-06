@@ -342,7 +342,7 @@ public class GoFishWindow extends javax.swing.JFrame {
                     System.out.println(e.getSource());
                     GofishPlayer AI = ((GofishPlayer)((JMenuItem)e.getSource())
                             .getClientProperty("AIPlayer"));
-                    System.out.println("hi from button " + 
+                    System.out.println("hi from player " + 
                             ((GofishPlayer)((JMenuItem)e.getSource())
                             .getClientProperty("AIPlayer")).ID );
                     new BookViewer(AI.books).setVisible(true);

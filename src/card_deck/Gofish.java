@@ -365,9 +365,12 @@ public class Gofish extends Game {
                 GAME_COMPLETE = true;
             }
             currentPlayer = (currentPlayer+1) % this.PLAYER_VAL;
-            
         }
         return 0;
+    }
+    
+    public void executeTurn(int AIIndex){
+        
     }
     
     public boolean isOver(){
