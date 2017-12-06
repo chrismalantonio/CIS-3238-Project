@@ -6,11 +6,13 @@
 package gameWindow;
 
 import card_deck.Card;
+import card_deck.Deck;
 import card_deck.GofishPlayer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 public class GoFishWindow extends javax.swing.JFrame {
 
@@ -69,6 +71,11 @@ public class GoFishWindow extends javax.swing.JFrame {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jPopupMenu3 = new javax.swing.JPopupMenu();
         jPopupMenu4 = new javax.swing.JPopupMenu();
+        jDialog3 = new javax.swing.JDialog();
+        requestField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        requestButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         AIWindow0 = new javax.swing.JPanel();
@@ -77,6 +84,7 @@ public class GoFishWindow extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         AIWindow1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -131,6 +139,55 @@ public class GoFishWindow extends javax.swing.JFrame {
         jFrame3Layout.setVerticalGroup(
             jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jDialog3.setTitle("Request value");
+        jDialog3.setMinimumSize(new java.awt.Dimension(400, 300));
+
+        requestField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Which card do you want to request?:");
+
+        requestButton.setText("Request");
+        requestButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
+        jDialog3.getContentPane().setLayout(jDialog3Layout);
+        jDialog3Layout.setHorizontalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog3Layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(requestButton)
+                .addGap(77, 77, 77))
+            .addGroup(jDialog3Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(requestField, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addGap(47, 47, 47))
+        );
+        jDialog3Layout.setVerticalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog3Layout.createSequentialGroup()
+                .addContainerGap(126, Short.MAX_VALUE)
+                .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(requestField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(requestButton)
+                    .addComponent(jLabel2))
+                .addGap(124, 124, 124))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -232,7 +289,7 @@ public class GoFishWindow extends javax.swing.JFrame {
         AIWindow1Layout.setHorizontalGroup(
             AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
-                .addContainerGap(95, Short.MAX_VALUE)
+                .addContainerGap(102, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(93, 93, 93))
         );
@@ -257,7 +314,8 @@ public class GoFishWindow extends javax.swing.JFrame {
                         .addComponent(AIWindow1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -268,7 +326,9 @@ public class GoFishWindow extends javax.swing.JFrame {
                     .addComponent(AIWindow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AIWindow0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -292,6 +352,27 @@ public class GoFishWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void requestFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_requestFieldActionPerformed
+
+    private void requestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestButtonActionPerformed
+        if(requestField.getText().isEmpty()){
+            jLabel2.setText("You didn't enter anything.");
+        }
+        else{
+            this.cardValue = requestField.getText().toLowerCase();
+            this.cardValueObtained = true;
+            this.playerValueObtained = true;
+            this.wNotify();
+            jDialog3.dispose();
+        }
+    }//GEN-LAST:event_requestButtonActionPerformed
+
+    public synchronized void wNotify(){
+        this.notifyAll();
+    }
+    
     public boolean pressButton(int buttonIndex){
         switch(buttonIndex){
             case 0:
@@ -378,12 +459,17 @@ public class GoFishWindow extends javax.swing.JFrame {
             interactPopups[i].add(tempMenu);
             
             askChoice.putClientProperty("AIPlayer", AIPlayers[i]);
+            askChoice.putClientProperty("window", this);
             askChoice.addActionListener(new ActionListener(){
+                JDialog menu;
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    new CardRequestMenu().setVisible(true);
+                    playerToAskFrom = (GofishPlayer)((JMenuItem)ae.getSource())
+                                      .getClientProperty("AIPlayer");
+                    System.out.println("You are going to ask for a card from player " + 
+                                       playerToAskFrom.ID);
+                    jDialog3.setVisible(true);
                 }
-                
             });
             interactPopups[i].add(askChoice);
         }
@@ -402,13 +488,19 @@ public class GoFishWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JPopupMenu jPopupMenu4;
+    private javax.swing.JButton requestButton;
+    private javax.swing.JTextField requestField;
     // End of variables declaration//GEN-END:variables
 }

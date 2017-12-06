@@ -16,7 +16,7 @@ public class CardRequestMenu extends javax.swing.JFrame {
     /**
      * Creates new form CardRequestMenu
      */
-    public CardRequestMenu() {
+    public CardRequestMenu(GoFishWindow gameWindow) {
         initComponents();
     }
 
@@ -105,6 +105,10 @@ public class CardRequestMenu extends javax.swing.JFrame {
         if(jTextField1.getText().isEmpty()){
             jLabel2.setText("You didn't enter anything.");
         }
+        else{
+            this.setVisible(false);
+            this.notifyAll();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -146,11 +150,6 @@ public class CardRequestMenu extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CardRequestMenu().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

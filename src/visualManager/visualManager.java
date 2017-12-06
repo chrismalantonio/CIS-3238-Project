@@ -10,15 +10,26 @@ import gameWindow.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-public class visualManager {
+public class visualManager extends Thread{
     
     public visualManager(){
         
     }
 
-    public int connect(Gofish game) throws InterruptedException {
+    @Override
+    public void run(){
+        try {
+            this.connect(new Gofish(new Deck()));
+        } catch (InterruptedException ex) {
+            Logger.getLogger(visualManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public synchronized int connect(Gofish game) throws InterruptedException{
         GoFishWindow window = new GoFishWindow();
         window.linkWindow(game.AI);
         window.setVisible(true);
@@ -28,10 +39,16 @@ public class visualManager {
         GofishPlayer player = null;
         while(!game.isOver()){
             if(currentPlayerIndex == 3){
-//                while(!window.valuesFound()){;}
-                this.wait();
+                if (!window.valuesFound()){
+                    System.out.println("Player turn, going to wait until player "
+                            + "has made a request.");
+                    this.wait();
+                    System.out.println("Did I wake up?");
+                }
                 GofishPlayer AIplayer = window.getPlayerRequest();
                 Card card = window.getCardRequest();
+                System.out.println("Player has made a decision. They want to "
+                        + "request a " + card.value + " from " + AIplayer.ID);
                 window.nullifyValues();
                 game.humanTurn(AIplayer, card);
             }else{
