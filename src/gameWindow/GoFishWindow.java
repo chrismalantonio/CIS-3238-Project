@@ -340,9 +340,12 @@ public class GoFishWindow extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println(e.getSource());
+                    GofishPlayer AI = ((GofishPlayer)((JMenuItem)e.getSource())
+                            .getClientProperty("AIPlayer"));
                     System.out.println("hi from button " + 
                             ((GofishPlayer)((JMenuItem)e.getSource())
                             .getClientProperty("AIPlayer")).ID );
+                    new BookViewer(AI.books).setVisible(true);
                 }                
             });
             interactPopups[i].add(tempMenu);
