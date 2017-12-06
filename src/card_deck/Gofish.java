@@ -6,6 +6,7 @@
 package card_deck;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
@@ -388,10 +389,12 @@ public class Gofish extends Game {
         return 0;
     }
     
-    public void executeAITurn(int AIIndex){
+    public void executeAITurn(int AIIndex) throws InterruptedException{
         GofishPlayer AIPlayer = this.AI[AIIndex];
         System.out.println("-----------------------------------------");
         System.out.println("Executing turn for player " + AIPlayer.ID);
+        System.out.println("Player " + AIPlayer.ID + " is deciding...");
+        Thread.sleep(1500);
         this.AITurn(AIPlayer);
         this.findBooksInHand(AIPlayer);
     }

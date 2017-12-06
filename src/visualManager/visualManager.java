@@ -37,13 +37,12 @@ public class visualManager extends Thread{
         game.dealCards();
         GofishPlayer human = game.HUMAN;
         GofishPlayer player = null;
+        System.out.println("Player turn, going to wait until player "
+                + "has made a request.");
         while(!game.isOver()){
             if(currentPlayerIndex == 3){
-                if (!window.valuesFound()){
-                    System.out.println("Player turn, going to wait until player "
-                            + "has made a request.");
-                    this.wait();
-                    System.out.println("Did I wake up?");
+                while (!window.valuesFound()){
+                    Thread.sleep(500);
                 }
                 GofishPlayer AIplayer = window.getPlayerRequest();
                 Card card = window.getCardRequest();
