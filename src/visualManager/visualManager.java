@@ -39,6 +39,7 @@ public class visualManager extends Thread{
         GofishPlayer player = null;
         System.out.println("Player turn, going to wait until player "
                 + "has made a request.");
+        window.updatePlayerWindow(human);
         while(!game.isOver()){
             if(currentPlayerIndex == 3){
                 while (!window.valuesFound()){
@@ -50,6 +51,7 @@ public class visualManager extends Thread{
                         + "request a " + card.value + " from " + AIplayer.ID);
                 window.nullifyValues();
                 game.humanTurn(AIplayer, card);
+                window.updatePlayerWindow(human);
             }else{
                 game.executeAITurn(currentPlayerIndex);
             }
