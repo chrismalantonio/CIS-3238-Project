@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 
 public class GoFishWindow extends javax.swing.JFrame {
 
