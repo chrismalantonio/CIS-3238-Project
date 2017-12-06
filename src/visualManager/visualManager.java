@@ -12,20 +12,17 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author Neel Patel
- */
 public class visualManager {
+    
+    public visualManager(){
+        
+    }
 
     public int connect(Gofish game) {
         GoFishWindow window = new GoFishWindow();
+        window.linkWindow(game.AI);
         window.setVisible(true);
-//        if(window.activateButton()){
-//            game.playGofish();
-//            return game.getCurrentTurn();
-//        }
-        return Integer.MIN_VALUE;
+        return 0;
     }
 
     public String getCardLocation(Card c) {

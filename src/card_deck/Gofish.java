@@ -370,6 +370,10 @@ public class Gofish extends Game {
         return 0;
     }
     
+    public boolean isOver(){
+        return GAME_COMPLETE;
+    }
+    
     private void printHand(GofishPlayer P){
         for(Card c: P.hand){
             System.out.print(c.toString() + ", ");

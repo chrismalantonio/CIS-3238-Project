@@ -5,9 +5,11 @@
  */
 package gameWindow;
 
+import card_deck.GofishPlayer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
@@ -20,6 +22,7 @@ public class GoFishWindow extends javax.swing.JFrame {
      */
     public boolean[] buttonsShowing;
     public boolean running = false;
+    private GofishPlayer[] AIPlayers;
     private javax.swing.JPopupMenu cardRequestMenu;
     private CardRequestMenu requestMenu;
     public GoFishWindow() {
@@ -28,24 +31,6 @@ public class GoFishWindow extends javax.swing.JFrame {
         interactButtons[1] = jButton3;
         interactButtons[2] = jButton4;
         buttonsShowing = new boolean[interactButtons.length];
-        for(int i = 0; i < 3; i++){
-            interactPopups[i] = new javax.swing.JPopupMenu();
-            interactPopups[i].add(new JMenuItem("show books")).addActionListener(
-            new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("hi from button " + e.getSource().toString());
-                }                
-            });
-            interactPopups[i].add(new JMenuItem("ask for a card")).addActionListener(
-            new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    new CardRequestMenu().setVisible(true);
-                }
-            });
-        }
-
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -84,11 +69,11 @@ public class GoFishWindow extends javax.swing.JFrame {
         jPopupMenu4 = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        AIWindow0 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        AIWindow2 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        AIWindow1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
@@ -148,7 +133,6 @@ public class GoFishWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -172,8 +156,8 @@ public class GoFishWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setPreferredSize(new java.awt.Dimension(200, 100));
+        AIWindow0.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AIWindow0.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jButton2.setText("Interact");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,25 +171,25 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout AIWindow0Layout = new javax.swing.GroupLayout(AIWindow0);
+        AIWindow0.setLayout(AIWindow0Layout);
+        AIWindow0Layout.setHorizontalGroup(
+            AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AIWindow0Layout.createSequentialGroup()
                 .addGap(77, 77, 77)
                 .addComponent(jButton2)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+        AIWindow0Layout.setVerticalGroup(
+            AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow0Layout.createSequentialGroup()
+                .addContainerGap(62, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.setPreferredSize(new java.awt.Dimension(200, 100));
+        AIWindow2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AIWindow2.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jButton4.setText("Interact");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -214,25 +198,25 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
+        javax.swing.GroupLayout AIWindow2Layout = new javax.swing.GroupLayout(AIWindow2);
+        AIWindow2.setLayout(AIWindow2Layout);
+        AIWindow2Layout.setHorizontalGroup(
+            AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow2Layout.createSequentialGroup()
+                .addContainerGap(83, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(74, 74, 74))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+        AIWindow2Layout.setVerticalGroup(
+            AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow2Layout.createSequentialGroup()
+                .addContainerGap(62, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel4.setPreferredSize(new java.awt.Dimension(200, 100));
+        AIWindow1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AIWindow1.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jButton3.setText("Interact");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -241,19 +225,19 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout AIWindow1Layout = new javax.swing.GroupLayout(AIWindow1);
+        AIWindow1.setLayout(AIWindow1Layout);
+        AIWindow1Layout.setHorizontalGroup(
+            AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
                 .addContainerGap(95, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(93, 93, 93))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+        AIWindow1Layout.setVerticalGroup(
+            AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
+                .addContainerGap(62, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -266,11 +250,11 @@ public class GoFishWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AIWindow0, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                        .addComponent(AIWindow1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -279,9 +263,9 @@ public class GoFishWindow extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AIWindow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AIWindow0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -340,11 +324,45 @@ public class GoFishWindow extends javax.swing.JFrame {
         
     }
 
+    public boolean linkWindow(GofishPlayer[] AIs){
+        this.AIPlayers = AIs;
+        this.link();
+        return false;
+    }
+    
+    private void link(){
+        for(int i = 0; i < 3; i++){
+            interactPopups[i] = new javax.swing.JPopupMenu();
+            interactPopups[i].putClientProperty("AIPlayer", AIPlayers[i]);
+            JMenuItem tempMenu = new JMenuItem("show books");
+            tempMenu.putClientProperty("AIPlayer", AIPlayers[i]);
+            tempMenu.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(e.getSource());
+                    System.out.println("hi from button " + 
+                            ((GofishPlayer)((JMenuItem)e.getSource())
+                            .getClientProperty("AIPlayer")).ID );
+                }                
+            });
+            interactPopups[i].add(tempMenu);
+            interactPopups[i].add(new JMenuItem("ask for a card")).addActionListener(
+            new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    new CardRequestMenu().setVisible(true);
+                }
+            });
+        }
+    }
     
     private javax.swing.JButton[] interactButtons = new javax.swing.JButton[3];
     private javax.swing.JButton[] requestButtons = new javax.swing.JButton[3];
     private javax.swing.JPopupMenu[] interactPopups = new javax.swing.JPopupMenu[3];
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AIWindow0;
+    private javax.swing.JPanel AIWindow1;
+    private javax.swing.JPanel AIWindow2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -355,9 +373,6 @@ public class GoFishWindow extends javax.swing.JFrame {
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;

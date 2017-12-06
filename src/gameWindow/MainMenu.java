@@ -6,6 +6,7 @@
 package gameWindow;
 
 import card_deck.*;
+import visualManager.visualManager;
 
 /**
  *
@@ -75,10 +76,11 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void goFishButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goFishButton
         // Sets goFish window to true
-        GoFishWindow window = new GoFishWindow();
-        window.setVisible(true);
+        visualManager gofishVM = new visualManager();
+        gofishVM.connect(new Gofish(new Deck()));
+//        GoFishWindow window = new GoFishWindow();
+//        window.setVisible(true);
         this.setVisible(false);
-
     }//GEN-LAST:event_goFishButton
 
     private void blackjackButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blackjackButton
