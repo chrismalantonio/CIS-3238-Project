@@ -433,4 +433,16 @@ public class GofishTests {
             }
         }
     }
+    
+    @Test
+    public void noWinnerFoundShouldReturnNull(){
+        gofish = new Gofish(new Deck());
+        gofish.dealCards();
+        gofish.executeAITurn(0);
+        gofish.executeAITurn(1);
+        gofish.executeAITurn(2);
+        GofishPlayer currentWinner = gofish.checkForWinner();
+        assertEquals("Winner was found even though there can't be a winner yet.",
+                    true, currentWinner == null);
+    }
 }

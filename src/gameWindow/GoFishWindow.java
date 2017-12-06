@@ -5,16 +5,13 @@
  */
 package gameWindow;
 
+import card_deck.Card;
 import card_deck.GofishPlayer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-/**
- *
- * @author Neel
- */
 public class GoFishWindow extends javax.swing.JFrame {
 
     /**
@@ -22,6 +19,11 @@ public class GoFishWindow extends javax.swing.JFrame {
      */
     public boolean[] buttonsShowing;
     public boolean running = false;
+    public boolean playerValueObtained = false;
+    public boolean cardValueObtained = false;
+    public GofishPlayer playerToAskFrom = null;
+    public Card cardToAskFor = null;
+    public String cardValue = "";
     private GofishPlayer[] AIPlayers;
     private javax.swing.JPopupMenu cardRequestMenu;
     private CardRequestMenu requestMenu;
@@ -323,6 +325,30 @@ public class GoFishWindow extends javax.swing.JFrame {
 
         
     }
+    
+    public boolean valuesFound(){
+        if(playerValueObtained && cardValueObtained){
+            playerValueObtained = false;
+            cardValueObtained = false;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public GofishPlayer getPlayerRequest(){
+        return this.playerToAskFrom;
+    }
+    
+    public Card getCardRequest(){
+        return this.cardToAskFor;
+    }
+    
+    public void nullifyValues(){
+        playerToAskFrom = null;
+        cardToAskFor = null;
+    }
 
     public boolean linkWindow(GofishPlayer[] AIs){
         this.AIPlayers = AIs;
@@ -335,6 +361,7 @@ public class GoFishWindow extends javax.swing.JFrame {
             interactPopups[i] = new javax.swing.JPopupMenu();
             interactPopups[i].putClientProperty("AIPlayer", AIPlayers[i]);
             JMenuItem tempMenu = new JMenuItem("show books");
+            JMenuItem askChoice = new JMenuItem("ask for a card");
             tempMenu.putClientProperty("AIPlayer", AIPlayers[i]);
             tempMenu.addActionListener(new ActionListener(){
                 @Override
@@ -349,13 +376,16 @@ public class GoFishWindow extends javax.swing.JFrame {
                 }                
             });
             interactPopups[i].add(tempMenu);
-            interactPopups[i].add(new JMenuItem("ask for a card")).addActionListener(
-            new ActionListener(){
+            
+            askChoice.putClientProperty("AIPlayer", AIPlayers[i]);
+            askChoice.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     new CardRequestMenu().setVisible(true);
                 }
+                
             });
+            interactPopups[i].add(askChoice);
         }
     }
     

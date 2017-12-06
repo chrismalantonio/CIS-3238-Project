@@ -208,6 +208,25 @@ public class Gofish extends Game {
             }
         }
     }
+    
+    public boolean humanTurn(GofishPlayer AIplayer, Card cardToAskFor){
+        if(this.askPlayerForCard(cardToAskFor, AIplayer)){
+            System.out.println(AIplayer.ID + " has a " + cardToAskFor.value);
+            this.giveCardToPlayer(cardToAskFor, HUMAN, AIplayer);
+            return true;
+        }else{
+            System.out.println("You have to go fish!");
+            if(this.d.cards.isEmpty()){
+                System.out.println("Unfortunately, you can't draw because there"
+                        + "are no more cards in the pool.");
+            }else{
+                System.out.println("You drew a " + this.d.cards.get
+                                  (this.d.cards.size()-1).toString());
+                HUMAN.draw(this.d);
+            }
+            return false;
+        }
+    }
 
     public boolean addCard() {
         return false;
@@ -369,8 +388,12 @@ public class Gofish extends Game {
         return 0;
     }
     
-    public void executeTurn(int AIIndex){
-        
+    public void executeAITurn(int AIIndex){
+        GofishPlayer AIPlayer = this.AI[AIIndex];
+        System.out.println("-----------------------------------------");
+        System.out.println("Executing turn for player " + AIPlayer.ID);
+        this.AITurn(AIPlayer);
+        this.findBooksInHand(AIPlayer);
     }
     
     public boolean isOver(){

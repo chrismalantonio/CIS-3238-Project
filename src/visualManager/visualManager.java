@@ -18,10 +18,34 @@ public class visualManager {
         
     }
 
-    public int connect(Gofish game) {
+    public int connect(Gofish game) throws InterruptedException {
         GoFishWindow window = new GoFishWindow();
         window.linkWindow(game.AI);
         window.setVisible(true);
+        int currentPlayerIndex = 0;
+        game.dealCards();
+        GofishPlayer human = game.HUMAN;
+        GofishPlayer player = null;
+        while(!game.isOver()){
+            if(currentPlayerIndex == 3){
+//                while(!window.valuesFound()){;}
+                this.wait();
+                GofishPlayer AIplayer = window.getPlayerRequest();
+                Card card = window.getCardRequest();
+                window.nullifyValues();
+                game.humanTurn(AIplayer, card);
+            }else{
+                game.executeAITurn(currentPlayerIndex);
+            }
+            if((player  = game.checkForWinner()) != null){
+                System.out.println(player.ID + " has an empty hand. Game is over.");
+                System.out.println("Checking for winner...");
+                player = game.findWinner();
+                System.out.println("The winner is " + player.ID + " who has a "
+                        + "total of " + player.books.size()/2 + " books.");
+            }
+            currentPlayerIndex = (currentPlayerIndex+1) % 4;
+        }
         return 0;
     }
 
