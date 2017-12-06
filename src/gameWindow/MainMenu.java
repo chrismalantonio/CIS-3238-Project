@@ -83,7 +83,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void blackjackButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blackjackButton
         // Sets Blackjack window to true
-        BlackjackWindow window = new BlackjackWindow();
+        DealerWindow window = new DealerWindow();
         window.setVisible(true);
         this.setVisible(false); 
     }//GEN-LAST:event_blackjackButton

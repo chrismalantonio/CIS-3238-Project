@@ -45,13 +45,10 @@ public class playerTests {
 
     @Test
     public void drawAllCardsFromDeck() {
-        for (int i = 0; i < 54; i++) {
+        for (int i = 0; i < 52; i++) {
             p.draw(d);
-            if (d.cards.isEmpty()) {
-                d = new Deck();
-            }
         }
-        assertEquals(d.cards.size(), 50);
+        assertEquals(d.cards.size(), 0);
     }
 
 }
