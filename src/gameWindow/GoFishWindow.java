@@ -253,28 +253,27 @@ public class GoFishWindow extends javax.swing.JFrame {
             .addGroup(AIWindow0Layout.createSequentialGroup()
                 .addGroup(AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AIWindow0Layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(jLabel3))
-                    .addGroup(AIWindow0Layout.createSequentialGroup()
                         .addGap(77, 77, 77)
-                        .addComponent(jButton2))
+                        .addGroup(AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AIWindow0Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(p0handCount))
+                            .addComponent(jButton2)))
                     .addGroup(AIWindow0Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(p0handCount)))
-                .addContainerGap(95, Short.MAX_VALUE))
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel3)))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         AIWindow0Layout.setVerticalGroup(
             AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow0Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(p0handCount))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -298,27 +297,24 @@ public class GoFishWindow extends javax.swing.JFrame {
         AIWindow2Layout.setHorizontalGroup(
             AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow2Layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(74, 74, 74))
-            .addGroup(AIWindow2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AIWindow2Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel5))
+                .addContainerGap(77, Short.MAX_VALUE)
+                .addGroup(AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(AIWindow2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(p2handCount)))
+                        .addComponent(p2handCount))
+                    .addComponent(jButton4))
+                .addGap(74, 74, 74))
+            .addGroup(AIWindow2Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(jLabel5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         AIWindow2Layout.setVerticalGroup(
             AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(p2handCount))
@@ -345,32 +341,30 @@ public class GoFishWindow extends javax.swing.JFrame {
         AIWindow1.setLayout(AIWindow1Layout);
         AIWindow1Layout.setHorizontalGroup(
             AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(93, 93, 93))
             .addGroup(AIWindow1Layout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AIWindow1Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel7))
-                    .addGroup(AIWindow1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(93, 93, 93))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(p1handCount)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(p1handCount)
+                        .addGap(104, 104, 104))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(123, 123, 123))))
         );
         AIWindow1Layout.setVerticalGroup(
             AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(p1handCount))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -466,7 +460,11 @@ public class GoFishWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArrayList<ImageIcon> books = new ArrayList<ImageIcon>();
+        for(Card c: this.human.books){
+            books.add(this.getImage(c));
+        }
         
+        new BookViewer(books).setVisible(true); 
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private void loadImages() throws IOException{
@@ -596,8 +594,9 @@ public class GoFishWindow extends javax.swing.JFrame {
         this.pack();
     }
 
-    public boolean linkWindow(GofishPlayer[] AIs){
+    public boolean linkWindow(GofishPlayer[] AIs, GofishPlayer human){
         this.AIPlayers = AIs;
+        this.human = human;
         this.link();
         return false;
     }
@@ -683,7 +682,6 @@ public class GoFishWindow extends javax.swing.JFrame {
             });
             interactPopups[i].add(askChoice);
         }
-        this.human = 
     }
     
     private javax.swing.JButton[] interactButtons = new javax.swing.JButton[3];

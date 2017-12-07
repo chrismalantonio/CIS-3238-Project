@@ -35,7 +35,7 @@ public class visualManager extends Thread{
     
     public synchronized int connect(Gofish game) throws InterruptedException, IOException{
         GoFishWindow window = new GoFishWindow();
-        window.linkWindow(game.AI);
+        window.linkWindow(game.AI, game.HUMAN);
         window.setVisible(true);
         int currentPlayerIndex = 0;
         game.dealCards();
