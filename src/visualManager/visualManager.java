@@ -70,6 +70,7 @@ public class visualManager extends Thread{
                 player = game.findWinner();
                 System.out.println("The winner is " + player.ID + " who has a "
                         + "total of " + player.books.size()/2 + " books.");
+                window.showWinner(player);
             }
             currentPlayerIndex = (currentPlayerIndex+1) % 4;
         }

@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
 public class GoFishWindow extends javax.swing.JFrame {
@@ -466,6 +467,17 @@ public class GoFishWindow extends javax.swing.JFrame {
         
         new BookViewer(books).setVisible(true); 
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public void showWinner(GofishPlayer winner){
+        String winStr;
+        if(winner.equals(this.human)){
+            winStr = "You are the winner!";
+        }
+        else{
+            winStr = "The winner is " + winner.ID;
+        }
+        this.add(new JPopupMenu().add(new JLabel(winStr))).show();
+    }
     
     private void loadImages() throws IOException{
         String filename;

@@ -366,9 +366,7 @@ public class GofishTests {
                 break;
             }
         }
-        
         if(gofish.HUMAN.hand.isEmpty()){emptyHand = true;}
-        
         assertEquals("Game ended but no player has an empty hand.", true, 
                 emptyHand);
     }
