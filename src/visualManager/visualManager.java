@@ -26,10 +26,12 @@ public class visualManager extends Thread{
             this.connect(new Gofish(new Deck()));
         } catch (InterruptedException ex) {
             Logger.getLogger(visualManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(visualManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public synchronized int connect(Gofish game) throws InterruptedException{
+    public synchronized int connect(Gofish game) throws InterruptedException, IOException{
         GoFishWindow window = new GoFishWindow();
         window.linkWindow(game.AI);
         window.setVisible(true);

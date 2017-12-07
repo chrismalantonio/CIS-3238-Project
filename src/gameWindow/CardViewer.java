@@ -8,6 +8,7 @@ package gameWindow;
 import card_deck.Card;
 import card_deck.GofishPlayer;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,7 +21,7 @@ public class CardViewer extends java.awt.Frame {
     /**
      * Creates new form CardViewer
      */
-    public CardViewer(ArrayList<Card> cards) {
+    public CardViewer(ArrayList<ImageIcon> handImages) {
         initComponents();
     }
 
@@ -57,7 +58,7 @@ public class CardViewer extends java.awt.Frame {
         ArrayList<Card> cards = null;
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CardViewer(cards).setVisible(true);
+                new CardViewer(null).setVisible(true);
             }
         });
     }

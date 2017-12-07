@@ -8,10 +8,19 @@ package gameWindow;
 import card_deck.Card;
 import card_deck.Deck;
 import card_deck.GofishPlayer;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -35,12 +44,17 @@ public class GoFishWindow extends javax.swing.JFrame {
     private GofishPlayer[] AIPlayers;
     private javax.swing.JPopupMenu cardRequestMenu;
     private CardRequestMenu requestMenu;
-    public GoFishWindow() {
+    private ArrayList<ImageIcon> cardImages;
+    private HashMap<String, Integer> imageMapper;
+    public GoFishWindow() throws IOException {
         initComponents();
         interactButtons[0] = jButton2;
         interactButtons[1] = jButton3;
         interactButtons[2] = jButton4;
         buttonsShowing = new boolean[interactButtons.length];
+        cardImages = new ArrayList<ImageIcon>();
+        this.initMapper();
+        this.loadImages();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -83,7 +97,6 @@ public class GoFishWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         requestButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        playerWindow = new javax.swing.JPanel();
         AIWindow0 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         AIWindow2 = new javax.swing.JPanel();
@@ -92,6 +105,8 @@ public class GoFishWindow extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        playerWindow = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -201,10 +216,6 @@ public class GoFishWindow extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
-        playerWindow.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        playerWindow.setMinimumSize(new java.awt.Dimension(180, 200));
-        playerWindow.setLayout(new java.awt.GridLayout());
-
         AIWindow0.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         AIWindow0.setPreferredSize(new java.awt.Dimension(200, 100));
 
@@ -279,7 +290,7 @@ public class GoFishWindow extends javax.swing.JFrame {
         AIWindow1Layout.setHorizontalGroup(
             AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(93, 93, 93))
         );
@@ -295,6 +306,11 @@ public class GoFishWindow extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        playerWindow.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        playerWindow.setMinimumSize(new java.awt.Dimension(600, 200));
+        playerWindow.setLayout(new java.awt.GridLayout(1, 0));
+        jScrollPane2.setViewportView(playerWindow);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -306,10 +322,10 @@ public class GoFishWindow extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(AIWindow0, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(AIWindow1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                        .addComponent(AIWindow1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(playerWindow, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -321,9 +337,9 @@ public class GoFishWindow extends javax.swing.JFrame {
                     .addComponent(AIWindow0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(playerWindow, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -362,9 +378,49 @@ public class GoFishWindow extends javax.swing.JFrame {
             jDialog3.dispose();
         }
     }//GEN-LAST:event_requestButtonActionPerformed
-
-    public synchronized void wNotify(){
-        this.notifyAll();
+    
+    private void loadImages() throws IOException{
+        String filename;
+        for(int i = 0; i < 52; i++){
+            filename = "src/images/"+(i+1)+".png";
+            System.out.println(filename);
+            BufferedImage img = ImageIO.read(new File(filename));
+            this.cardImages.add(new ImageIcon(img));
+        }
+    }
+    
+    private void initMapper(){
+        imageMapper = new HashMap<String, Integer>();
+        imageMapper.put("clubs", 0);
+        imageMapper.put("spades", 1);
+        imageMapper.put("hearts", 2);
+        imageMapper.put("diamonds", 3);
+        imageMapper.put("ace", 1);
+        imageMapper.put("king", 11);
+        imageMapper.put("queen", 12);
+        imageMapper.put("jack", 13);
+    }
+    
+    private ImageIcon getImage(Card c){
+        int cardVal;
+        switch(c.value){
+            case("ace"):
+                cardVal = imageMapper.get("ace");
+                break;
+            case("king"):
+                cardVal = imageMapper.get("king");
+                break;
+            case("queen"):
+                cardVal = imageMapper.get("queen");
+                break;
+            case("jack"):
+                cardVal = imageMapper.get("jack");
+                break;
+            default:
+                cardVal = Integer.parseInt(c.value);
+        }
+        return this.cardImages.get((13 * imageMapper.get(c.suit)) 
+                                    + cardVal-1);
     }
     
     public boolean pressButton(int buttonIndex){
@@ -395,10 +451,7 @@ public class GoFishWindow extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         //</editor-fold>
-
         /* Create and display the form */
-
-        
     }
     
     public boolean valuesFound(){
@@ -427,8 +480,11 @@ public class GoFishWindow extends javax.swing.JFrame {
     
     public void updatePlayerWindow(GofishPlayer human){
         ArrayList<Card> humanHand = human.hand;
+        this.playerWindow.removeAll();
         for(Card c: humanHand){
-            this.playerWindow.add(new JLabel(c.toString()));
+            JLabel cardImage = new JLabel();
+            cardImage.setIcon(this.getImage(c));
+            this.playerWindow.add(cardImage);
             System.out.println("Creating cards...");
         }
         this.pack();
@@ -450,13 +506,56 @@ public class GoFishWindow extends javax.swing.JFrame {
             tempMenu.addActionListener(new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    ArrayList<ImageIcon> bookImages = new ArrayList<ImageIcon>();
                     System.out.println(e.getSource());
                     GofishPlayer AI = ((GofishPlayer)((JMenuItem)e.getSource())
                             .getClientProperty("AIPlayer"));
+                    for(Card c: AI.books){
+                        int suitVal,cardVal;
+                        suitVal = cardVal = 0;
+                        switch(c.suit){
+                            case("clubs"):
+                                suitVal = 0;
+                                break;
+                            case("spades"):
+                                suitVal = 1;
+                                break;
+                            case("hearts"):
+                                suitVal = 2;
+                                break;
+                            case("diamonds"):
+                                suitVal = 3;
+                                break;
+                        }
+                        switch(c.value){
+                            case("ace"):
+                                cardVal = 1;
+                                break;
+                            case("jack"):
+                                cardVal = 11;
+                                break;
+                            case("queen"):
+                                cardVal = 12;
+                                break;
+                            case("king"):
+                                cardVal = 13;
+                                break;
+                            default:
+                                cardVal = Integer.parseInt(c.value);
+                                break;
+                        }
+                        try {
+                            bookImages.add(new ImageIcon(ImageIO.read(
+                                    new File("src/images/"+(13* suitVal
+                                            + cardVal-1)+".png"))));
+                        } catch (IOException ex) {
+                            Logger.getLogger(GoFishWindow.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                     System.out.println("hi from player " + 
                             ((GofishPlayer)((JMenuItem)e.getSource())
                             .getClientProperty("AIPlayer")).ID );
-                    new BookViewer(AI.books).setVisible(true);
+                    new BookViewer(bookImages).setVisible(true);
                 }                
             });
             interactPopups[i].add(tempMenu);
@@ -501,6 +600,7 @@ public class GoFishWindow extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JPopupMenu jPopupMenu4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel playerWindow;
     private javax.swing.JButton requestButton;

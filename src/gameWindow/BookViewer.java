@@ -7,6 +7,7 @@ package gameWindow;
 
 import card_deck.Card;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
@@ -18,9 +19,15 @@ public class BookViewer extends javax.swing.JFrame {
     /**
      * Creates new form BookViewer
      */
-    public BookViewer(ArrayList<Card> cards) {
+    public BookViewer(ArrayList<ImageIcon> hands) {
+        this.removeAll();
         initComponents();
-        this.add(new JLabel("hi"));
+        for(ImageIcon img: hands){
+            JLabel lbl = new JLabel();
+            lbl.setIcon(img);
+            this.add(lbl);
+        }
+        this.pack();
     }
 
     /**
