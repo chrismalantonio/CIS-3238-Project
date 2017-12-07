@@ -377,7 +377,7 @@ public class Gofish extends Game {
             }
             GofishPlayer lastPlayer = this.checkForWinner();
             if(lastPlayer != null){
-                System.out.println(lastPlayer.ID + " has an empty hand, game has ended.");
+                System.out.println("\u001B[32m"+lastPlayer.ID + " has an empty hand, game has ended.");
                 System.out.println("Finding winner...");
                 GofishPlayer winner = this.findWinner();
                 System.out.println("Player " + winner.ID + " is the winner. They obtained " +

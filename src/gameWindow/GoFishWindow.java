@@ -419,8 +419,8 @@ public class GoFishWindow extends javax.swing.JFrame {
             default:
                 cardVal = Integer.parseInt(c.value);
         }
-        return this.cardImages.get((13 * imageMapper.get(c.suit)) 
-                                    + cardVal);
+        return this.cardImages.get(((13 * imageMapper.get(c.suit)) 
+                                    + cardVal)-1);
     }
     
     public boolean pressButton(int buttonIndex){
@@ -513,7 +513,7 @@ public class GoFishWindow extends javax.swing.JFrame {
                     for(Card c: AI.books){
                         int suitVal,cardVal;
                         suitVal = cardVal = 0;
-                        switch(c.suit){
+                        switch(c.suit.toLowerCase()){
                             case("clubs"):
                                 suitVal = 0;
                                 break;

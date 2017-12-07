@@ -58,7 +58,7 @@ public class visualManager extends Thread{
                 game.executeAITurn(currentPlayerIndex);
             }
             if((player  = game.checkForWinner()) != null){
-                System.out.println(player.ID + " has an empty hand. Game is over.");
+                System.out.println("\u001B[32m " + player.ID + " has an empty hand. Game is over.");
                 System.out.println("Checking for winner...");
                 player = game.findWinner();
                 System.out.println("The winner is " + player.ID + " who has a "
