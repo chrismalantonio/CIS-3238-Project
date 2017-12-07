@@ -52,9 +52,7 @@ public class Blackjack extends Game {
 
     public void cpuBestChoice(BlackjackPlayer cpu, Deck deck) {
         if ((cpu.getCardValue(cpu.hand, 0) == cpu.getCardValue(cpu.hand, 1))) {
-            if (cpu.hand.count != 20) {
                 cpu.split();
-            }
         }
         while (cpu.hand.count < 17) {
             cpu.hit(cpu.hand, deck);
