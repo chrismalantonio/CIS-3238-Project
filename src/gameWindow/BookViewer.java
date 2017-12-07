@@ -20,12 +20,12 @@ public class BookViewer extends javax.swing.JFrame {
      * Creates new form BookViewer
      */
     public BookViewer(ArrayList<ImageIcon> hands) {
-        this.removeAll();
         initComponents();
         for(ImageIcon img: hands){
             JLabel lbl = new JLabel();
+            lbl.setSize(img.getIconWidth(), img.getIconHeight());
             lbl.setIcon(img);
-            this.add(lbl);
+            this.bookPanel.add(lbl);
         }
         this.pack();
     }
@@ -39,13 +39,33 @@ public class BookViewer extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bookPanel = new javax.swing.JPanel();
+
+        setMaximumSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
-        getContentPane().setLayout(new java.awt.GridLayout(10, 10, 1, 1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bookPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bookPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -58,5 +78,6 @@ public class BookViewer extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bookPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -396,9 +396,9 @@ public class GoFishWindow extends javax.swing.JFrame {
         imageMapper.put("hearts", 2);
         imageMapper.put("diamonds", 3);
         imageMapper.put("ace", 1);
-        imageMapper.put("king", 11);
+        imageMapper.put("jack", 11);
         imageMapper.put("queen", 12);
-        imageMapper.put("jack", 13);
+        imageMapper.put("king", 13);
     }
     
     private ImageIcon getImage(Card c){
@@ -407,20 +407,20 @@ public class GoFishWindow extends javax.swing.JFrame {
             case("ace"):
                 cardVal = imageMapper.get("ace");
                 break;
-            case("king"):
+            case("jack"):
                 cardVal = imageMapper.get("king");
                 break;
             case("queen"):
                 cardVal = imageMapper.get("queen");
                 break;
-            case("jack"):
+            case("king"):
                 cardVal = imageMapper.get("jack");
                 break;
             default:
                 cardVal = Integer.parseInt(c.value);
         }
         return this.cardImages.get((13 * imageMapper.get(c.suit)) 
-                                    + cardVal-1);
+                                    + cardVal);
     }
     
     public boolean pressButton(int buttonIndex){
@@ -545,9 +545,12 @@ public class GoFishWindow extends javax.swing.JFrame {
                                 break;
                         }
                         try {
+                            System.out.println("Creating image of " + c.toString() +
+                                    "with file src/images/" + (13* suitVal
+                                    + cardVal)+".png");
                             bookImages.add(new ImageIcon(ImageIO.read(
                                     new File("src/images/"+(13* suitVal
-                                            + cardVal-1)+".png"))));
+                                            + cardVal)+".png"))));
                         } catch (IOException ex) {
                             Logger.getLogger(GoFishWindow.class.getName()).log(Level.SEVERE, null, ex);
                         }
