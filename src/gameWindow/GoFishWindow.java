@@ -42,6 +42,7 @@ public class GoFishWindow extends javax.swing.JFrame {
     public Card cardToAskFor = null;
     public String cardValue = "";
     private GofishPlayer[] AIPlayers;
+    private GofishPlayer human;
     private javax.swing.JPopupMenu cardRequestMenu;
     private CardRequestMenu requestMenu;
     private ArrayList<ImageIcon> cardImages;
@@ -116,6 +117,7 @@ public class GoFishWindow extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         playerWindow = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -382,21 +384,31 @@ public class GoFishWindow extends javax.swing.JFrame {
         playerWindow.setLayout(new java.awt.GridLayout(1, 0));
         jScrollPane2.setViewportView(playerWindow);
 
+        jButton1.setText("My books");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(AIWindow0, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(AIWindow1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -410,7 +422,9 @@ public class GoFishWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
 
@@ -449,6 +463,11 @@ public class GoFishWindow extends javax.swing.JFrame {
             jDialog3.dispose();
         }
     }//GEN-LAST:event_requestButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ArrayList<ImageIcon> books = new ArrayList<ImageIcon>();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     private void loadImages() throws IOException{
         String filename;
@@ -509,6 +528,22 @@ public class GoFishWindow extends javax.swing.JFrame {
                 break;
         }
         return false;
+    }
+    
+    public void updateHandLabel(GofishPlayer player){
+        switch(player.ID){
+            case(0):
+                this.p0handCount.setText(Integer.toString(player.hand.size()));
+                break;
+            case(1):
+                this.p1handCount.setText(Integer.toString(player.hand.size()));
+                break;
+            case(2):
+                this.p2handCount.setText(Integer.toString(player.hand.size()));
+                break;
+            default:
+                break;
+        }
     }
     
 //    interactPopups[0].
@@ -648,6 +683,7 @@ public class GoFishWindow extends javax.swing.JFrame {
             });
             interactPopups[i].add(askChoice);
         }
+        this.human = 
     }
     
     private javax.swing.JButton[] interactButtons = new javax.swing.JButton[3];
@@ -657,6 +693,7 @@ public class GoFishWindow extends javax.swing.JFrame {
     private javax.swing.JPanel AIWindow0;
     private javax.swing.JPanel AIWindow1;
     private javax.swing.JPanel AIWindow2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

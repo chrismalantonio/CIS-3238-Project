@@ -16,6 +16,8 @@ import javax.imageio.ImageIO;
 
 public class visualManager extends Thread{
     
+    
+    
     public visualManager(){
         
     }
@@ -42,6 +44,9 @@ public class visualManager extends Thread{
         System.out.println("Player turn, going to wait until player "
                 + "has made a request.");
         window.updatePlayerWindow(human);
+        for(GofishPlayer p: game.AI){
+            window.updateHandLabel(p);
+        }
         while(!game.isOver()){
             if(currentPlayerIndex == 3){
                 while (!window.valuesFound()){
@@ -57,6 +62,7 @@ public class visualManager extends Thread{
                 window.updatePlayerWindow(human);
             }else{
                 game.executeAITurn(currentPlayerIndex);
+                window.updateHandLabel(game.AI[currentPlayerIndex]);
             }
             if((player  = game.checkForWinner()) != null){
                 System.out.println("\u001B[32m " + player.ID + " has an empty hand. Game is over.");
