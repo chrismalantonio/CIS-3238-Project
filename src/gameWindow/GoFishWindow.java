@@ -99,10 +99,19 @@ public class GoFishWindow extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         AIWindow0 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        p0handCount = new javax.swing.JLabel();
         AIWindow2 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
+        p2handCount = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         AIWindow1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
+        p1handCount = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -231,19 +240,39 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Player 0");
+
+        jLabel4.setText("Cards in hand:");
+
         javax.swing.GroupLayout AIWindow0Layout = new javax.swing.GroupLayout(AIWindow0);
         AIWindow0.setLayout(AIWindow0Layout);
         AIWindow0Layout.setHorizontalGroup(
             AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AIWindow0Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jButton2)
+                .addGroup(AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AIWindow0Layout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(jLabel3))
+                    .addGroup(AIWindow0Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(jButton2))
+                    .addGroup(AIWindow0Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p0handCount)))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
         AIWindow0Layout.setVerticalGroup(
             AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow0Layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(p0handCount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
@@ -258,6 +287,10 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Player 2");
+
+        jLabel6.setText("Cards in hand:");
+
         javax.swing.GroupLayout AIWindow2Layout = new javax.swing.GroupLayout(AIWindow2);
         AIWindow2.setLayout(AIWindow2Layout);
         AIWindow2Layout.setHorizontalGroup(
@@ -266,11 +299,28 @@ public class GoFishWindow extends javax.swing.JFrame {
                 .addContainerGap(83, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addGap(74, 74, 74))
+            .addGroup(AIWindow2Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AIWindow2Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel5))
+                    .addGroup(AIWindow2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p2handCount)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         AIWindow2Layout.setVerticalGroup(
             AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow2Layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(p2handCount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -285,6 +335,10 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Player 1");
+
+        jLabel8.setText("Cards in hand:");
+
         javax.swing.GroupLayout AIWindow1Layout = new javax.swing.GroupLayout(AIWindow1);
         AIWindow1.setLayout(AIWindow1Layout);
         AIWindow1Layout.setHorizontalGroup(
@@ -293,11 +347,28 @@ public class GoFishWindow extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(93, 93, 93))
+            .addGroup(AIWindow1Layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addGroup(AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AIWindow1Layout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addComponent(jLabel7))
+                    .addGroup(AIWindow1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p1handCount)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         AIWindow1Layout.setVerticalGroup(
             AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(p1handCount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
@@ -507,7 +578,6 @@ public class GoFishWindow extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ArrayList<ImageIcon> bookImages = new ArrayList<ImageIcon>();
-                    System.out.println(e.getSource());
                     GofishPlayer AI = ((GofishPlayer)((JMenuItem)e.getSource())
                             .getClientProperty("AIPlayer"));
                     for(Card c: AI.books){
@@ -598,6 +668,12 @@ public class GoFishWindow extends javax.swing.JFrame {
     private javax.swing.JFrame jFrame3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
@@ -605,6 +681,9 @@ public class GoFishWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel p0handCount;
+    private javax.swing.JLabel p1handCount;
+    private javax.swing.JLabel p2handCount;
     private javax.swing.JPanel playerWindow;
     private javax.swing.JButton requestButton;
     private javax.swing.JTextField requestField;

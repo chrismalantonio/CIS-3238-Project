@@ -53,6 +53,7 @@ public class visualManager extends Thread{
                         + "request a " + card.value + " from " + AIplayer.ID);
                 window.nullifyValues();
                 game.humanTurn(AIplayer, card);
+                game.findBooksInHand(human);
                 window.updatePlayerWindow(human);
             }else{
                 game.executeAITurn(currentPlayerIndex);

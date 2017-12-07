@@ -123,8 +123,12 @@ public class Gofish extends Game {
                 }
             }
             if(bookExists){
-                System.out.println(A.ID + " has found a book in their hand and"
+                if(A.equals(HUMAN)){
+                    System.out.println("\u001B[32m" + "You found a book!" + "\u001B[30m");
+                }else{
+                    System.out.println(A.ID + " has found a book in their hand and"
                         + "removed it.");
+                }
                 A.hand.remove(c); A.hand.remove(b);
                 A.books.add(c); A.books.add(b);
             }
