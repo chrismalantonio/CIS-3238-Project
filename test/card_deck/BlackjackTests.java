@@ -33,8 +33,8 @@ public class BlackjackTests {
         Card ace2 = new Card("hearts", "ace");
         Card king = new Card("clubs", "king");
         Card jack = new Card("spades", "jack");
-        Card two = new Card("spades", "two");
-        Card three = new Card("spades", "three");
+        Card two = new Card("spades", "2");
+        Card three = new Card("spades", "3");
 
         /* simulate 21 in both player hands
             and 20 in dealer's hand         */
@@ -60,8 +60,8 @@ public class BlackjackTests {
     public void dealerDrawsWhenUnder17() {
         Card king = new Card("clubs", "king");
         Card jack = new Card("spades", "jack");
-        Card nine = new Card("spades", "nine");
-        Card six = new Card("spades", "six");
+        Card nine = new Card("spades", "9");
+        Card six = new Card("spades", "6");
 
         /*  Player hand count: 19
             Dealer hand count: 16   */
@@ -100,25 +100,53 @@ public class BlackjackTests {
 
     @Test
     public void dealerShouldDrawAfterSplit() {
-        Card three = new Card("hearts", "three");
-        Card three2 = new Card("spades", "three");
-        Card four = new Card("spades", "four");
-        Card four2 = new Card("hearts", "four");
-        Card eight = new Card("spades", "eight");
+        Card three = new Card("hearts", "3");
+        Card three2 = new Card("spades", "3");
+        Card four = new Card("spades", "4");
+        Card four2 = new Card("hearts", "4");
+        Card eight = new Card("spades", "8");
 
         p.hand.cards.add(three);
         p.hand.cards.add(four);
         p.hand.cards.add(eight);
-        
+
         p.hand2.cards.add(three2);
         p.hand2.cards.add(four2);
 
         p.hand.count = 15;
         p.hand2.count = 7;
         cpu.hand.count = 13;
+
+        g.decideWinner(p, cpu, d);
+
+        assertNotEquals(cpu.hand.count, 13);
+    }
+
+    @Test
+    public void cpuShouldHaveCardsInSecondHand() {
+        Card four = new Card("hearts", "4");
+        Card four2 = new Card("spades", "4");
+
+        cpu.hand.cards.add(four);
+        cpu.hand.cards.add(four2);
+        cpu.hand.count = 8;
+
+        g.cpuBestChoice(cpu, d);
+
+        assertFalse(cpu.hand2.cards.isEmpty());
+    }
+
+    @Test
+    public void cpuShouldDrawAt16() {
+        Card king = new Card("clubs", "king");
+        Card six = new Card("clubs", "6");
         
-        g.decideWinner(p, cpu, d); 
-        
-        assertNotEquals(cpu.hand.count, 13); 
+        cpu.hand.cards.add(king);
+        cpu.hand.cards.add(six);
+        cpu.hand.count = 16;
+
+        g.cpuBestChoice(cpu, d);
+
+        assertNotEquals(cpu.hand.count, 16);
     }
 }
