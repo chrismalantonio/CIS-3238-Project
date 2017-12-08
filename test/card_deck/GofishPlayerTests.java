@@ -45,46 +45,30 @@ public class GofishPlayerTests {
     public void playerHasCorrectStartingCardAmount(){
         
     }
+
+    @Test
+    public void playerIsAbleToTakeACardFromOpponent(){
+        
+    }
+    
+    @Test
+    public void playerCanGiveACardToOpponent(){
+        
+    }
+    
+    @Test 
+    public void sometest(){
+        
+    }
     
     @Test
     public void checkBooksConfirmsBookStatus(){
         Deck d = new Deck();
-        for(int i = 0; i < 10; i++){
-            p.draw(d);
-        }
-        boolean bookExists = false;
-        Card c = p.hand.get(0);
-        for(int i = 1; i < 10; i++){
-            if(c.equals(p.hand.get(i))){
-                bookExists = true;
-            }
-        }
-        if(bookExists){
-            assertEquals("Book exists but checkBooks did not find it.", 
-                        bookExists, p.checkForBooks(c));
-        }else{
-            assertEquals("Nonexistent book found in player book list", bookExists,
-                        p.checkForBooks(c));
-        }
+        p.hand.add(new Card("hearts", "two"));
+        p.hand.add(new Card("clubs", "two"));
+        assertEquals("Book exists but checkBooks didn't find it.", true, 
+                    p.checkForBooks(p.hand.get(0)));
     }
+    
 
-    @Test
-    public void cardsInBookAreNotInHand(){
-        Deck d = new Deck();
-        for(int i = 0; i < 52; i++){
-            p.draw(d);
-        }
-        
-        Card a = p.hand.get(0);
-        p.addBook(a);
-        int remCards = 0;
-        for(Card c: p.hand){
-            if(c.value.equals(a.value)){
-                remCards++;
-            }
-        }
-        
-        assertEquals("Book creation failed.", remCards, 2);
-        
-    }
 }

@@ -5,14 +5,27 @@
  */
 package gameWindow;
 
+import card_deck.Card;
+import card_deck.GofishPlayer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 
-/**
- *
- * @author Neel
- */
 public class GoFishWindow extends javax.swing.JFrame {
 
     /**
@@ -20,32 +33,29 @@ public class GoFishWindow extends javax.swing.JFrame {
      */
     public boolean[] buttonsShowing;
     public boolean running = false;
+    public boolean playerValueObtained = false;
+    public boolean cardValueObtained = false;
+    public GofishPlayer playerToAskFrom = null;
+    PrintStream stdout = System.out;
+    PrintStream gameOutput;
+    public Card cardToAskFor = null;
+    public String cardValue = "";
+    private GofishPlayer[] AIPlayers;
+    private GofishPlayer human;
     private javax.swing.JPopupMenu cardRequestMenu;
     private CardRequestMenu requestMenu;
-    public GoFishWindow() {
+    private ArrayList<ImageIcon> cardImages;
+    private HashMap<String, Integer> imageMapper;
+    public GoFishWindow() throws IOException {
         initComponents();
         interactButtons[0] = jButton2;
         interactButtons[1] = jButton3;
         interactButtons[2] = jButton4;
         buttonsShowing = new boolean[interactButtons.length];
-        for(int i = 0; i < 3; i++){
-            interactPopups[i] = new javax.swing.JPopupMenu();
-            interactPopups[i].add(new JMenuItem("show cards")).addActionListener(
-            new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("hi from " + e.toString());
-                }                
-            });
-            interactPopups[i].add(new JMenuItem("ask for a card")).addActionListener(
-            new ActionListener(){
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    new CardRequestMenu().setVisible(true);
-                }
-            });
-        }
-
+        cardImages = new ArrayList<ImageIcon>();
+        this.initMapper();
+        this.loadImages();
+        this.jTextArea1.setEditable(false);
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -62,7 +72,8 @@ public class GoFishWindow extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GoFishWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+        gameOutput = new PrintStream(new gameoutput(this.jTextArea1));
+        System.setOut(gameOutput);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,14 +93,31 @@ public class GoFishWindow extends javax.swing.JFrame {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jPopupMenu3 = new javax.swing.JPopupMenu();
         jPopupMenu4 = new javax.swing.JPopupMenu();
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        jDialog3 = new javax.swing.JDialog();
+        requestField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        requestButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        AIWindow0 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        p0handCount = new javax.swing.JLabel();
+        AIWindow2 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        p2handCount = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        AIWindow1 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
+        p1handCount = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        playerWindow = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -146,34 +174,61 @@ public class GoFishWindow extends javax.swing.JFrame {
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
+        jDialog3.setTitle("Request value");
+        jDialog3.setMinimumSize(new java.awt.Dimension(400, 300));
+
+        requestField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Which card do you want to request?:");
+
+        requestButton.setText("Request");
+        requestButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                requestButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
+        jDialog3.getContentPane().setLayout(jDialog3Layout);
+        jDialog3Layout.setHorizontalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog3Layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(requestButton)
+                .addGap(77, 77, 77))
+            .addGroup(jDialog3Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(requestField, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addGap(47, 47, 47))
+        );
+        jDialog3Layout.setVerticalGroup(
+            jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog3Layout.createSequentialGroup()
+                .addContainerGap(126, Short.MAX_VALUE)
+                .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(requestField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(requestButton)
+                    .addComponent(jLabel2))
+                .addGap(124, 124, 124))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jButton1.setText("Ask player for card");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(323, 323, 323)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(204, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setPreferredSize(new java.awt.Dimension(200, 100));
+        AIWindow0.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AIWindow0.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jButton2.setText("Interact");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,25 +242,44 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jButton2)
-                .addContainerGap(88, Short.MAX_VALUE))
+        jLabel3.setText("Player 0");
+
+        jLabel4.setText("Cards in hand:");
+
+        javax.swing.GroupLayout AIWindow0Layout = new javax.swing.GroupLayout(AIWindow0);
+        AIWindow0.setLayout(AIWindow0Layout);
+        AIWindow0Layout.setHorizontalGroup(
+            AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AIWindow0Layout.createSequentialGroup()
+                .addGroup(AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AIWindow0Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addGroup(AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(AIWindow0Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(p0handCount))
+                            .addComponent(jButton2)))
+                    .addGroup(AIWindow0Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel3)))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+        AIWindow0Layout.setVerticalGroup(
+            AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow0Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(AIWindow0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(p0handCount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
                 .addContainerGap())
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.setPreferredSize(new java.awt.Dimension(200, 100));
+        AIWindow2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AIWindow2.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jButton4.setText("Interact");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -214,25 +288,43 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
-                .addComponent(jButton4)
+        jLabel5.setText("Player 2");
+
+        jLabel6.setText("Cards in hand:");
+
+        javax.swing.GroupLayout AIWindow2Layout = new javax.swing.GroupLayout(AIWindow2);
+        AIWindow2.setLayout(AIWindow2Layout);
+        AIWindow2Layout.setHorizontalGroup(
+            AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow2Layout.createSequentialGroup()
+                .addContainerGap(77, Short.MAX_VALUE)
+                .addGroup(AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(AIWindow2Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p2handCount))
+                    .addComponent(jButton4))
                 .addGap(74, 74, 74))
+            .addGroup(AIWindow2Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+        AIWindow2Layout.setVerticalGroup(
+            AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow2Layout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addGroup(AIWindow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(p2handCount))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel4.setPreferredSize(new java.awt.Dimension(200, 100));
+        AIWindow1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AIWindow1.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jButton3.setText("Interact");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -241,22 +333,57 @@ public class GoFishWindow extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(95, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(93, 93, 93))
+        jLabel7.setText("Player 1");
+
+        jLabel8.setText("Cards in hand:");
+
+        javax.swing.GroupLayout AIWindow1Layout = new javax.swing.GroupLayout(AIWindow1);
+        AIWindow1.setLayout(AIWindow1Layout);
+        AIWindow1Layout.setHorizontalGroup(
+            AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AIWindow1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(93, 93, 93))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(p1handCount)
+                        .addGap(104, 104, 104))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(123, 123, 123))))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+        AIWindow1Layout.setVerticalGroup(
+            AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AIWindow1Layout.createSequentialGroup()
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(AIWindow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(p1handCount))
+                .addGap(12, 12, 12)
                 .addComponent(jButton3)
                 .addContainerGap())
         );
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        playerWindow.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        playerWindow.setMinimumSize(new java.awt.Dimension(600, 200));
+        playerWindow.setLayout(new java.awt.GridLayout(1, 0));
+        jScrollPane2.setViewportView(playerWindow);
+
+        jButton1.setText("My books");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -265,13 +392,17 @@ public class GoFishWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(AIWindow0, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                        .addComponent(AIWindow1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -279,11 +410,15 @@ public class GoFishWindow extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AIWindow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AIWindow0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AIWindow2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jButton1)
                 .addContainerGap())
         );
 
@@ -306,6 +441,87 @@ public class GoFishWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void requestFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_requestFieldActionPerformed
+
+    private void requestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestButtonActionPerformed
+        if(requestField.getText().isEmpty()){
+            jLabel2.setText("You didn't enter anything.");
+        }
+        else{
+            this.cardValue = requestField.getText().toLowerCase();
+            this.cardToAskFor = new Card("spades", this.cardValue);
+            this.cardValueObtained = true;
+            this.playerValueObtained = true;
+            jDialog3.dispose();
+        }
+    }//GEN-LAST:event_requestButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ArrayList<ImageIcon> books = new ArrayList<ImageIcon>();
+        for(Card c: this.human.books){
+            books.add(this.getImage(c));
+        }
+        
+        new BookViewer(books).setVisible(true); 
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    public void showWinner(GofishPlayer winner){
+        String winStr;
+        if(winner.equals(this.human)){
+            winStr = "You are the winner!";
+        }
+        else{
+            winStr = "The winner is " + winner.ID;
+        }
+        this.add(new JPopupMenu().add(new JLabel(winStr))).show();
+    }
+    
+    private void loadImages() throws IOException{
+        String filename;
+        for(int i = 0; i < 52; i++){
+            filename = "src/images/"+(i+1)+".png";
+            System.out.println(filename);
+            BufferedImage img = ImageIO.read(new File(filename));
+            this.cardImages.add(new ImageIcon(img));
+        }
+    }
+    
+    private void initMapper(){
+        imageMapper = new HashMap<String, Integer>();
+        imageMapper.put("clubs", 0);
+        imageMapper.put("spades", 1);
+        imageMapper.put("hearts", 2);
+        imageMapper.put("diamonds", 3);
+        imageMapper.put("ace", 1);
+        imageMapper.put("jack", 11);
+        imageMapper.put("queen", 12);
+        imageMapper.put("king", 13);
+    }
+    
+    private ImageIcon getImage(Card c){
+        int cardVal;
+        switch(c.value){
+            case("ace"):
+                cardVal = imageMapper.get("ace");
+                break;
+            case("jack"):
+                cardVal = imageMapper.get("king");
+                break;
+            case("queen"):
+                cardVal = imageMapper.get("queen");
+                break;
+            case("king"):
+                cardVal = imageMapper.get("jack");
+                break;
+            default:
+                cardVal = Integer.parseInt(c.value);
+        }
+        return this.cardImages.get(((13 * imageMapper.get(c.suit)) 
+                                    + cardVal)-1);
+    }
+    
     public boolean pressButton(int buttonIndex){
         switch(buttonIndex){
             case 0:
@@ -323,44 +539,184 @@ public class GoFishWindow extends javax.swing.JFrame {
         return false;
     }
     
-//    interactPopups[0].
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) { 
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        //</editor-fold>
-
-        /* Create and display the form */
-
+    public void updateHandLabel(GofishPlayer player){
+        switch(player.ID){
+            case(0):
+                this.p0handCount.setText(Integer.toString(player.hand.size()));
+                break;
+            case(1):
+                this.p1handCount.setText(Integer.toString(player.hand.size()));
+                break;
+            case(2):
+                this.p2handCount.setText(Integer.toString(player.hand.size()));
+                break;
+            default:
+                break;
+        }
+    }
         
+    public boolean valuesFound(){
+        if(playerValueObtained && cardValueObtained){
+            playerValueObtained = false;
+            cardValueObtained = false;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public GofishPlayer getPlayerRequest(){
+        return this.playerToAskFrom;
+    }
+    
+    public Card getCardRequest(){
+        return this.cardToAskFor;
+    }
+    
+    public void nullifyValues(){
+        playerToAskFrom = null;
+        cardToAskFor = null;
+    }
+    
+    public void updatePlayerWindow(GofishPlayer human){
+        ArrayList<Card> humanHand = human.hand;
+        this.playerWindow.removeAll();
+        for(Card c: humanHand){
+            JLabel cardImage = new JLabel();
+            cardImage.setIcon(this.getImage(c));
+            this.playerWindow.add(cardImage);
+        }
+        this.pack();
     }
 
+    public boolean linkWindow(GofishPlayer[] AIs, GofishPlayer human){
+        this.AIPlayers = AIs;
+        this.human = human;
+        this.link();
+        return false;
+    }
+    
+    private void link(){
+        for(int i = 0; i < 3; i++){
+            interactPopups[i] = new javax.swing.JPopupMenu();
+            interactPopups[i].putClientProperty("AIPlayer", AIPlayers[i]);
+            JMenuItem tempMenu = new JMenuItem("show books");
+            JMenuItem askChoice = new JMenuItem("ask for a card");
+            tempMenu.putClientProperty("AIPlayer", AIPlayers[i]);
+            tempMenu.addActionListener(new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ArrayList<ImageIcon> bookImages = new ArrayList<ImageIcon>();
+                    GofishPlayer AI = ((GofishPlayer)((JMenuItem)e.getSource())
+                            .getClientProperty("AIPlayer"));
+                    for(Card c: AI.books){
+                        int suitVal,cardVal;
+                        suitVal = cardVal = 0;
+                        switch(c.suit.toLowerCase()){
+                            case("clubs"):
+                                suitVal = 0;
+                                break;
+                            case("spades"):
+                                suitVal = 1;
+                                break;
+                            case("hearts"):
+                                suitVal = 2;
+                                break;
+                            case("diamonds"):
+                                suitVal = 3;
+                                break;
+                        }
+                        switch(c.value){
+                            case("ace"):
+                                cardVal = 1;
+                                break;
+                            case("jack"):
+                                cardVal = 11;
+                                break;
+                            case("queen"):
+                                cardVal = 12;
+                                break;
+                            case("king"):
+                                cardVal = 13;
+                                break;
+                            default:
+                                cardVal = Integer.parseInt(c.value);
+                                break;
+                        }
+                        try {
+//                            System.out.println("Creating image of " + c.toString() +
+//                                    "with file src/images/" + (13* suitVal
+//                                    + cardVal)+".png");
+                            bookImages.add(new ImageIcon(ImageIO.read(
+                                    new File("src/images/"+(13* suitVal
+                                            + cardVal)+".png"))));
+                        } catch (IOException ex) {
+                            Logger.getLogger(GoFishWindow.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    System.out.println("hi from player " + 
+                            ((GofishPlayer)((JMenuItem)e.getSource())
+                            .getClientProperty("AIPlayer")).ID );
+                    new BookViewer(bookImages).setVisible(true);
+                }                
+            });
+            interactPopups[i].add(tempMenu);
+            
+            askChoice.putClientProperty("AIPlayer", AIPlayers[i]);
+            askChoice.putClientProperty("window", this);
+            askChoice.addActionListener(new ActionListener(){
+                JDialog menu;
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    playerToAskFrom = (GofishPlayer)((JMenuItem)ae.getSource())
+                                      .getClientProperty("AIPlayer");
+                    System.out.println("You are going to ask for a card from player " + 
+                                       playerToAskFrom.ID);
+                    jDialog3.setVisible(true);
+                }
+            });
+            interactPopups[i].add(askChoice);
+        }
+    }
     
     private javax.swing.JButton[] interactButtons = new javax.swing.JButton[3];
     private javax.swing.JButton[] requestButtons = new javax.swing.JButton[3];
     private javax.swing.JPopupMenu[] interactPopups = new javax.swing.JPopupMenu[3];
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AIWindow0;
+    private javax.swing.JPanel AIWindow1;
+    private javax.swing.JPanel AIWindow2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
+    private javax.swing.JDialog jDialog3;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JPopupMenu jPopupMenu4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel p0handCount;
+    private javax.swing.JLabel p1handCount;
+    private javax.swing.JLabel p2handCount;
+    private javax.swing.JPanel playerWindow;
+    private javax.swing.JButton requestButton;
+    private javax.swing.JTextField requestField;
     // End of variables declaration//GEN-END:variables
 }

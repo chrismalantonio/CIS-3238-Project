@@ -49,10 +49,24 @@ public class visualManagerTests {
     }
     
     @Test
-    public void visualManagerCanRelayInfoFromWindowToGame() {
+    public void visualManagerCanRelayInfoFromWindowToGame() throws IOException {
         gWindow = new GoFishWindow();
         visualManager vm = new visualManager();
-//        assertEquals("Game and window not connected.", vm.connect(gofish), 41);
+    }
+    
+    @Test
+    public void handLabelUpdatesRespectivePlayerHand() throws IOException, InterruptedException{
+        Gofish game = new Gofish(new Deck());
+        GoFishWindow window = new GoFishWindow();
+        
+        game.AI[0].draw(game.d);
+        
+        game.AI[0].draw(game.d);
+        game.AI[0].draw(game.d);
+        game.AI[0].draw(game.d);
+        int handSize = game.AI[0].hand.size();
+        assertEquals("Hand label is matched to the wrong player.", true, 
+                     handSize==7);
     }
 
     @Test

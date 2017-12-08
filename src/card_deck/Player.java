@@ -22,7 +22,9 @@ public class Player {
 
     public void draw(Deck d) {
         int topOfDeck = d.cards.size() - 1;
-        hand.add((d.cards.remove(topOfDeck)));
+        if(topOfDeck >= 0){
+            hand.add((d.cards.remove(topOfDeck)));
+        }
     }
 
 }

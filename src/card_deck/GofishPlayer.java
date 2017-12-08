@@ -19,6 +19,7 @@ public class GofishPlayer extends Player{
     private Iterator<Card> bookIterator;
     Iterator<Card> handIterator;
     private final int BOOK_SIZE = 2;
+    public int ID;
     
     public GofishPlayer(){
         super();
@@ -29,27 +30,36 @@ public class GofishPlayer extends Player{
         int bookCounter = 0;
         handIterator = hand.iterator();
         Card d;
-        while(handIterator.hasNext() && bookCounter < BOOK_SIZE){
+        while(handIterator.hasNext() ){
             d = handIterator.next();
-            if(c.value.equals(d.value) && !c.suit.equals(d.suit)){
-                bookCounter++;
+            if(c.value.equals(d.value)){
+                return true;
             }
         }
-        return bookCounter == BOOK_SIZE;
+        return false;
     }
+    
+    public void setID(int ID){
+        this.ID = ID;
+    }
+    
+
     
     public void addBook(Card c){
         handIterator = hand.iterator();
-        Card d;
+        Card d = null;
+        boolean bookFound = false;
         while(handIterator.hasNext()){
             d = handIterator.next();
-            if(c.value.equals(d.value) && !c.suit.equals(d.suit)){
+            if(c.value.equals(d.value)){
                 books.add(c);
                 books.add(d);
-                hand.remove(c);
-                hand.remove(d);
+                bookFound = true;
                 break;
             }
+        }
+        if(bookFound){
+            this.hand.remove(d);
         }
     }
 }

@@ -6,6 +6,11 @@
 package gameWindow;
 
 import card_deck.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import visualManager.visualManager;
 
 /**
  *
@@ -31,6 +36,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,22 +54,36 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("gofish help");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
+                .addContainerGap(159, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)))
                 .addGap(77, 77, 77)
                 .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                 .addGap(112, 112, 112))
@@ -74,10 +94,10 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void goFishButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goFishButton
         // Sets goFish window to true
-        GoFishWindow window = new GoFishWindow();
-        window.setVisible(true);
+        new Thread(new visualManager()).start();
+//        GoFishWindow window = new GoFishWindow();
+//        window.setVisible(true);
         this.setVisible(false);
-
     }//GEN-LAST:event_goFishButton
 
     private void blackjackButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blackjackButton
@@ -87,6 +107,37 @@ public class MainMenu extends javax.swing.JFrame {
         this.setVisible(false); 
     }//GEN-LAST:event_blackjackButton
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String help = "You will play gofish against three computer opponents.\n"
+                + "The game will start with each player being dealt 7 cards.\n"
+                + "Each player has a hand a collection of books, their hand is\n"
+                + "the current of cards that they have. Their book collection \n"
+                + "is a collection of all the card pairs that they have found.\n"
+                + "Each player's turn will consist of them asking another player\n"
+                + "for a card value that the current player owns.\n"
+                + "So if I have a 2 and a 5, I can ask the other players for 2s or 5s.\n"
+                + "If the other player has a card with that matching value, they\n "
+                + "must give it to me, if they don't have it, I draw from the deck\n"
+                + "if it still exists. The game progresses as such until a player\n"
+                + "no longer has any cards in their hand. The game then ends and the\n"
+                + "player with the most books is the winner.\n"
+                + "The top of the screen contains a section for each of the AI players.\n"
+                + "Each AI section has an interact button and their current card count.\n"
+                + "The interact button has 2 options, 'show books' and 'ask for a card'.\n"
+                + "When it is your turn, you can click the 'interact' button for \n"
+                + "an AI and ask them for a card, or view which books they have.\n"
+                + "The center of the screen contains the log, this is where all \n"
+                + "updates to the game will be displayed. You will be able to see\n"
+                + "Which AI is requesting which card from which player and whether\n"
+                + "they got a pair or not. Keep an eye on this to know what card to\n"
+                + "ask for when it is your turn.\n"
+                + "The bottom of the screen is your hand. These are the cards that\n"
+                + "you have currently drawn. The button on the bottom right will\n"
+                + "display all the books that you have collected.\n";
+        JOptionPane.showMessageDialog(this, help);
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -94,5 +145,6 @@ public class MainMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     // End of variables declaration//GEN-END:variables
 }
