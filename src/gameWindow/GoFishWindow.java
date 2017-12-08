@@ -6,9 +6,7 @@
 package gameWindow;
 
 import card_deck.Card;
-import card_deck.Deck;
 import card_deck.GofishPlayer;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -555,21 +553,7 @@ public class GoFishWindow extends javax.swing.JFrame {
                 break;
         }
     }
-    
-//    interactPopups[0].
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) { 
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        //</editor-fold>
-        /* Create and display the form */
-    }
-    
+        
     public boolean valuesFound(){
         if(playerValueObtained && cardValueObtained){
             playerValueObtained = false;

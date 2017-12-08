@@ -443,4 +443,12 @@ public class GofishTests {
         assertEquals("Winner was found even though there can't be a winner yet.",
                     true, currentWinner == null);
     }
+    
+    @Test
+    public void gameEndsWhenWinnerFound(){
+        gofish = new Gofish(new Deck());
+        gofish.playGofish();
+        assertEquals("Game ended but no winner found.", true, gofish.isOver()
+                     == true);
+    }
 }

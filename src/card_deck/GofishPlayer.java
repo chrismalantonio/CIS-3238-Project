@@ -30,7 +30,7 @@ public class GofishPlayer extends Player{
         int bookCounter = 0;
         handIterator = hand.iterator();
         Card d;
-        while(handIterator.hasNext() && bookCounter < BOOK_SIZE){
+        while(handIterator.hasNext() ){
             d = handIterator.next();
             if(c.value.equals(d.value)){
                 return true;

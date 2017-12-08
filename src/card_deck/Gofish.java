@@ -315,10 +315,12 @@ public class Gofish extends Game {
     public GofishPlayer checkForWinner(){
         for(GofishPlayer P: this.AI){
             if(P.hand.isEmpty()){
+                this.GAME_COMPLETE = true;
                 return P;
             }
         }
         if(HUMAN.hand.isEmpty()){
+            this.GAME_COMPLETE = true;
             return HUMAN;
         }
         return null;
