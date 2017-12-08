@@ -55,6 +55,7 @@ public class GoFishWindow extends javax.swing.JFrame {
         cardImages = new ArrayList<ImageIcon>();
         this.initMapper();
         this.loadImages();
+        this.jTextArea1.setEditable(false);
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -585,7 +586,6 @@ public class GoFishWindow extends javax.swing.JFrame {
             JLabel cardImage = new JLabel();
             cardImage.setIcon(this.getImage(c));
             this.playerWindow.add(cardImage);
-            System.out.println("Creating cards...");
         }
         this.pack();
     }
@@ -645,9 +645,9 @@ public class GoFishWindow extends javax.swing.JFrame {
                                 break;
                         }
                         try {
-                            System.out.println("Creating image of " + c.toString() +
-                                    "with file src/images/" + (13* suitVal
-                                    + cardVal)+".png");
+//                            System.out.println("Creating image of " + c.toString() +
+//                                    "with file src/images/" + (13* suitVal
+//                                    + cardVal)+".png");
                             bookImages.add(new ImageIcon(ImageIO.read(
                                     new File("src/images/"+(13* suitVal
                                             + cardVal)+".png"))));

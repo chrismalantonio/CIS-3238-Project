@@ -77,7 +77,6 @@ public class Gofish extends Game {
         } else {
             return this.checkIfAiHasCard(c, p);
         }
-//        return false;
     }
 
     public boolean giveCardToPlayer(Card c, GofishPlayer to, GofishPlayer from) {
@@ -93,11 +92,7 @@ public class Gofish extends Game {
         if (to.checkForBooks(c)) {
             System.out.println(c.toString());
             System.out.println(from.hand.contains(c));
-            System.out.println("From's hand before removal:");
-            this.printHand(from);
             from.hand.remove(cardToRemove);
-            System.out.println("From's hand after removal:");
-            this.printHand(from);
             System.out.println(to.ID + " Has obtained a book of the following card value: "
                                + c.value);
             to.addBook(c);
@@ -126,16 +121,14 @@ public class Gofish extends Game {
                 if(A.equals(HUMAN)){
                     System.out.println("\u001B[32m" + "You found a book!" + "\u001B[30m");
                 }else{
-                    System.out.println(A.ID + " has found a book in their hand and"
-                        + "removed it.");
+                    System.out.println(A.ID + " has found a book in their hand of value " + c.value
+                                      + " and removed it from their hand.");
                 }
                 A.hand.remove(c); A.hand.remove(b);
                 A.books.add(c); A.books.add(b);
             }
             bookExists = false;
         }
-        System.out.println(A.ID+"'s hand after books removed.");
-        this.printHand(A);
     }
 
     public Card chooseCardToAskFor(GofishPlayer AI, GofishPlayer askTo) {

@@ -71,9 +71,6 @@ public class BookViewer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        //how to add panels.
-        this.add(new JLabel("hello"));
-        this.pack();
     }//GEN-LAST:event_formMouseClicked
 
     
