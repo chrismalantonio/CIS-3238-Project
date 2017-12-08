@@ -5,9 +5,8 @@
  */
 package gameWindow;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
@@ -27,5 +26,12 @@ public class DealerWindowTests {
     public void testNewGameButton() {
         window.newGameButton();
         assertEquals(window.dealer.hand.cards.size(), 2);
+    }
+    
+    @Test 
+    public void testStayButton(){
+        window.stayButton(); 
+        
+        assertFalse(window.getStay().isVisible());
     }
 }

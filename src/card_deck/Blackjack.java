@@ -50,9 +50,18 @@ public class Blackjack extends Game {
         }
     }
 
+    public void decideWinner(BlackjackPlayer player, BlackjackPlayer dealer) {
+        if (!player.hand2.cards.isEmpty()) {
+            checkHands(dealer.hand, player.hand);
+            checkHands(dealer.hand, player.hand2);
+        } else {
+            checkHands(dealer.hand, player.hand);
+        }
+    }
+
     public void cpuBestChoice(BlackjackPlayer cpu, Deck deck) {
         if ((cpu.getCardValue(cpu.hand, 0) == cpu.getCardValue(cpu.hand, 1))) {
-                cpu.split();
+            cpu.split();
         }
         while (cpu.hand.count < 17) {
             cpu.hit(cpu.hand, deck);
