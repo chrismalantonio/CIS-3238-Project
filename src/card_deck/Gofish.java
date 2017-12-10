@@ -90,8 +90,6 @@ public class Gofish extends Game {
             }
         }
         if (to.checkForBooks(c)) {
-            System.out.println(c.toString());
-            System.out.println(from.hand.contains(c));
             from.hand.remove(cardToRemove);
             System.out.println(to.ID + " Has obtained a book of the following card value: "
                                + c.value);
@@ -119,7 +117,7 @@ public class Gofish extends Game {
             }
             if(bookExists){
                 if(A.equals(HUMAN)){
-                    System.out.println("\u001B[32m" + "You found a book!" + "\u001B[30m");
+                    System.out.println("You found a book!");
                 }else{
                     System.out.println(A.ID + " has found a book in their hand of value " + c.value
                                       + " and removed it from their hand.");
@@ -396,6 +394,10 @@ public class Gofish extends Game {
         Thread.sleep(1500);
         this.AITurn(AIPlayer);
         this.findBooksInHand(AIPlayer);
+    }
+    
+    public int cardsRemainingInPool(){
+        return this.d.getDeckSize();
     }
     
     public boolean isOver(){

@@ -35,6 +35,10 @@ public class Deck {
         this.shuffle();
     }
     
+    public int getDeckSize(){
+        return cards.size();
+    }
+    
     public Iterator<Card> getIterator(){
         return cards.iterator();
     }
