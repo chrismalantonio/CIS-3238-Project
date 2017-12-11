@@ -6,7 +6,6 @@
 package gameWindow;
 
 import card_deck.*;
-import javax.swing.JLabel;
 import visualManager.*;
 
 /**
@@ -22,25 +21,22 @@ public class BlackjackWindow extends javax.swing.JFrame {
     BlackjackPlayer player, cpu;
     Blackjack game;
     visualManager v;
-    javax.swing.JLabel[] firstHand = new javax.swing.JLabel[8];
-    javax.swing.JLabel[] secondHand = new javax.swing.JLabel[8];
-    javax.swing.JLabel[] dealerHand = new javax.swing.JLabel[8];
 
-    ;
-
+    private int wins, losses, ties;
 
     public BlackjackWindow() {
         initComponents();
         v = new visualManager();
-        createNewGame();
         game = new Blackjack();
+        wins = losses = ties = 0;
+        createNewGame();
     }
 
     public void createNewGame() {
         deck = new Deck();
         player = new BlackjackPlayer();
         cpu = new BlackjackPlayer();
-        player.hand2 = new Hand(); 
+        player.hand2 = new Hand();
 
         /* Initial game state */
         for (int i = 0; i < 2; i++) {
@@ -64,6 +60,8 @@ public class BlackjackWindow extends javax.swing.JFrame {
         firstHand[1].setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(player.hand, 1))));
         dealerHand[0].setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/" + 0 + ".png")));
         dealerHand[1].setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(cpu.hand, 1))));
+
+        record.setText("Wins: " + game.wins + " Losses: " + game.losses + " Ties: " + game.ties);
     }
 
     /**
@@ -94,15 +92,20 @@ public class BlackjackWindow extends javax.swing.JFrame {
         }
         jPanel5 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        record = new javax.swing.JLabel();
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        hit.setText("Hit   ");
+        hit.setText(
+                "Hit   ");
         hit.addMouseListener(new java.awt.event.MouseAdapter() {
+
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 hitButton(evt);
             }
-        });
+        }
+        );
 
         split.setText("Split");
         split.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -346,6 +349,8 @@ public class BlackjackWindow extends javax.swing.JFrame {
                                 .addGap(42, 42, 42))
         );
 
+        record.setText("Wins: 0 Losses: 0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -364,7 +369,11 @@ public class BlackjackWindow extends javax.swing.JFrame {
                                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(38, 38, 38))))
+                                                .addGap(38, 38, 38))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(8, 8, 8)
+                                                .addComponent(record)
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(139, 139, 139)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,7 +382,9 @@ public class BlackjackWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(48, 48, 48)
+                                .addGap(23, 23, 23)
+                                .addComponent(record)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -400,11 +411,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
             stay.setVisible(false);
 
             if (!stay.isVisible() && !stay2.isVisible()) {
-                game.decideWinner(player, cpu, deck);
-                for (int j = 0; j < cpu.hand.cards.size() - 1; j++) {
-                    dealerHand[j].setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(cpu.hand, j))));
-                    dealerHand[j].setVisible(true);
-                }
+                updateRecord();
                 newGame.setVisible(true);
             }
         }
@@ -433,11 +440,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
         split.setVisible(false);
         stay.setVisible(false);
         if (!stay.isVisible() && !stay2.isVisible()) {
-            game.decideWinner(player, cpu, deck);
-            for (int j = 0; j < cpu.hand.cards.size() - 1; j++) {
-                dealerHand[j].setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(cpu.hand, j))));
-                dealerHand[j].setVisible(true);
-            }
+            updateRecord();
             newGame.setVisible(true);
         }
     }//GEN-LAST:event_stayButton
@@ -460,11 +463,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
             stay2.setVisible(false);
 
             if (!stay.isVisible() && !stay2.isVisible()) {
-                game.decideWinner(player, cpu, deck);
-                for (int j = 0; j < cpu.hand.cards.size() - 1; j++) {
-                    dealerHand[j].setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(cpu.hand, j))));
-                    dealerHand[j].setVisible(true);
-                }
+                updateRecord();
                 newGame.setVisible(true);
             }
         }
@@ -474,11 +473,7 @@ public class BlackjackWindow extends javax.swing.JFrame {
         hit2.setVisible(false);
         stay2.setVisible(false);
         if (!stay.isVisible() && !stay2.isVisible()) {
-            game.decideWinner(player, cpu, deck);
-            for (int j = 0; j < cpu.hand.cards.size() - 1; j++) {
-                dealerHand[j].setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(cpu.hand, j))));
-                dealerHand[j].setVisible(true);
-            }
+            updateRecord();
             newGame.setVisible(true);
         }
     }//GEN-LAST:event_stay2Button
@@ -500,11 +495,53 @@ public class BlackjackWindow extends javax.swing.JFrame {
             firstHand[i].setVisible(false);
             dealerHand[i].setVisible(false);
         }
-
     }
 
+    private void updateRecord() {
+        this.wins = game.wins;
+        this.ties = game.ties;
+        this.losses = game.losses;
+        game.decideWinner(player, cpu, deck);
+        if (player.hand2.cards.isEmpty()) {
+            if (game.wins > this.wins) {
+                record.setText("You win!");
+                wins++;
+            } else if (game.ties > this.ties) {
+                record.setText("You tied.");
+            } else {
+                record.setText("You lost...");
+            }
+        } else {
+            if (game.wins - this.wins == 2) {
+                record.setText("You won both hands!");
+                wins += 2;
+            } else if (game.ties - this.ties == 2) {
+                record.setText("You tied both hands.");
+                ties += 2;
+            } else if (game.losses - this.losses == 2) {
+                record.setText("You lost both hands...");
+                losses += 2;
+            } else if (game.wins - this.wins == 1 && game.losses - this.losses == 1) {
+                record.setText("You won one hand and lost the other.");
+                wins++;
+                losses++;
+            } else if (game.wins - this.wins == 1 && game.ties - this.ties == 1) {
+                record.setText("You won one hand and tied the other.");
+                wins++;
+                ties++;               
+            } else if (game.ties - this.ties == 1 && game.losses - this.losses == 1) {
+                record.setText("You tied one hand and lost the other.");
+                ties++;
+                losses++; 
+            }
+        }
+        for (int j = 0; j < cpu.hand.cards.size(); j++) {
+            dealerHand[j].setIcon(new javax.swing.ImageIcon(getClass().getResource(getCard(cpu.hand, j))));
+            dealerHand[j].setVisible(true);
+        }
+    }
 
-    /* Use these function for tests */
+    /* Use these function for testing purposes */
     public void newGameButton() {
         this.newGameButton(null);
     }
@@ -528,6 +565,16 @@ public class BlackjackWindow extends javax.swing.JFrame {
     public void stay2Button() {
         this.stay2Button(null);
     }
+    
+    public javax.swing.JButton getSplit(){
+        return split; 
+    }
+    
+    public javax.swing.JLabel getRecord(){
+        return record; 
+    }
+    
+    /*  end of functions used for testing */
 
     private javax.swing.JButton hit;
     private javax.swing.JButton hit2;
@@ -540,4 +587,8 @@ public class BlackjackWindow extends javax.swing.JFrame {
     private javax.swing.JButton split;
     private javax.swing.JButton stay;
     private javax.swing.JButton stay2;
+    private javax.swing.JLabel record;
+    javax.swing.JLabel[] firstHand = new javax.swing.JLabel[8];
+    javax.swing.JLabel[] secondHand = new javax.swing.JLabel[8];
+    javax.swing.JLabel[] dealerHand = new javax.swing.JLabel[8];
 }

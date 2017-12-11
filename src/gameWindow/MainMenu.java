@@ -39,7 +39,6 @@ public class MainMenu extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 500));
 
         jButton1.setText("Go Fish");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -103,7 +102,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void blackjackButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blackjackButton
         // Sets Blackjack window to true
-        BlackjackWindow window = new BlackjackWindow();
+        BlackjackMenu window = new BlackjackMenu();
         window.setVisible(true);
         this.setVisible(false); 
     }//GEN-LAST:event_blackjackButton

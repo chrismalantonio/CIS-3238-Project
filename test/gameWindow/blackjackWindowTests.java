@@ -20,6 +20,7 @@ public class blackjackWindowTests {
     @Before
     public void setUp() {
         window = new BlackjackWindow();
+        
     }
 
     /* returns true if player can split */
@@ -70,4 +71,12 @@ public class blackjackWindowTests {
         assertEquals(window.player.hand2.cards.size(), 3);
     }
 
+    @Test
+    public void splitButtonShowsOnNewGame() {
+        while (!canSplit()) {
+            window.createNewGame();
+        }      
+        assertTrue(window.getSplit().isVisible()); 
+    }
+    
 }
