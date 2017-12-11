@@ -7,13 +7,10 @@ package visualManager;
 
 import card_deck.*;
 import gameWindow.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 public class visualManager extends Thread{
     
@@ -46,8 +43,10 @@ public class visualManager extends Thread{
         }
         while(!game.isOver()){
             if(currentPlayerIndex == 0){
+                window.changeTextColor(Color.green);
                 System.out.println("=================New Round Starting, there are " + 
                         game.cardsRemainingInPool() + " cards remaining to be drawn.=================");
+                window.changeTextColor(Color.BLACK);
             }
             if(currentPlayerIndex == 3){
                 System.out.println("It is your turn, choose a player and ask them for a card.");

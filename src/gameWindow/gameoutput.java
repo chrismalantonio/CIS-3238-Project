@@ -35,8 +35,5 @@ public class gameoutput extends OutputStream {
         } catch (BadLocationException ex) {
             Logger.getLogger(gameoutput.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        textArea.append(String.valueOf((char)b));
-        // scrolls the text area to the end of data
-//        textArea.setCaretPosition(textArea.getDocument().getLength());
     }
 }

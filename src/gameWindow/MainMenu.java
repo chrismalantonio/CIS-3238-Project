@@ -5,11 +5,7 @@
  */
 package gameWindow;
 
-import card_deck.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import visualManager.visualManager;
 
 /**
@@ -93,10 +89,7 @@ public class MainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void goFishButton(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goFishButton
-        // Sets goFish window to true
         new Thread(new visualManager()).start();
-//        GoFishWindow window = new GoFishWindow();
-//        window.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_goFishButton
 

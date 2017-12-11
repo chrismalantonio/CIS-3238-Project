@@ -20,13 +20,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.text.DefaultCaret;
 
 public class GoFishWindow extends javax.swing.JFrame {
@@ -459,6 +456,7 @@ public class GoFishWindow extends javax.swing.JFrame {
             this.cardToAskFor = new Card("spades", this.cardValue);
             this.cardValueObtained = true;
             this.playerValueObtained = true;
+            requestField.setText("");
             jDialog3.dispose();
         }
     }//GEN-LAST:event_requestButtonActionPerformed
@@ -472,8 +470,8 @@ public class GoFishWindow extends javax.swing.JFrame {
         new BookViewer(books).setVisible(true); 
     }//GEN-LAST:event_jButton1ActionPerformed
     
-    public void changeTextColor(){
-//        this.gameInfoOutput.setcolor
+    public void changeTextColor(Color color){
+        this.jTextPane1.setForeground(color);
     }
     
     public void showWinner(GofishPlayer winner){
@@ -485,7 +483,6 @@ public class GoFishWindow extends javax.swing.JFrame {
             winStr = "The winner is " + winner.ID;
         }
         JOptionPane.showMessageDialog(this, winStr);
-//        this.add(new JPopupMenu().add(new JLabel(winStr))).show();
     }
     
     private void loadImages() throws IOException{
@@ -655,9 +652,6 @@ public class GoFishWindow extends javax.swing.JFrame {
                                 break;
                         }
                         try {
-//                            System.out.println("Creating image of " + c.toString() +
-//                                    "with file src/images/" + (13* suitVal
-//                                    + cardVal)+".png");
                             bookImages.add(new ImageIcon(ImageIO.read(
                                     new File("src/images/"+(13* suitVal
                                             + cardVal)+".png"))));
