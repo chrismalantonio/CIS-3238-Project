@@ -530,6 +530,9 @@ public class GoFishWindow extends javax.swing.JFrame {
     }
     
     public boolean pressButton(int buttonIndex){
+        /**
+         * Launches the interact menu.
+         */
         switch(buttonIndex){
             case 0:
                 this.jButton2MouseClicked(null);
@@ -547,6 +550,9 @@ public class GoFishWindow extends javax.swing.JFrame {
     }
     
     public void updateHandLabel(GofishPlayer player){
+         /**
+          * Sets the value of how many cards each AI has in their hand.
+          */
         switch(player.ID){
             case(0):
                 this.p0handCount.setText(Integer.toString(player.hand.size()));
@@ -563,6 +569,10 @@ public class GoFishWindow extends javax.swing.JFrame {
     }
         
     public boolean valuesFound(){
+        /**
+         * The game thread waits for these values to be true before it goes through
+         * another round of AI turns.
+         */
         if(playerValueObtained && cardValueObtained){
             playerValueObtained = false;
             cardValueObtained = false;
@@ -582,11 +592,17 @@ public class GoFishWindow extends javax.swing.JFrame {
     }
     
     public void nullifyValues(){
+        /**
+         * Resets values used by the game thread.
+         */
         playerToAskFrom = null;
         cardToAskFor = null;
     }
     
     public void updatePlayerWindow(GofishPlayer human){
+        /**
+         * Draws all the cards in the players hands to the window.
+         */
         ArrayList<Card> humanHand = human.hand;
         this.playerWindow.removeAll();
         for(Card c: humanHand){
@@ -598,6 +614,9 @@ public class GoFishWindow extends javax.swing.JFrame {
     }
 
     public boolean linkWindow(GofishPlayer[] AIs, GofishPlayer human){
+        /**
+         * Links the game and the window.
+         */
         this.AIPlayers = AIs;
         this.human = human;
         this.link();
@@ -605,6 +624,9 @@ public class GoFishWindow extends javax.swing.JFrame {
     }
     
     private void link(){
+        /**
+         * Links each of the AI windows to an AI player in the Gofish game.
+         */
         for(int i = 0; i < 3; i++){
             interactPopups[i] = new javax.swing.JPopupMenu();
             interactPopups[i].putClientProperty("AIPlayer", AIPlayers[i]);

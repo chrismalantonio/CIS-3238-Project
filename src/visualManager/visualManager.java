@@ -11,7 +11,6 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 public class visualManager extends Thread{
     
     public visualManager(){
