@@ -67,28 +67,7 @@ public class GofishTests {
         assertEquals("AI does not have card specified.",
                 gofish.checkIfAiHasCard(new Card(c.suit, c.value), AI), true);
     }
-    
-    @Test
-    public void AiShouldNotHaveCardSpecified(){
-        d = new Deck();
-        gofish = new Gofish(d);
-        Player aAI = new Player();
-        Player bAI = new Player();
-        int handSize = d.cards.size() /2;
-        for(int i = 0; i < handSize; i++){
-            aAI.draw(d); bAI.draw(d);
-        }
-        System.out.println(aAI.hand.size()+ ","+bAI.hand.size());
-        
-        for(int i = 0; i < 100000; i++){
-            gofish.d = new Deck();
-            Card aC = aAI.hand.get((int)(Math.floor(handSize * Math.random())));
-            Card bC = bAI.hand.get((int)(Math.floor(handSize * Math.random())));
-//            assertNotEquals("The deck has two cards that are the same.", 
-//            aC,bC);
-        }
-    }
-    
+       
     @Test
     public void cardRemovedShouldNotBeInHand(){
         AI.hand.add(new Card("hearts", "ace"));
@@ -115,34 +94,6 @@ public class GofishTests {
                 gofish.mostRecentCard(gofish.AI[0]));
     }
     
-    @Test
-    public void oldCardsPushedBackInMemory(){
-        Card cX = new Card("clubs", "2");
-        Card[] c = new Card[6];
-        c[0] = new Card("spades", "ace");
-        c[1] = new Card("spades", "2");
-        c[2] = new Card("spades", "3");
-        c[3] = new Card("spades", "4");
-        c[4] = new Card("spades", "5");
-        c[5] = new Card("spades", "6");
-        gofish = new Gofish(new Deck());
-
-        Card[] memories = gofish.getMemories(gofish.AI[0]);
-        
-        gofish.updateAIMemory(cX, gofish.AI[0]);
-
-        assertEquals("Card in first position is not the first card remembered.",
-                     cX, memories[0]);
-
-        for(Card n: c){
-            gofish.updateAIMemory(n, gofish.AI[0]);
-        }
-        
-        for(Card n: memories){
-//            assertNotEquals("Card that was in memory but removed is still in"
-//                    + "memory.", n, c[0]);
-        }
-    }
     
     @Test
     public void gofishGameGeneratesFairPlayers(){
@@ -436,9 +387,6 @@ public class GofishTests {
     public void noWinnerFoundShouldReturnNull(){
         gofish = new Gofish(new Deck());
         gofish.dealCards();
-//        gofish.executeAITurn(0);
-//        gofish.executeAITurn(1);
-//        gofish.executeAITurn(2);
         GofishPlayer currentWinner = gofish.checkForWinner();
         assertEquals("Winner was found even though there can't be a winner yet.",
                     true, currentWinner == null);

@@ -7,16 +7,11 @@ package visualManager;
 
 import card_deck.*;
 import gameWindow.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-
 public class visualManager extends Thread{
-    
-    
     
     public visualManager(){
         
@@ -31,8 +26,8 @@ public class visualManager extends Thread{
         } catch (IOException ex) {
             Logger.getLogger(visualManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
+    } 
+   
     public synchronized int connect(Gofish game) throws InterruptedException, IOException{
         GoFishWindow window = new GoFishWindow();
         window.linkWindow(game.AI, game.HUMAN);
@@ -47,9 +42,13 @@ public class visualManager extends Thread{
         }
         while(!game.isOver()){
             if(currentPlayerIndex == 0){
-                System.out.println("=================New Round Starting=================");
+                window.changeTextColor(Color.green);
+                System.out.println("=================New Round Starting, there are " + 
+                        game.cardsRemainingInPool() + " cards remaining to be drawn.=================");
+                window.changeTextColor(Color.BLACK);
             }
             if(currentPlayerIndex == 3){
+                System.out.println("It is your turn, choose a player and ask them for a card.");
                 while (!window.valuesFound()){
                     Thread.sleep(500);
                 }
@@ -66,7 +65,7 @@ public class visualManager extends Thread{
                 window.updateHandLabel(game.AI[currentPlayerIndex]);
             }
             if((player  = game.checkForWinner()) != null){
-                System.out.println("\u001B[32m " + player.ID + " has an empty hand. Game is over.");
+                System.out.println(player.ID + " has an empty hand. Game is over.");
                 System.out.println("Checking for winner...");
                 player = game.findWinner();
                 System.out.println("The winner is " + player.ID + " who has a "
