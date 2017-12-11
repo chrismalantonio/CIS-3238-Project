@@ -366,9 +366,7 @@ public class GofishTests {
                 break;
             }
         }
-        
         if(gofish.HUMAN.hand.isEmpty()){emptyHand = true;}
-        
         assertEquals("Game ended but no player has an empty hand.", true, 
                 emptyHand);
     }
@@ -432,5 +430,25 @@ public class GofishTests {
                 anotherWinner = true;
             }
         }
+    }
+    
+    @Test
+    public void noWinnerFoundShouldReturnNull(){
+        gofish = new Gofish(new Deck());
+        gofish.dealCards();
+//        gofish.executeAITurn(0);
+//        gofish.executeAITurn(1);
+//        gofish.executeAITurn(2);
+        GofishPlayer currentWinner = gofish.checkForWinner();
+        assertEquals("Winner was found even though there can't be a winner yet.",
+                    true, currentWinner == null);
+    }
+    
+    @Test
+    public void gameEndsWhenWinnerFound(){
+        gofish = new Gofish(new Deck());
+        gofish.playGofish();
+        assertEquals("Game ended but no winner found.", true, gofish.isOver()
+                     == true);
     }
 }

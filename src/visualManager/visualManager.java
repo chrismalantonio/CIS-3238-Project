@@ -10,22 +10,73 @@ import gameWindow.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author Neel Patel
- */
-public class visualManager {
+public class visualManager extends Thread{
+    
+    
+    
+    public visualManager(){
+        
+    }
 
-    public int connect(Gofish game) {
+    @Override
+    public void run(){
+        try {
+            this.connect(new Gofish(new Deck()));
+        } catch (InterruptedException ex) {
+            Logger.getLogger(visualManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(visualManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public synchronized int connect(Gofish game) throws InterruptedException, IOException{
         GoFishWindow window = new GoFishWindow();
+        window.linkWindow(game.AI, game.HUMAN);
         window.setVisible(true);
-//        if(window.activateButton()){
-//            game.playGofish();
-//            return game.getCurrentTurn();
-//        }
-        return Integer.MIN_VALUE;
+        int currentPlayerIndex = 0;
+        game.dealCards();
+        GofishPlayer human = game.HUMAN;
+        GofishPlayer player = null;
+        window.updatePlayerWindow(human);
+        for(GofishPlayer p: game.AI){
+            window.updateHandLabel(p);
+        }
+        while(!game.isOver()){
+            if(currentPlayerIndex == 0){
+                System.out.println("=================New Round Starting=================");
+            }
+            if(currentPlayerIndex == 3){
+                while (!window.valuesFound()){
+                    Thread.sleep(500);
+                }
+                GofishPlayer AIplayer = window.getPlayerRequest();
+                Card card = window.getCardRequest();
+                System.out.println("Player has made a decision. They want to "
+                        + "request a " + card.value + " from " + AIplayer.ID);
+                window.nullifyValues();
+                game.humanTurn(AIplayer, card);
+                game.findBooksInHand(human);
+                window.updatePlayerWindow(human);
+            }else{
+                game.executeAITurn(currentPlayerIndex);
+                window.updateHandLabel(game.AI[currentPlayerIndex]);
+            }
+            if((player  = game.checkForWinner()) != null){
+                System.out.println("\u001B[32m " + player.ID + " has an empty hand. Game is over.");
+                System.out.println("Checking for winner...");
+                player = game.findWinner();
+                System.out.println("The winner is " + player.ID + " who has a "
+                        + "total of " + player.books.size()/2 + " books.");
+                window.showWinner(player);
+                
+            }
+            currentPlayerIndex = (currentPlayerIndex+1) % 4;
+        }
+        return 0;
     }
 
     public String getCardLocation(Card c) {
